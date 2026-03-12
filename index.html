@@ -394,9 +394,71 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
         </div>
       </div>
 
-    </div><!-- /tool-mc -->
+    
+	</div><!-- /tool-mc -->
+
+    <!-- ── BINOMIAL TREE TOOL ── -->
+    <div id="tool-bin" style="display:none;">
+
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Binomial Tree Parameters</span></div>
+        <div class="card-body">
+          <div class="inputs-grid">
+            <div class="field"><label>Spot Price <span class="sym">S</span></label><input type="number" id="bin-spot" value="100" step="1"></div>
+            <div class="field"><label>Strike Price <span class="sym">K</span></label><input type="number" id="bin-strike" value="100" step="1"></div>
+            <div class="field"><label>Maturity (yrs) <span class="sym">T</span></label><input type="number" id="bin-maturity" value="1" step="0.1"></div>
+            <div class="field"><label>Risk-Free Rate % <span class="sym">r</span></label><input type="number" id="bin-rate" value="5" step="0.1"></div>
+            <div class="field"><label>Volatility % <span class="sym">σ</span></label><input type="number" id="bin-vol" value="20" step="1"></div>
+            <div class="field"><label>Steps <span class="sym">N</span></label><input type="number" id="bin-steps" value="5" min="1" max="10" step="1"></div>
+          </div>
+          <div style="display:flex;gap:1rem;margin-top:1rem;align-items:center;flex-wrap:wrap;">
+            <div style="display:flex;gap:0;background:var(--off);border:1.5px solid var(--border);border-radius:8px;overflow:hidden;">
+              <button id="bin-type-call" onclick="setBinType('call')" style="padding:0.5rem 1.2rem;border:none;background:var(--blue);color:white;font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;">Call</button>
+              <button id="bin-type-put"  onclick="setBinType('put')"  style="padding:0.5rem 1.2rem;border:none;background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;">Put</button>
+            </div>
+            <div style="display:flex;gap:0;background:var(--off);border:1.5px solid var(--border);border-radius:8px;overflow:hidden;">
+              <button id="bin-style-euro" onclick="setBinStyle('european')" style="padding:0.5rem 1.2rem;border:none;background:var(--blue);color:white;font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;">European</button>
+              <button id="bin-style-amer" onclick="setBinStyle('american')" style="padding:0.5rem 1.2rem;border:none;background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;">American</button>
+            </div>
+            <button class="btn-primary" onclick="runBinomial()" style="margin-top:0;flex:1;min-width:160px;">▶ &nbsp;Build Tree</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="price-strip">
+        <div class="price-card call"><div class="p-label" id="bin-card-label">Option Price</div><div class="p-value" id="bin-price">—</div><div class="p-sub">Binomial model</div></div>
+        <div class="price-card put" style="border-color:var(--blue);"><div class="p-label" style="color:var(--blue);">BS Benchmark</div><div class="p-value" id="bin-bs-price" style="color:var(--blue);">—</div><div class="p-sub">Black–Scholes reference</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Tree Diagram</span>
+          <span id="bin-params-label" style="margin-left:auto;font-size:0.65rem;color:var(--muted);font-family:'DM Mono',monospace;"></span>
+        </div>
+        <div class="card-body" style="padding:1rem;overflow-x:auto;">
+          <canvas id="binCanvas" style="display:block;"></canvas>
+        </div>
+        <div style="padding:0 1.5rem 1rem;display:flex;gap:1.5rem;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);"><div style="width:32px;height:14px;background:rgba(26,64,245,0.15);border:1.5px solid var(--blue);border-radius:3px;"></div>Stock price (top) · Option value (bottom)</div>
+          <div style="display:flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);"><div style="width:32px;height:14px;background:rgba(0,170,102,0.15);border:1.5px solid var(--green);border-radius:3px;"></div>Early exercise (American)</div>
+          <div style="display:flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);"><div style="width:32px;height:14px;background:rgba(224,49,43,0.1);border:1.5px solid var(--put);border-radius:3px;"></div>In-the-money at expiry</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Model Parameters</span></div>
+        <div class="card-body">
+          <table class="calc-table">
+            <thead><tr><th>Parameter</th><th>Formula</th><th style="text-align:right">Value</th></tr></thead>
+            <tbody id="bin-params-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /tool-bin -->
 
   </div><!-- /cat-options -->
+
+ 
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
   <!-- CAT 2: PORTFOLIO & RISK -->
@@ -830,6 +892,169 @@ function runMonteCarlo(){
 // ════════════════════════════════════════════════════════════════════════
 // INIT
 // ════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════
+// BINOMIAL TREE
+// ════════════════════════════════════════════════════════════════════════
+let binType='call', binStyle='european';
+
+function setBinType(t){
+  binType=t;
+  document.getElementById('bin-type-call').style.background=t==='call'?'var(--blue)':'transparent';
+  document.getElementById('bin-type-call').style.color=t==='call'?'white':'var(--muted)';
+  document.getElementById('bin-type-put').style.background=t==='put'?'var(--blue)':'transparent';
+  document.getElementById('bin-type-put').style.color=t==='put'?'white':'var(--muted)';
+}
+function setBinStyle(s){
+  binStyle=s;
+  document.getElementById('bin-style-euro').style.background=s==='european'?'var(--blue)':'transparent';
+  document.getElementById('bin-style-euro').style.color=s==='european'?'white':'var(--muted)';
+  document.getElementById('bin-style-amer').style.background=s==='american'?'var(--blue)':'transparent';
+  document.getElementById('bin-style-amer').style.color=s==='american'?'white':'var(--muted)';
+}
+
+function runBinomial(){
+  const S0=+document.getElementById('bin-spot').value;
+  const K  =+document.getElementById('bin-strike').value;
+  const T  =+document.getElementById('bin-maturity').value;
+  const r  =+document.getElementById('bin-rate').value/100;
+  const sig=+document.getElementById('bin-vol').value/100;
+  const N  =Math.min(10,Math.max(1,Math.round(+document.getElementById('bin-steps').value)));
+  const dt =T/N;
+  const u  =Math.exp(sig*Math.sqrt(dt));
+  const d  =1/u;
+  const p  =(Math.exp(r*dt)-d)/(u-d);   // risk-neutral probability
+  const disc=Math.exp(-r*dt);
+
+  // Build stock price tree
+  const S=[];
+  for(let i=0;i<=N;i++){S[i]=[];for(let j=0;j<=i;j++)S[i][j]=S0*Math.pow(u,j)*Math.pow(d,i-j);}
+
+  // Terminal payoffs
+  const V=[];
+  for(let i=0;i<=N;i++){V[i]=[];for(let j=0;j<=i;j++)V[i][j]=0;}
+  for(let j=0;j<=N;j++){
+    const payoff=binType==='call'?Math.max(S[N][j]-K,0):Math.max(K-S[N][j],0);
+    V[N][j]=payoff;
+  }
+
+  // Backward induction
+  const earlyEx=[];for(let i=0;i<=N;i++){earlyEx[i]=[];for(let j=0;j<=i;j++)earlyEx[i][j]=false;}
+  for(let i=N-1;i>=0;i--){
+    for(let j=0;j<=i;j++){
+      const hold=disc*(p*V[i+1][j+1]+(1-p)*V[i+1][j]);
+      if(binStyle==='american'){
+        const exercise=binType==='call'?Math.max(S[i][j]-K,0):Math.max(K-S[i][j],0);
+        if(exercise>hold+1e-10){V[i][j]=exercise;earlyEx[i][j]=true;}
+        else V[i][j]=hold;
+      } else {
+        V[i][j]=hold;
+      }
+    }
+  }
+
+  const price=V[0][0];
+  const bsRef=bs(S0,K,T,r,sig,0);
+  const bsPrice=binType==='call'?bsRef.call:bsRef.put;
+
+  document.getElementById('bin-price').textContent=price.toFixed(4);
+  document.getElementById('bin-bs-price').textContent=bsPrice.toFixed(4);
+  document.getElementById('bin-card-label').textContent=(binStyle==='american'?'American ':'European ')+(binType==='call'?'Call':'Put');
+  document.getElementById('bin-params-label').textContent='u='+u.toFixed(4)+' · d='+d.toFixed(4)+' · p='+p.toFixed(4);
+
+  // Params table
+  document.getElementById('bin-params-body').innerHTML=[
+    ['u (up factor)',   'e^(σ√Δt)',        u.toFixed(6)],
+    ['d (down factor)', '1/u',             d.toFixed(6)],
+    ['p (risk-neutral prob)', '(e^(rΔt)−d)/(u−d)', p.toFixed(6)],
+    ['Δt (time step)',  'T/N',             dt.toFixed(6)],
+    ['Discount/step',   'e^(−rΔt)',        disc.toFixed(6)],
+  ].map(([v,f,val])=>`<tr><td class="var">${v}</td><td class="formula">${f}</td><td class="val">${val}</td></tr>`).join('');
+
+  // Draw tree
+  drawBinomialTree(S,V,earlyEx,N,K);
+}
+
+function drawBinomialTree(S,V,earlyEx,N,K){
+  const canvas=document.getElementById('binCanvas');
+  const nodeW=88, nodeH=52, hGap=110, vGap=62;
+  const padX=20, padY=20;
+  const totalW=padX*2+N*hGap+nodeW;
+  const totalH=padY*2+(N)*vGap+nodeH;
+  canvas.width=totalW; canvas.height=totalH;
+  canvas.style.width=totalW+'px'; canvas.style.height=totalH+'px';
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,totalW,totalH);
+
+  const nodeX=(i)=>padX+i*hGap;
+  const nodeY=(i,j)=>padY+(N/2-i/2+j)*(vGap)+(N%2===0?0:vGap/2)-(N===1?vGap/2:0);
+
+  // Draw edges first
+  for(let i=0;i<N;i++){
+    for(let j=0;j<=i;j++){
+      const x1=nodeX(i)+nodeW/2, y1=nodeY(i,j)+nodeH/2;
+      // up branch
+      const x2u=nodeX(i+1)+nodeW/2, y2u=nodeY(i+1,j+1)+nodeH/2;
+      ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2u,y2u);
+      ctx.strokeStyle='rgba(26,64,245,0.18)';ctx.lineWidth=1.5;ctx.stroke();
+      // down branch
+      const x2d=nodeX(i+1)+nodeW/2, y2d=nodeY(i+1,j)+nodeH/2;
+      ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2d,y2d);
+      ctx.strokeStyle='rgba(26,64,245,0.18)';ctx.lineWidth=1.5;ctx.stroke();
+    }
+  }
+
+  // Draw nodes
+  for(let i=0;i<=N;i++){
+    for(let j=0;j<=i;j++){
+      const x=nodeX(i), y=nodeY(i,j);
+      const isITM=i===N&&(V[i][j]>0.0001);
+      const isEarly=earlyEx[i][j];
+
+      // Box fill
+      ctx.beginPath();ctx.roundRect(x,y,nodeW,nodeH,5);
+      if(isEarly)ctx.fillStyle='rgba(0,170,102,0.12)';
+      else if(isITM)ctx.fillStyle='rgba(224,49,43,0.08)';
+      else ctx.fillStyle='rgba(245,247,255,0.95)';
+      ctx.fill();
+
+      // Box border
+      ctx.beginPath();ctx.roundRect(x,y,nodeW,nodeH,5);
+      if(isEarly)ctx.strokeStyle='var(--green)';
+      else if(isITM)ctx.strokeStyle='var(--put)';
+      else ctx.strokeStyle='rgba(26,64,245,0.3)';
+      ctx.lineWidth=1.5;ctx.stroke();
+
+      // Divider
+      ctx.beginPath();ctx.moveTo(x+4,y+nodeH/2);ctx.lineTo(x+nodeW-4,y+nodeH/2);
+      ctx.strokeStyle='rgba(26,64,245,0.1)';ctx.lineWidth=1;ctx.stroke();
+
+      // Stock price
+      ctx.fillStyle='#0d1240';ctx.font="bold 0.68rem 'DM Mono',monospace";
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(S[i][j].toFixed(2),x+nodeW/2,y+nodeH/4);
+
+      // Option value
+      const optColor=isEarly?'#00aa66':isITM?'var(--put)':'var(--blue)';
+      ctx.fillStyle=optColor;ctx.font="bold 0.68rem 'DM Mono',monospace";
+      ctx.fillText(V[i][j].toFixed(2),x+nodeW/2,y+nodeH*3/4);
+    }
+  }
+
+  // Step labels
+  ctx.fillStyle='var(--muted)';ctx.font="0.6rem 'DM Mono',monospace";ctx.textAlign='center';ctx.textBaseline='top';
+  for(let i=0;i<=N;i++) ctx.fillText('t='+i,nodeX(i)+nodeW/2,2);
+}
+
+// Also update selectTool to handle 'bin'
+const _origSelectTool=selectTool;
+selectTool=function(name){
+  document.querySelectorAll('.tool-chip').forEach(c=>c.classList.remove('active'));
+  document.getElementById('chip-'+name).classList.add('active');
+  document.getElementById('tool-bs').style.display=name==='bs'?'block':'none';
+  document.getElementById('tool-mc').style.display=name==='mc'?'block':'none';
+  document.getElementById('tool-bin').style.display=name==='bin'?'block':'none';
+  if(name==='mc')initMcCanvas();
+};
 window.onload=()=>{
   calculate();
   initMcCanvas();
