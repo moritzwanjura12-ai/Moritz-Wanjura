@@ -1,159 +1,202 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Black-Scholes Option Pricer</title>
-
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<title>Vanilla Options Calculator</title>
 
 <style>
 
 body{
-font-family:Arial;
-max-width:900px;
-margin:auto;
-padding:20px;
-background:#0f1116;
+font-family: 'Segoe UI', sans-serif;
+background:#0f1c2e;
 color:white;
+margin:0;
+padding:40px;
 }
 
-.slider-container{
-margin:15px 0;
+.container{
+max-width:1000px;
+margin:auto;
+}
+
+h1{
+text-align:center;
+margin-bottom:40px;
+color:#4da3ff;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+.input-box{
+background:#16263f;
+padding:20px;
+border-radius:10px;
 }
 
 label{
 display:block;
-margin-bottom:5px;
+margin-bottom:6px;
+color:#7fb3ff;
 }
 
-input[type=range]{
+input{
 width:100%;
+padding:12px;
+border:none;
+border-radius:6px;
+background:#0f1c2e;
+color:white;
+font-size:16px;
 }
 
-.value{
+button{
+width:100%;
+padding:16px;
+margin-top:25px;
+border:none;
+border-radius:8px;
+background:#1f6feb;
+color:white;
+font-size:18px;
+cursor:pointer;
+transition:0.2s;
+}
+
+button:hover{
+background:#3b82f6;
+}
+
+.results{
+margin-top:40px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+.result-card{
+background:#16263f;
+padding:30px;
+border-radius:10px;
+text-align:center;
+}
+
+.result-title{
+color:#7fb3ff;
+margin-bottom:10px;
+}
+
+.price{
+font-size:40px;
 font-weight:bold;
-color:#4fc3f7;
-}
-
-#price{
-font-size:26px;
-margin-top:20px;
 }
 
 </style>
+
 </head>
 
 <body>
 
+<div class="container">
+
 <h1>Black-Scholes Option Pricer</h1>
 
-<div class="slider-container">
-<label>Stock Price (S): <span id="S_val" class="value"></span></label>
-<input id="S" type="range" min="10" max="300" step="1" value="100">
+<div class="grid">
+
+<div class="input-box">
+<label>Spot Price</label>
+<input id="S" value="52">
 </div>
 
-<div class="slider-container">
-<label>Strike (K): <span id="K_val" class="value"></span></label>
-<input id="K" type="range" min="10" max="300" step="1" value="100">
+<div class="input-box">
+<label>Strike Price</label>
+<input id="K" value="50">
 </div>
 
-<div class="slider-container">
-<label>Volatility σ: <span id="sigma_val" class="value"></span></label>
-<input id="sigma" type="range" min="0.01" max="1" step="0.01" value="0.2">
+<div class="input-box">
+<label>Maturity (years)</label>
+<input id="T" value="0.25">
 </div>
 
-<div class="slider-container">
-<label>Interest Rate r: <span id="r_val" class="value"></span></label>
-<input id="r" type="range" min="0" max="0.1" step="0.001" value="0.05">
+<div class="input-box">
+<label>Risk-Free Rate (%)</label>
+<input id="r" value="12">
 </div>
 
-<div class="slider-container">
-<label>Time to Maturity T (years): <span id="T_val" class="value"></span></label>
-<input id="T" type="range" min="0.01" max="2" step="0.01" value="1">
+<div class="input-box">
+<label>Volatility (%)</label>
+<input id="sigma" value="30">
 </div>
 
-<div id="price"></div>
+<div class="input-box">
+<label>Dividend Yield (%)</label>
+<input id="q" value="0">
+</div>
 
-<div id="greeksChart"></div>
+</div>
+
+<button onclick="calculate()">Calculate Price</button>
+
+<div class="results">
+
+<div class="result-card">
+<div class="result-title">Call Option</div>
+<div id="call" class="price">0.000</div>
+</div>
+
+<div class="result-card">
+<div class="result-title">Put Option</div>
+<div id="put" class="price">0.000</div>
+</div>
+
+</div>
+
+</div>
 
 <script>
 
 function N(x){
-return (1 + erf(x / Math.sqrt(2))) / 2;
+return (1+erf(x/Math.sqrt(2)))/2
 }
 
 function erf(x){
-let sign = (x >= 0) ? 1 : -1;
-x = Math.abs(x);
+let sign = x>=0?1:-1
+x=Math.abs(x)
 
-let a1 = 0.254829592;
-let a2 = -0.284496736;
-let a3 = 1.421413741;
-let a4 = -1.453152027;
-let a5 = 1.061405429;
-let p = 0.3275911;
+let a1=0.254829592
+let a2=-0.284496736
+let a3=1.421413741
+let a4=-1.453152027
+let a5=1.061405429
+let p=0.3275911
 
-let t = 1.0/(1.0+p*x);
-let y = 1.0 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t*Math.exp(-x*x);
+let t=1/(1+p*x)
+let y=1-(((((a5*t+a4)*t)+a3)*t+a2)*t+a1)*t*Math.exp(-x*x)
 
-return sign*y;
+return sign*y
 }
 
-function blackScholes(S,K,T,r,sigma){
+function calculate(){
 
-let d1 = (Math.log(S/K)+(r+sigma*sigma/2)*T)/(sigma*Math.sqrt(T));
-let d2 = d1 - sigma*Math.sqrt(T);
+let S=parseFloat(document.getElementById("S").value)
+let K=parseFloat(document.getElementById("K").value)
+let T=parseFloat(document.getElementById("T").value)
+let r=parseFloat(document.getElementById("r").value)/100
+let sigma=parseFloat(document.getElementById("sigma").value)/100
+let q=parseFloat(document.getElementById("q").value)/100
 
-let call = S*N(d1)-K*Math.exp(-r*T)*N(d2);
+let d1=(Math.log(S/K)+(r-q+sigma*sigma/2)*T)/(sigma*Math.sqrt(T))
+let d2=d1-sigma*Math.sqrt(T)
 
-let delta = N(d1);
-let gamma = Math.exp(-d1*d1/2)/(S*sigma*Math.sqrt(2*Math.PI*T));
-let vega = S*Math.sqrt(T)*Math.exp(-d1*d1/2)/Math.sqrt(2*Math.PI);
-let theta = -(S*Math.exp(-d1*d1/2)*sigma)/(2*Math.sqrt(2*Math.PI*T)) - r*K*Math.exp(-r*T)*N(d2);
+let call=S*Math.exp(-q*T)*N(d1)-K*Math.exp(-r*T)*N(d2)
+let put=K*Math.exp(-r*T)*N(-d2)-S*Math.exp(-q*T)*N(-d1)
 
-return {call,delta,gamma,vega,theta};
-
-}
-
-function update(){
-
-let S=parseFloat(document.getElementById("S").value);
-let K=parseFloat(document.getElementById("K").value);
-let sigma=parseFloat(document.getElementById("sigma").value);
-let r=parseFloat(document.getElementById("r").value);
-let T=parseFloat(document.getElementById("T").value);
-
-document.getElementById("S_val").innerHTML=S;
-document.getElementById("K_val").innerHTML=K;
-document.getElementById("sigma_val").innerHTML=sigma;
-document.getElementById("r_val").innerHTML=r;
-document.getElementById("T_val").innerHTML=T;
-
-let res=blackScholes(S,K,T,r,sigma);
-
-document.getElementById("price").innerHTML=
-"Call Price: "+res.call.toFixed(2);
-
-let data=[
-
-{
-x:["Delta","Gamma","Vega","Theta"],
-y:[res.delta,res.gamma,res.vega,res.theta],
-type:"bar"
-}
-
-];
-
-Plotly.newPlot("greeksChart",data,{
-title:"Option Greeks"
-});
+document.getElementById("call").innerHTML=call.toFixed(4)
+document.getElementById("put").innerHTML=put.toFixed(4)
 
 }
-
-document.querySelectorAll("input").forEach(i=>{
-i.oninput=update
-})
-
-update()
 
 </script>
 
