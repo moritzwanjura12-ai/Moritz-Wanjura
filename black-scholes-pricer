@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Black-Scholes Option Pricer</title>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+max-width:900px;
+margin:auto;
+padding:20px;
+background:#0f1116;
+color:white;
+}
+
+.slider-container{
+margin:15px 0;
+}
+
+label{
+display:block;
+margin-bottom:5px;
+}
+
+input[type=range]{
+width:100%;
+}
+
+.value{
+font-weight:bold;
+color:#4fc3f7;
+}
+
+#price{
+font-size:26px;
+margin-top:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Black-Scholes Option Pricer</h1>
+
+<div class="slider-container">
+<label>Stock Price (S): <span id="S_val" class="value"></span></label>
+<input id="S" type="range" min="10" max="300" step="1" value="100">
+</div>
+
+<div class="slider-container">
+<label>Strike (K): <span id="K_val" class="value"></span></label>
+<input id="K" type="range" min="10" max="300" step="1" value="100">
+</div>
+
+<div class="slider-container">
+<label>Volatility σ: <span id="sigma_val" class="value"></span></label>
+<input id="sigma" type="range" min="0.01" max="1" step="0.01" value="0.2">
+</div>
+
+<div class="slider-container">
+<label>Interest Rate r: <span id="r_val" class="value"></span></label>
+<input id="r" type="range" min="0" max="0.1" step="0.001" value="0.05">
+</div>
+
+<div class="slider-container">
+<label>Time to Maturity T (years): <span id="T_val" class="value"></span></label>
+<input id="T" type="range" min="0.01" max="2" step="0.01" value="1">
+</div>
+
+<div id="price"></div>
+
+<div id="greeksChart"></div>
+
+<script>
+
+function N(x){
+return (1 + erf(x / Math.sqrt(2))) / 2;
+}
+
+function erf(x){
+let sign = (x >= 0) ? 1 : -1;
+x = Math.abs(x);
+
+let a1 = 0.254829592;
+let a2 = -0.284496736;
+let a3 = 1.421413741;
+let a4 = -1.453152027;
+let a5 = 1.061405429;
+let p = 0.3275911;
+
+let t = 1.0/(1.0+p*x);
+let y = 1.0 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t*Math.exp(-x*x);
+
+return sign*y;
+}
+
+function blackScholes(S,K,T,r,sigma){
+
+let d1 = (Math.log(S/K)+(r+sigma*sigma/2)*T)/(sigma*Math.sqrt(T));
+let d2 = d1 - sigma*Math.sqrt(T);
+
+let call = S*N(d1)-K*Math.exp(-r*T)*N(d2);
+
+let delta = N(d1);
+let gamma = Math.exp(-d1*d1/2)/(S*sigma*Math.sqrt(2*Math.PI*T));
+let vega = S*Math.sqrt(T)*Math.exp(-d1*d1/2)/Math.sqrt(2*Math.PI);
+let theta = -(S*Math.exp(-d1*d1/2)*sigma)/(2*Math.sqrt(2*Math.PI*T)) - r*K*Math.exp(-r*T)*N(d2);
+
+return {call,delta,gamma,vega,theta};
+
+}
+
+function update(){
+
+let S=parseFloat(document.getElementById("S").value);
+let K=parseFloat(document.getElementById("K").value);
+let sigma=parseFloat(document.getElementById("sigma").value);
+let r=parseFloat(document.getElementById("r").value);
+let T=parseFloat(document.getElementById("T").value);
+
+document.getElementById("S_val").innerHTML=S;
+document.getElementById("K_val").innerHTML=K;
+document.getElementById("sigma_val").innerHTML=sigma;
+document.getElementById("r_val").innerHTML=r;
+document.getElementById("T_val").innerHTML=T;
+
+let res=blackScholes(S,K,T,r,sigma);
+
+document.getElementById("price").innerHTML=
+"Call Price: "+res.call.toFixed(2);
+
+let data=[
+
+{
+x:["Delta","Gamma","Vega","Theta"],
+y:[res.delta,res.gamma,res.vega,res.theta],
+type:"bar"
+}
+
+];
+
+Plotly.newPlot("greeksChart",data,{
+title:"Option Greeks"
+});
+
+}
+
+document.querySelectorAll("input").forEach(i=>{
+i.oninput=update
+})
+
+update()
+
+</script>
+
+</body>
+</html>
