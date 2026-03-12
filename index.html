@@ -834,5 +834,83 @@ window.onload=()=>{
   initMcCanvas();
 };
 </script>
+<!-- ── FEEDBACK WIDGET ─────────────────────────────────────────────────── -->
+<div id="feedback-bar">
+  <div id="feedback-inner">
+    <span id="fb-label">How do you like this page?</span>
+    <div id="fb-stars">
+      <button class="fb-star" data-v="1" onclick="setRating(1)">★</button>
+      <button class="fb-star" data-v="2" onclick="setRating(2)">★</button>
+      <button class="fb-star" data-v="3" onclick="setRating(3)">★</button>
+      <button class="fb-star" data-v="4" onclick="setRating(4)">★</button>
+      <button class="fb-star" data-v="5" onclick="setRating(5)">★</button>
+    </div>
+    <span id="fb-thanks" style="display:none;">Thanks for your feedback ✓</span>
+  </div>
+</div>
+
+<style>
+#feedback-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: white;
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -4px 24px rgba(26,64,245,0.08);
+  z-index: 200;
+  padding: 0.75rem 2.5rem;
+}
+#feedback-inner {
+  max-width: 1060px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+#fb-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+#fb-stars {
+  display: flex;
+  gap: 4px;
+}
+.fb-star {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  color: var(--border);
+  cursor: pointer;
+  padding: 0 2px;
+  line-height: 1;
+  transition: color 0.15s, transform 0.15s;
+}
+.fb-star:hover { transform: scale(1.2); }
+.fb-star.active { color: #f5b700; }
+#fb-thanks {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--green);
+  text-transform: uppercase;
+  animation: fadeUp 0.3s ease;
+}
+</style>
+
+<script>
+function setRating(val) {
+  document.querySelectorAll('.fb-star').forEach(s => {
+    s.classList.toggle('active', +s.dataset.v <= val);
+  });
+  setTimeout(() => {
+    document.getElementById('fb-stars').style.display = 'none';
+    document.getElementById('fb-label').style.display = 'none';
+    document.getElementById('fb-thanks').style.display = 'inline';
+  }, 400);
+}
+</script>
 </body>
 </html>
