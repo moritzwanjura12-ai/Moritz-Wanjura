@@ -1,204 +1,557 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Vanilla Options Calculator</title>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Black–Scholes Pricer · Moritz Wanjura</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
+:root {
+  --blue:    #1a40f5;
+  --blue2:   #0a2acc;
+  --blue3:   #e8edff;
+  --bluemid: #4a6bff;
+  --white:   #ffffff;
+  --off:     #f5f7ff;
+  --border:  #d8e0f5;
+  --text:    #0d1240;
+  --muted:   #7a85bb;
+  --call:    #1a40f5;
+  --put:     #e0312b;
+  --shadow:  rgba(26,64,245,0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--white); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
 
-body{
-font-family: 'Segoe UI', sans-serif;
-background:#0f1c2e;
-color:white;
-margin:0;
-padding:40px;
+.topbar {
+  background: var(--blue2); color: white;
+  padding: 0 2.5rem; height: 44px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em;
+}
+.topbar-left { opacity: 0.6; }
+.topbar-right { opacity: 0.9; }
+
+.hero {
+  background: linear-gradient(135deg, var(--blue2) 0%, var(--blue) 60%, var(--bluemid) 100%);
+  padding: 3rem 2.5rem 2.5rem; position: relative; overflow: hidden;
+}
+.hero::before {
+  content:''; position:absolute; right:-80px; top:-80px;
+  width:420px; height:420px; border-radius:50%; background:rgba(255,255,255,0.04);
+}
+.hero::after {
+  content:''; position:absolute; right:120px; bottom:-120px;
+  width:280px; height:280px; border-radius:50%; background:rgba(255,255,255,0.03);
+}
+.hero-inner { max-width: 960px; margin: 0 auto; position: relative; z-index: 1; }
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 900;
+  color: white; line-height: 1.05; margin-bottom: 0.5rem; letter-spacing: -0.02em;
+}
+.hero h1 em { font-style: italic; color: rgba(255,255,255,0.65); }
+.hero-sub { display: flex; align-items: center; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+.hero-sub .badge {
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+  color: white; font-family: 'DM Mono', monospace; font-size: 0.68rem;
+  letter-spacing: 0.1em; padding: 3px 10px; border-radius: 20px;
+}
+.hero-sub .author { font-size: 0.8rem; color: rgba(255,255,255,0.5); font-family: 'DM Mono', monospace; }
+
+.main { max-width: 960px; margin: 0 auto; padding: 2rem 2.5rem 4rem; }
+
+.card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; box-shadow: 0 2px 20px var(--shadow);
+  margin-bottom: 1.5rem; overflow: hidden;
+}
+.card-header {
+  padding: 0.85rem 1.5rem; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 0.6rem; background: var(--off);
+}
+.card-header .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); }
+.card-header span {
+  font-family: 'DM Mono', monospace; font-size: 0.7rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 500;
+}
+.card-body { padding: 1.5rem; }
+
+.inputs-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+@media(max-width:640px){.inputs-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:420px){.inputs-grid{grid-template-columns:1fr;}}
+
+.field label {
+  display: block; font-size: 0.68rem; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
+}
+.field label .sym { font-family: 'DM Mono', monospace; color: var(--blue); font-size: 0.75rem; }
+.field input {
+  width: 100%; background: var(--white); border: 1.5px solid var(--border);
+  border-radius: 8px; padding: 0.65rem 0.9rem; color: var(--text);
+  font-family: 'DM Mono', monospace; font-size: 0.95rem; font-weight: 500;
+  outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.field input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,64,245,0.1); }
+
+.btn-calc {
+  width: 100%; padding: 0.9rem; background: var(--blue); color: white;
+  border: none; border-radius: 8px; font-family: 'DM Mono', monospace;
+  font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+  cursor: pointer; margin-top: 1.25rem; transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(26,64,245,0.3);
+}
+.btn-calc:hover  { background: var(--blue2); box-shadow: 0 6px 24px rgba(26,64,245,0.4); }
+.btn-calc:active { transform: scale(0.99); }
+
+.tab-bar {
+  display: flex; gap: 0;
+  border-bottom: 2px solid var(--border); margin-bottom: 1.5rem;
+}
+.tab-btn {
+  padding: 0.65rem 1.2rem; background: transparent;
+  border: none; border-bottom: 2px solid transparent; margin-bottom: -2px;
+  font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted); cursor: pointer; transition: color 0.2s, border-color 0.2s;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); font-weight: 500; }
+
+.price-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+.price-card { border-radius: 10px; padding: 1.4rem 1.5rem; position: relative; overflow: hidden; }
+.price-card.call { background: var(--blue); color: white; }
+.price-card.put  { background: var(--white); border: 2px solid var(--put); color: var(--text); }
+.price-card .p-label {
+  font-family: 'DM Mono', monospace; font-size: 0.65rem;
+  letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7; margin-bottom: 0.4rem;
+}
+.price-card .p-value { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 700; line-height: 1; }
+.price-card.call .p-value { color: white; }
+.price-card.put  .p-value { color: var(--put); }
+.price-card .p-sub { font-size: 0.7rem; opacity: 0.5; margin-top: 0.3rem; font-family: 'DM Mono', monospace; }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; animation: fadeUp 0.2s ease; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+.calc-table { width: 100%; border-collapse: collapse; font-family: 'DM Mono', monospace; font-size: 0.8rem; }
+.calc-table thead tr { border-bottom: 2px solid var(--border); }
+.calc-table th { text-align: left; padding: 0.5rem 0.75rem; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.calc-table td { padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border); }
+.calc-table td.var { color: var(--blue); font-weight: 500; }
+.calc-table td.formula { color: var(--muted); font-size: 0.72rem; }
+.calc-table td.val { text-align: right; color: var(--text); font-weight: 500; }
+.calc-table tr:last-child td { border-bottom: none; }
+
+.greeks-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 0.75rem; }
+@media(max-width:640px){.greeks-grid{grid-template-columns:repeat(3,1fr);}}
+.g-card { border: 1.5px solid var(--border); border-radius: 10px; padding: 1rem; text-align: center; transition: border-color 0.2s, box-shadow 0.2s; }
+.g-card:hover { border-color: var(--blue); box-shadow: 0 4px 16px var(--shadow); }
+.g-sym { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--blue); line-height: 1; margin-bottom: 2px; }
+.g-name { font-family: 'DM Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
+.g-row { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 0.75rem; margin-bottom: 2px; }
+.g-row .lbl { color: var(--muted); font-size: 0.65rem; }
+.g-row .call-v { color: var(--call); }
+.g-row .put-v  { color: var(--put);  }
+.g-desc { font-size: 0.6rem; color: var(--muted); margin-top: 6px; line-height: 1.3; }
+
+.chart-controls { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+.chart-controls select {
+  background: var(--white); border: 1.5px solid var(--border); border-radius: 6px;
+  color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.72rem;
+  padding: 0.4rem 0.8rem; cursor: pointer; outline: none;
+}
+.chart-controls select:focus { border-color: var(--blue); }
+canvas#myChart { max-height: 300px; }
+
+#surface3d { width: 100%; height: 380px; border-radius: 8px; overflow: hidden; cursor: grab; background: var(--off); }
+#surface3d:active { cursor: grabbing; }
+.surface-legend {
+  display: flex; gap: 1.5rem; margin-top: 0.75rem;
+  font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); align-items: center; flex-wrap: wrap;
+}
+.surface-legend span { display: flex; align-items: center; gap: 5px; }
+.swatch { width: 14px; height: 14px; border-radius: 2px; }
+
+.error-msg {
+  background: #fff5f5; border: 1.5px solid #ffcdd2; border-radius: 8px; color: var(--put);
+  font-size: 0.78rem; padding: 0.7rem 1rem; margin-top: 1rem; display: none;
+  font-family: 'DM Mono', monospace;
 }
 
-.container{
-max-width:1000px;
-margin:auto;
+footer {
+  border-top: 1px solid var(--border); padding: 1.5rem 2.5rem;
+  max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;
 }
-
-h1{
-text-align:center;
-margin-bottom:40px;
-color:#4da3ff;
-}
-
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
-}
-
-.input-box{
-background:#16263f;
-padding:20px;
-border-radius:10px;
-}
-
-label{
-display:block;
-margin-bottom:6px;
-color:#7fb3ff;
-}
-
-input{
-width:100%;
-padding:12px;
-border:none;
-border-radius:6px;
-background:#0f1c2e;
-color:white;
-font-size:16px;
-}
-
-button{
-width:100%;
-padding:16px;
-margin-top:25px;
-border:none;
-border-radius:8px;
-background:#1f6feb;
-color:white;
-font-size:18px;
-cursor:pointer;
-transition:0.2s;
-}
-
-button:hover{
-background:#3b82f6;
-}
-
-.results{
-margin-top:40px;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
-}
-
-.result-card{
-background:#16263f;
-padding:30px;
-border-radius:10px;
-text-align:center;
-}
-
-.result-title{
-color:#7fb3ff;
-margin-bottom:10px;
-}
-
-.price{
-font-size:40px;
-font-weight:bold;
-}
-
+footer .author-sig { font-family: 'Playfair Display', serif; font-size: 1rem; font-style: italic; color: var(--blue); }
+footer .foot-right { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted); text-align: right; line-height: 1.6; }
 </style>
-
 </head>
-
 <body>
 
-<div class="container">
-
-<h1>Black-Scholes Option Pricer</h1>
-
-<div class="grid">
-
-<div class="input-box">
-<label>Spot Price</label>
-<input id="S" value="52">
+<div class="topbar">
+  <span class="topbar-left">BLACK–SCHOLES · EUROPEAN OPTIONS PRICER</span>
+  <span class="topbar-right">© MORITZ WANJURA</span>
 </div>
 
-<div class="input-box">
-<label>Strike Price</label>
-<input id="K" value="50">
+<div class="hero">
+  <div class="hero-inner">
+    <h1>Black–<em>Scholes</em><br>Options Pricer</h1>
+    <div class="hero-sub">
+      <div class="badge">European Options</div>
+      <div class="badge">Merton (1973)</div>
+      <div class="author">by Moritz Wanjura</div>
+    </div>
+  </div>
 </div>
 
-<div class="input-box">
-<label>Maturity (years)</label>
-<input id="T" value="0.25">
+<div class="main">
+
+  <div class="card">
+    <div class="card-header"><div class="dot"></div><span>Parameters</span></div>
+    <div class="card-body">
+      <div class="inputs-grid">
+        <div class="field"><label>Spot Price <span class="sym">S</span></label><input type="number" id="spot" value="52" step="0.01"></div>
+        <div class="field"><label>Strike Price <span class="sym">K</span></label><input type="number" id="strike" value="50" step="0.01"></div>
+        <div class="field"><label>Maturity (yrs) <span class="sym">T</span></label><input type="number" id="maturity" value="0.25" step="0.01"></div>
+        <div class="field"><label>Risk-Free Rate % <span class="sym">r</span></label><input type="number" id="rate" value="12" step="0.1"></div>
+        <div class="field"><label>Volatility % <span class="sym">σ</span></label><input type="number" id="vol" value="30" step="0.1"></div>
+        <div class="field"><label>Dividend Yield % <span class="sym">q</span></label><input type="number" id="div" value="0" step="0.1"></div>
+      </div>
+      <div class="error-msg" id="errorMsg"></div>
+      <button class="btn-calc" onclick="calculate()">▶ &nbsp;Calculate</button>
+    </div>
+  </div>
+
+  <div class="price-strip">
+    <div class="price-card call">
+      <div class="p-label">Call Option</div>
+      <div class="p-value" id="callPrice">—</div>
+      <div class="p-sub">C(S,K,T,r,σ,q)</div>
+    </div>
+    <div class="price-card put">
+      <div class="p-label">Put Option</div>
+      <div class="p-value" id="putPrice">—</div>
+      <div class="p-sub">P(S,K,T,r,σ,q)</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body" style="padding-bottom:0.5rem;">
+      <div class="tab-bar">
+        <button class="tab-btn active" id="tb-calc"   onclick="switchTab('calc')">Calculations</button>
+        <button class="tab-btn"        id="tb-greeks" onclick="switchTab('greeks')">Greeks</button>
+        <button class="tab-btn"        id="tb-graph"  onclick="switchTab('graph')">2D Graph</button>
+        <button class="tab-btn"        id="tb-3d"     onclick="switchTab('3d')">3D Surface</button>
+      </div>
+
+      <div class="tab-panel active" id="panel-calc">
+        <table class="calc-table">
+          <thead><tr><th>Variable</th><th>Formula</th><th style="text-align:right">Value</th></tr></thead>
+          <tbody id="calcBody">
+            <tr><td colspan="3" style="color:var(--muted);font-family:'DM Mono',monospace;font-size:0.8rem;padding:1rem 0.75rem">Press Calculate to compute.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="tab-panel" id="panel-greeks">
+        <div class="greeks-grid" id="greeksGrid">
+          <p style="color:var(--muted);font-family:'DM Mono',monospace;font-size:0.8rem;grid-column:1/-1">Press Calculate first.</p>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="panel-graph">
+        <div class="chart-controls">
+          <select id="chartType" onchange="drawChart()">
+            <option value="price">Option Price vs Spot</option>
+            <option value="payoff">Payoff at Expiry</option>
+            <option value="delta">Delta vs Spot</option>
+            <option value="gamma">Gamma vs Spot</option>
+            <option value="vega">Vega vs Spot</option>
+            <option value="theta">Theta vs Spot</option>
+            <option value="vol_smile">Price vs Volatility</option>
+          </select>
+        </div>
+        <canvas id="myChart"></canvas>
+      </div>
+
+      <div class="tab-panel" id="panel-3d">
+        <p style="font-size:0.75rem;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:0.75rem;">
+          Call price surface · axes: Spot Price × Implied Volatility → Option Value · Drag to rotate
+        </p>
+        <div id="surface3d"></div>
+        <div class="surface-legend">
+          <span><div class="swatch" style="background:#1a40f5"></div>High value</span>
+          <span><div class="swatch" style="background:#7aadff"></div>Mid value</span>
+          <span><div class="swatch" style="background:#e8edff"></div>Low value</span>
+          <span style="margin-left:auto;font-size:0.62rem">X: Spot · Z: Volatility · Y: Call Price</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="input-box">
-<label>Risk-Free Rate (%)</label>
-<input id="r" value="12">
-</div>
-
-<div class="input-box">
-<label>Volatility (%)</label>
-<input id="sigma" value="30">
-</div>
-
-<div class="input-box">
-<label>Dividend Yield (%)</label>
-<input id="q" value="0">
-</div>
-
-</div>
-
-<button onclick="calculate()">Calculate Price</button>
-
-<div class="results">
-
-<div class="result-card">
-<div class="result-title">Call Option</div>
-<div id="call" class="price">0.000</div>
-</div>
-
-<div class="result-card">
-<div class="result-title">Put Option</div>
-<div id="put" class="price">0.000</div>
-</div>
-
-</div>
-
-</div>
+<footer>
+  <div class="author-sig">Moritz Wanjura</div>
+  <div class="foot-right">
+    Black–Scholes–Merton Model (1973)<br>
+    For educational purposes · Not financial advice
+  </div>
+</footer>
 
 <script>
+function erf(x){
+  const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;
+  const s=x<0?-1:1;x=Math.abs(x);const t=1/(1+p*x);
+  return s*(1-(((((a5*t+a4)*t)+a3)*t+a2)*t+a1)*t*Math.exp(-x*x));
+}
+const N=x=>(1+erf(x/Math.sqrt(2)))/2;
+const nd=x=>Math.exp(-0.5*x*x)/Math.sqrt(2*Math.PI);
 
-function N(x){
-return (1+erf(x/Math.sqrt(2)))/2
+function bs(S,K,T,r,sigma,q){
+  if(T<=0)return{call:Math.max(S-K,0),put:Math.max(K-S,0),d1:0,d2:0,Nd1:N(0),Nd2:N(0),Nd1n:N(0),Nd2n:N(0)};
+  const d1=(Math.log(S/K)+(r-q+0.5*sigma**2)*T)/(sigma*Math.sqrt(T));
+  const d2=d1-sigma*Math.sqrt(T);
+  return{call:S*Math.exp(-q*T)*N(d1)-K*Math.exp(-r*T)*N(d2),
+         put: K*Math.exp(-r*T)*N(-d2)-S*Math.exp(-q*T)*N(-d1),
+         d1,d2,Nd1:N(d1),Nd2:N(d2),Nd1n:N(-d1),Nd2n:N(-d2)};
 }
 
-function erf(x){
-let sign = x>=0?1:-1
-x=Math.abs(x)
+function greeks(S,K,T,r,sigma,q){
+  if(T<=0)return{dC:0,dP:0,gam:0,veg:0,tC:0,tP:0,rC:0,rP:0};
+  const d1=(Math.log(S/K)+(r-q+0.5*sigma**2)*T)/(sigma*Math.sqrt(T));
+  const d2=d1-sigma*Math.sqrt(T),sqT=Math.sqrt(T);
+  return{
+    dC: Math.exp(-q*T)*N(d1),
+    dP:-Math.exp(-q*T)*N(-d1),
+    gam:Math.exp(-q*T)*nd(d1)/(S*sigma*sqT),
+    veg:S*Math.exp(-q*T)*nd(d1)*sqT/100,
+    tC:(-S*Math.exp(-q*T)*nd(d1)*sigma/(2*sqT)-r*K*Math.exp(-r*T)*N(d2)+q*S*Math.exp(-q*T)*N(d1))/365,
+    tP:(-S*Math.exp(-q*T)*nd(d1)*sigma/(2*sqT)+r*K*Math.exp(-r*T)*N(-d2)-q*S*Math.exp(-q*T)*N(-d1))/365,
+    rC:K*T*Math.exp(-r*T)*N(d2)/100,
+    rP:-K*T*Math.exp(-r*T)*N(-d2)/100,
+  };
+}
 
-let a1=0.254829592
-let a2=-0.284496736
-let a3=1.421413741
-let a4=-1.453152027
-let a5=1.061405429
-let p=0.3275911
+let chartInst=null, activeTab='calc', lastP=null;
+let renderer3d=null,scene3d=null,camera3d=null,animId=null,rotGroup=null;
+let isDrag=false,prevMouse={x:0,y:0};
 
-let t=1/(1+p*x)
-let y=1-(((((a5*t+a4)*t)+a3)*t+a2)*t+a1)*t*Math.exp(-x*x)
-
-return sign*y
+function getP(){
+  return{S:+document.getElementById('spot').value,K:+document.getElementById('strike').value,
+    T:+document.getElementById('maturity').value,r:+document.getElementById('rate').value/100,
+    sigma:+document.getElementById('vol').value/100,q:+document.getElementById('div').value/100};
 }
 
 function calculate(){
-
-let S=parseFloat(document.getElementById("S").value)
-let K=parseFloat(document.getElementById("K").value)
-let T=parseFloat(document.getElementById("T").value)
-let r=parseFloat(document.getElementById("r").value)/100
-let sigma=parseFloat(document.getElementById("sigma").value)/100
-let q=parseFloat(document.getElementById("q").value)/100
-
-let d1=(Math.log(S/K)+(r-q+sigma*sigma/2)*T)/(sigma*Math.sqrt(T))
-let d2=d1-sigma*Math.sqrt(T)
-
-let call=S*Math.exp(-q*T)*N(d1)-K*Math.exp(-r*T)*N(d2)
-let put=K*Math.exp(-r*T)*N(-d2)-S*Math.exp(-q*T)*N(-d1)
-
-document.getElementById("call").innerHTML=call.toFixed(4)
-document.getElementById("put").innerHTML=put.toFixed(4)
-
+  document.getElementById('errorMsg').style.display='none';
+  const p=getP();
+  if([p.S,p.K,p.T,p.r,p.sigma].some(isNaN)||p.S<=0||p.K<=0||p.T<0||p.sigma<=0){
+    const e=document.getElementById('errorMsg');e.textContent='⚠ Enter valid positive numbers for all fields.';e.style.display='block';return;
+  }
+  lastP=p;
+  const res=bs(p.S,p.K,p.T,p.r,p.sigma,p.q);
+  document.getElementById('callPrice').textContent=res.call.toFixed(4);
+  document.getElementById('putPrice').textContent=res.put.toFixed(4);
+  renderActiveTab();
 }
 
-</script>
+function switchTab(name){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  document.getElementById('tb-'+name).classList.add('active');
+  activeTab=name;
+  if(lastP)renderActiveTab();
+}
 
+function renderActiveTab(){
+  if(activeTab==='calc')  renderCalc();
+  if(activeTab==='greeks')renderGreeks();
+  if(activeTab==='graph') drawChart();
+  if(activeTab==='3d')    draw3D();
+}
+
+function renderCalc(){
+  const{S,K,T,r,sigma,q}=lastP;
+  const res=bs(S,K,T,r,sigma,q),sqT=Math.sqrt(T);
+  const rows=[
+    ['ln(S/K)','Log moneyness',Math.log(S/K).toFixed(6)],
+    ['σ√T','Vol × √T',(sigma*sqT).toFixed(6)],
+    ['d₁','[ln(S/K)+(r−q+½σ²)T]/(σ√T)',res.d1.toFixed(6)],
+    ['d₂','d₁ − σ√T',res.d2.toFixed(6)],
+    ['N(d₁)','CDF standard normal',res.Nd1.toFixed(6)],
+    ['N(d₂)','CDF standard normal',res.Nd2.toFixed(6)],
+    ['N(−d₁)','CDF standard normal',res.Nd1n.toFixed(6)],
+    ['N(−d₂)','CDF standard normal',res.Nd2n.toFixed(6)],
+    ['e^(−rT)','Risk-free discount',Math.exp(-r*T).toFixed(6)],
+    ['e^(−qT)','Dividend discount',Math.exp(-q*T).toFixed(6)],
+    ['Call (C)','S·e^(−qT)·N(d₁)−K·e^(−rT)·N(d₂)',res.call.toFixed(6)],
+    ['Put (P)','K·e^(−rT)·N(−d₂)−S·e^(−qT)·N(−d₁)',res.put.toFixed(6)],
+    ['Parity residual','C−P−(S·e^(−qT)−K·e^(−rT))',((res.call-res.put)-(S*Math.exp(-q*T)-K*Math.exp(-r*T))).toExponential(3)],
+  ];
+  document.getElementById('calcBody').innerHTML=rows.map(([v,f,val])=>
+    `<tr><td class="var">${v}</td><td class="formula">${f}</td><td class="val">${val}</td></tr>`).join('');
+}
+
+function renderGreeks(){
+  const{S,K,T,r,sigma,q}=lastP;
+  const g=greeks(S,K,T,r,sigma,q);
+  const items=[
+    {sym:'Δ',name:'Delta',c:g.dC,p:g.dP,desc:'∂V/∂S'},
+    {sym:'Γ',name:'Gamma',c:g.gam,p:g.gam,desc:'∂²V/∂S²'},
+    {sym:'ν',name:'Vega',c:g.veg,p:g.veg,desc:'∂V/∂σ per 1%'},
+    {sym:'Θ',name:'Theta',c:g.tC,p:g.tP,desc:'∂V/∂t daily'},
+    {sym:'ρ',name:'Rho',c:g.rC,p:g.rP,desc:'∂V/∂r per 1%'},
+  ];
+  document.getElementById('greeksGrid').innerHTML=items.map(i=>`
+    <div class="g-card">
+      <div class="g-sym">${i.sym}</div>
+      <div class="g-name">${i.name}</div>
+      <div class="g-row"><span class="lbl">C</span><span class="call-v">${i.c.toFixed(4)}</span></div>
+      <div class="g-row"><span class="lbl">P</span><span class="put-v">${i.p.toFixed(4)}</span></div>
+      <div class="g-desc">${i.desc}</div>
+    </div>`).join('');
+}
+
+function drawChart(){
+  const{S,K,T,r,sigma,q}=lastP;
+  const type=document.getElementById('chartType').value;
+  let labels=[],dC=[],dP=[];
+  if(type==='vol_smile'){
+    const vols=Array.from({length:60},(_,i)=>0.05+i*0.01);
+    labels=vols.map(v=>(v*100).toFixed(0)+'%');
+    vols.forEach(v=>{const res=bs(S,K,T,r,v,q);dC.push(res.call);dP.push(res.put);});
+  }else{
+    const spots=Array.from({length:80},(_,i)=>S*0.4+i*(S*1.2/80));
+    labels=spots.map(s=>s.toFixed(2));
+    spots.forEach(s=>{
+      if(type==='price'){const res=bs(s,K,T,r,sigma,q);dC.push(res.call);dP.push(res.put);}
+      else if(type==='payoff'){dC.push(Math.max(s-K,0));dP.push(Math.max(K-s,0));}
+      else{const g=greeks(s,K,Math.max(T,0.001),r,sigma,q);
+        if(type==='delta'){dC.push(g.dC);dP.push(g.dP);}
+        if(type==='gamma'){dC.push(g.gam);dP.push(g.gam);}
+        if(type==='vega'){dC.push(g.veg);dP.push(g.veg);}
+        if(type==='theta'){dC.push(g.tC);dP.push(g.tP);}
+      }
+    });
+  }
+  const ctx=document.getElementById('myChart').getContext('2d');
+  if(chartInst)chartInst.destroy();
+  chartInst=new Chart(ctx,{type:'line',data:{labels,datasets:[
+    {label:'Call',data:dC,borderColor:'#1a40f5',backgroundColor:'rgba(26,64,245,0.07)',borderWidth:2,pointRadius:0,fill:type==='payoff',tension:0.3},
+    {label:'Put', data:dP,borderColor:'#e0312b',backgroundColor:'rgba(224,49,43,0.07)', borderWidth:2,pointRadius:0,fill:type==='payoff',tension:0.3},
+  ]},options:{responsive:true,interaction:{mode:'index',intersect:false},
+    plugins:{
+      legend:{labels:{color:'#7a85bb',font:{family:'DM Mono',size:11}}},
+      tooltip:{backgroundColor:'#fff',borderColor:'#d8e0f5',borderWidth:1,titleColor:'#1a40f5',bodyColor:'#0d1240',
+        callbacks:{label:c=>` ${c.dataset.label}: ${c.raw.toFixed(4)}`}}
+    },
+    scales:{
+      x:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10},maxTicksLimit:10},grid:{color:'rgba(26,64,245,0.06)'}},
+      y:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10}},grid:{color:'rgba(26,64,245,0.06)'}}
+    }
+  }});
+}
+
+function draw3D(){
+  const cont=document.getElementById('surface3d');
+  if(renderer3d){renderer3d.dispose();cont.innerHTML='';}
+  if(animId){cancelAnimationFrame(animId);animId=null;}
+
+  const W=cont.clientWidth||900,H=380;
+  const{S,K,T,r,sigma,q}=lastP;
+  const NX=42,NZ=42;
+  const spots=Array.from({length:NX},(_,i)=>S*0.45+i*(S*1.1/(NX-1)));
+  const vols= Array.from({length:NZ},(_,i)=>0.05+i*(0.75/(NZ-1)));
+
+  const prices=[];
+  let minP=Infinity,maxP=-Infinity;
+  for(let iz=0;iz<NZ;iz++){
+    for(let ix=0;ix<NX;ix++){
+      const p=bs(spots[ix],K,Math.max(T,0.02),r,vols[iz],q).call;
+      prices.push(p);if(p<minP)minP=p;if(p>maxP)maxP=p;
+    }
+  }
+
+  scene3d=new THREE.Scene();
+  scene3d.background=new THREE.Color(0xf5f7ff);
+  camera3d=new THREE.PerspectiveCamera(45,W/H,0.1,1000);
+  camera3d.position.set(22,18,28);camera3d.lookAt(0,0,0);
+
+  renderer3d=new THREE.WebGLRenderer({antialias:true});
+  renderer3d.setSize(W,H);renderer3d.setPixelRatio(Math.min(devicePixelRatio,2));
+  cont.appendChild(renderer3d.domElement);
+
+  scene3d.add(new THREE.AmbientLight(0xffffff,0.65));
+  const dl=new THREE.DirectionalLight(0xffffff,0.85);dl.position.set(20,30,20);scene3d.add(dl);
+
+  rotGroup=new THREE.Group();scene3d.add(rotGroup);
+
+  const geom=new THREE.BufferGeometry();
+  const pos=[],col=[],idx=[];
+  const cLow=new THREE.Color(0xdce8ff),cMid=new THREE.Color(0x6699ff),cHi=new THREE.Color(0x0a2acc);
+  const scY=9;
+
+  for(let iz=0;iz<NZ;iz++){
+    for(let ix=0;ix<NX;ix++){
+      const px=(ix/(NX-1)-0.5)*18;
+      const pz=(iz/(NZ-1)-0.5)*18;
+      const raw=prices[iz*NX+ix];
+      const py=((raw-minP)/(maxP-minP))*scY;
+      pos.push(px,py,pz);
+      const t=(raw-minP)/(maxP-minP);
+      const c=t<0.5?cLow.clone().lerp(cMid,t*2):cMid.clone().lerp(cHi,(t-0.5)*2);
+      col.push(c.r,c.g,c.b);
+    }
+  }
+  for(let iz=0;iz<NZ-1;iz++){
+    for(let ix=0;ix<NX-1;ix++){
+      const a=iz*NX+ix,b=a+1,c=a+NX,d=c+1;
+      idx.push(a,c,b,b,c,d);
+    }
+  }
+  geom.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+  geom.setAttribute('color',new THREE.Float32BufferAttribute(col,3));
+  geom.setIndex(idx);geom.computeVertexNormals();
+
+  rotGroup.add(new THREE.Mesh(geom,new THREE.MeshPhongMaterial({vertexColors:true,side:THREE.DoubleSide,shininess:50})));
+  rotGroup.add(new THREE.Mesh(geom,new THREE.MeshBasicMaterial({color:0xffffff,wireframe:true,opacity:0.1,transparent:true})));
+
+  const mkLine=(pts,c)=>{
+    const g=new THREE.BufferGeometry().setFromPoints(pts.map(p=>new THREE.Vector3(...p)));
+    return new THREE.Line(g,new THREE.LineBasicMaterial({color:c,linewidth:2}));
+  };
+  rotGroup.add(mkLine([[-9,-0.1,-9],[9,-0.1,-9]],0x1a40f5));
+  rotGroup.add(mkLine([[-9,-0.1,-9],[-9,scY+1,-9]],0xe0312b));
+  rotGroup.add(mkLine([[-9,-0.1,-9],[-9,-0.1,9]],0x00aa66));
+
+  rotGroup.rotation.y=-0.45;
+  rotGroup.position.y=-3.5;
+
+  function loop(){animId=requestAnimationFrame(loop);renderer3d.render(scene3d,camera3d);}
+  loop();
+
+  cont.addEventListener('mousedown',e=>{isDrag=true;prevMouse={x:e.clientX,y:e.clientY};});
+  window.addEventListener('mouseup',()=>isDrag=false);
+  window.addEventListener('mousemove',e=>{
+    if(!isDrag)return;
+    rotGroup.rotation.y+=(e.clientX-prevMouse.x)*0.008;
+    rotGroup.rotation.x=Math.max(-1.1,Math.min(1.1,rotGroup.rotation.x+(e.clientY-prevMouse.y)*0.008));
+    prevMouse={x:e.clientX,y:e.clientY};
+  });
+  cont.addEventListener('touchstart',e=>{isDrag=true;prevMouse={x:e.touches[0].clientX,y:e.touches[0].clientY};},{passive:true});
+  window.addEventListener('touchend',()=>isDrag=false);
+  window.addEventListener('touchmove',e=>{
+    if(!isDrag)return;
+    rotGroup.rotation.y+=(e.touches[0].clientX-prevMouse.x)*0.008;
+    prevMouse={x:e.touches[0].clientX,y:e.touches[0].clientY};
+  },{passive:true});
+}
+
+window.onload=calculate;
+</script>
 </body>
 </html>
