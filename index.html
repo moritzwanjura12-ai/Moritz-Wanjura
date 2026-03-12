@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Black–Scholes Pricer · Moritz Wanjura</title>
+<title>Quantitative Finance · Moritz Wanjura</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -11,7 +11,6 @@
 :root {
   --blue:    #1a40f5;
   --blue2:   #0a2acc;
-  --blue3:   #e8edff;
   --bluemid: #4a6bff;
   --white:   #ffffff;
   --off:     #f5f7ff;
@@ -21,287 +20,445 @@
   --call:    #1a40f5;
   --put:     #e0312b;
   --shadow:  rgba(26,64,245,0.12);
+  --green:   #00aa66;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--white); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--white);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;}
 
-.topbar {
-  background: var(--blue2); color: white;
-  padding: 0 2.5rem; height: 44px;
-  display: flex; align-items: center; justify-content: space-between;
-  font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em;
+/* ── TOPBAR ──────────────────────────────────────────────────────────── */
+.topbar{
+  background:var(--blue2);color:white;
+  padding:0 2.5rem;height:44px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.12em;
+  position:sticky;top:0;z-index:100;
 }
-.topbar-left { opacity: 0.6; }
-.topbar-right { opacity: 0.9; }
+.topbar-left{opacity:0.6;}
+.topbar-right{opacity:0.9;}
 
-.hero {
-  background: linear-gradient(135deg, var(--blue2) 0%, var(--blue) 60%, var(--bluemid) 100%);
-  padding: 3rem 2.5rem 2.5rem; position: relative; overflow: hidden;
+/* ── HERO ────────────────────────────────────────────────────────────── */
+.hero{
+  background:linear-gradient(135deg,var(--blue2) 0%,var(--blue) 60%,var(--bluemid) 100%);
+  padding:3rem 2.5rem 2rem;position:relative;overflow:hidden;
 }
-.hero::before {
-  content:''; position:absolute; right:-80px; top:-80px;
-  width:420px; height:420px; border-radius:50%; background:rgba(255,255,255,0.04);
-}
-.hero::after {
-  content:''; position:absolute; right:120px; bottom:-120px;
-  width:280px; height:280px; border-radius:50%; background:rgba(255,255,255,0.03);
-}
-.hero-inner { max-width: 960px; margin: 0 auto; position: relative; z-index: 1; }
-.hero h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 900;
-  color: white; line-height: 1.05; margin-bottom: 0.5rem; letter-spacing: -0.02em;
-}
-.hero h1 em { font-style: italic; color: rgba(255,255,255,0.65); }
-.hero-sub { display: flex; align-items: center; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
-.hero-sub .badge {
-  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
-  color: white; font-family: 'DM Mono', monospace; font-size: 0.68rem;
-  letter-spacing: 0.1em; padding: 3px 10px; border-radius: 20px;
-}
-.hero-sub .author { font-size: 0.8rem; color: rgba(255,255,255,0.5); font-family: 'DM Mono', monospace; }
+.hero::before{content:'';position:absolute;right:-80px;top:-80px;width:420px;height:420px;border-radius:50%;background:rgba(255,255,255,0.04);}
+.hero::after{content:'';position:absolute;right:120px;bottom:-120px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,0.03);}
+.hero-inner{max-width:1060px;margin:0 auto;position:relative;z-index:1;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4.5vw,3rem);font-weight:900;color:white;line-height:1.05;margin-bottom:0.4rem;letter-spacing:-0.02em;}
+.hero h1 em{font-style:italic;color:rgba(255,255,255,0.6);}
+.hero-sub{display:flex;align-items:center;gap:1rem;margin-top:0.75rem;flex-wrap:wrap;}
+.badge{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:white;font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;padding:3px 10px;border-radius:20px;}
+.hero-author{font-size:0.78rem;color:rgba(255,255,255,0.45);font-family:'DM Mono',monospace;}
 
-.main { max-width: 960px; margin: 0 auto; padding: 2rem 2.5rem 4rem; }
+/* ── CATEGORY NAV ────────────────────────────────────────────────────── */
+.cat-nav{
+  background:white;border-bottom:2px solid var(--border);
+  position:sticky;top:44px;z-index:99;
+}
+.cat-nav-inner{
+  max-width:1060px;margin:0 auto;
+  display:flex;overflow-x:auto;
+}
+.cat-nav-inner::-webkit-scrollbar{display:none;}
+.cat-btn{
+  padding:0 1.8rem;height:52px;flex-shrink:0;
+  background:transparent;border:none;border-bottom:3px solid transparent;
+  margin-bottom:-2px;
+  font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--muted);cursor:pointer;
+  transition:color 0.2s,border-color 0.2s;
+  display:flex;align-items:center;gap:0.5rem;
+  white-space:nowrap;
+}
+.cat-btn .cat-icon{font-size:0.9rem;}
+.cat-btn:hover{color:var(--text);}
+.cat-btn.active{color:var(--blue);border-bottom-color:var(--blue);font-weight:500;}
 
-.card {
-  background: var(--white); border: 1px solid var(--border);
-  border-radius: 12px; box-shadow: 0 2px 20px var(--shadow);
-  margin-bottom: 1.5rem; overflow: hidden;
-}
-.card-header {
-  padding: 0.85rem 1.5rem; border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: 0.6rem; background: var(--off);
-}
-.card-header .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); }
-.card-header span {
-  font-family: 'DM Mono', monospace; font-size: 0.7rem;
-  letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 500;
-}
-.card-body { padding: 1.5rem; }
+/* ── MAIN ────────────────────────────────────────────────────────────── */
+.main{max-width:1060px;margin:0 auto;padding:2rem 2.5rem 5rem;}
 
-.inputs-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+/* ── CATEGORY PANELS ─────────────────────────────────────────────────── */
+.cat-panel{display:none;}
+.cat-panel.active{display:block;animation:fadeUp 0.25s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SECTION HEADER ──────────────────────────────────────────────────── */
+.sec-header{margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+.sec-header h2{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--text);margin-bottom:0.25rem;}
+.sec-header p{font-size:0.82rem;color:var(--muted);font-family:'DM Mono',monospace;}
+
+/* ── TOOL GRID ───────────────────────────────────────────────────────── */
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;margin-bottom:1.5rem;}
+.tool-chip{
+  padding:0.6rem 1rem;
+  background:var(--off);border:1.5px solid var(--border);border-radius:8px;
+  font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.06em;
+  color:var(--muted);cursor:pointer;transition:all 0.2s;text-transform:uppercase;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.tool-chip:hover{border-color:var(--blue);color:var(--blue);background:rgba(26,64,245,0.04);}
+.tool-chip.active{border-color:var(--blue);color:var(--blue);background:rgba(26,64,245,0.08);font-weight:500;}
+.tool-chip .chip-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0;}
+
+/* ── CARD ────────────────────────────────────────────────────────────── */
+.card{background:var(--white);border:1px solid var(--border);border-radius:12px;box-shadow:0 2px 20px var(--shadow);margin-bottom:1.5rem;overflow:hidden;}
+.card-header{padding:0.85rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.6rem;background:var(--off);}
+.card-header .dot{width:8px;height:8px;border-radius:50%;background:var(--blue);}
+.card-header span{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:500;}
+.card-body{padding:1.5rem;}
+
+/* ── INPUTS ──────────────────────────────────────────────────────────── */
+.inputs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
 @media(max-width:640px){.inputs-grid{grid-template-columns:1fr 1fr;}}
-@media(max-width:420px){.inputs-grid{grid-template-columns:1fr;}}
+@media(max-width:400px){.inputs-grid{grid-template-columns:1fr;}}
+.field label{display:block;font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.field label .sym{font-family:'DM Mono',monospace;color:var(--blue);font-size:0.75rem;}
+.field input{width:100%;background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:0.65rem 0.9rem;color:var(--text);font-family:'DM Mono',monospace;font-size:0.95rem;font-weight:500;outline:none;transition:border-color 0.2s,box-shadow 0.2s;}
+.field input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,64,245,0.1);}
 
-.field label {
-  display: block; font-size: 0.68rem; font-weight: 500;
-  letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
-}
-.field label .sym { font-family: 'DM Mono', monospace; color: var(--blue); font-size: 0.75rem; }
-.field input {
-  width: 100%; background: var(--white); border: 1.5px solid var(--border);
-  border-radius: 8px; padding: 0.65rem 0.9rem; color: var(--text);
-  font-family: 'DM Mono', monospace; font-size: 0.95rem; font-weight: 500;
-  outline: none; transition: border-color 0.2s, box-shadow 0.2s;
-}
-.field input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,64,245,0.1); }
+/* ── BUTTON ──────────────────────────────────────────────────────────── */
+.btn-primary{width:100%;padding:0.9rem;background:var(--blue);color:white;border:none;border-radius:8px;font-family:'DM Mono',monospace;font-size:0.8rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;margin-top:1.25rem;transition:background 0.2s,transform 0.1s,box-shadow 0.2s;box-shadow:0 4px 16px rgba(26,64,245,0.3);}
+.btn-primary:hover{background:var(--blue2);box-shadow:0 6px 24px rgba(26,64,245,0.4);}
+.btn-primary:active{transform:scale(0.99);}
+.btn-secondary{padding:0.65rem 1.2rem;background:white;color:var(--blue);border:1.5px solid var(--blue);border-radius:8px;font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;}
+.btn-secondary:hover{background:var(--blue);color:white;}
 
-.btn-calc {
-  width: 100%; padding: 0.9rem; background: var(--blue); color: white;
-  border: none; border-radius: 8px; font-family: 'DM Mono', monospace;
-  font-size: 0.8rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
-  cursor: pointer; margin-top: 1.25rem; transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
-  box-shadow: 0 4px 16px rgba(26,64,245,0.3);
-}
-.btn-calc:hover  { background: var(--blue2); box-shadow: 0 6px 24px rgba(26,64,245,0.4); }
-.btn-calc:active { transform: scale(0.99); }
+/* ── TABS (inner) ────────────────────────────────────────────────────── */
+.tab-bar{display:flex;border-bottom:2px solid var(--border);margin-bottom:1.5rem;}
+.tab-btn{padding:0.65rem 1.2rem;background:transparent;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:color 0.2s,border-color 0.2s;white-space:nowrap;}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue);font-weight:500;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeUp 0.2s ease;}
 
-.tab-bar {
-  display: flex; gap: 0;
-  border-bottom: 2px solid var(--border); margin-bottom: 1.5rem;
-}
-.tab-btn {
-  padding: 0.65rem 1.2rem; background: transparent;
-  border: none; border-bottom: 2px solid transparent; margin-bottom: -2px;
-  font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.08em;
-  text-transform: uppercase; color: var(--muted); cursor: pointer; transition: color 0.2s, border-color 0.2s;
-}
-.tab-btn:hover { color: var(--text); }
-.tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); font-weight: 500; }
+/* ── PRICE STRIP ─────────────────────────────────────────────────────── */
+.price-strip{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
+.price-card{border-radius:10px;padding:1.4rem 1.5rem;}
+.price-card.call{background:var(--blue);color:white;}
+.price-card.put{background:var(--white);border:2px solid var(--put);color:var(--text);}
+.price-card .p-label{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;opacity:0.7;margin-bottom:0.4rem;}
+.price-card .p-value{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;line-height:1;}
+.price-card.call .p-value{color:white;}
+.price-card.put  .p-value{color:var(--put);}
+.price-card .p-sub{font-size:0.7rem;opacity:0.5;margin-top:0.3rem;font-family:'DM Mono',monospace;}
 
-.price-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
-.price-card { border-radius: 10px; padding: 1.4rem 1.5rem; position: relative; overflow: hidden; }
-.price-card.call { background: var(--blue); color: white; }
-.price-card.put  { background: var(--white); border: 2px solid var(--put); color: var(--text); }
-.price-card .p-label {
-  font-family: 'DM Mono', monospace; font-size: 0.65rem;
-  letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7; margin-bottom: 0.4rem;
-}
-.price-card .p-value { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 700; line-height: 1; }
-.price-card.call .p-value { color: white; }
-.price-card.put  .p-value { color: var(--put); }
-.price-card .p-sub { font-size: 0.7rem; opacity: 0.5; margin-top: 0.3rem; font-family: 'DM Mono', monospace; }
+/* ── CALC TABLE ──────────────────────────────────────────────────────── */
+.calc-table{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;font-size:0.8rem;}
+.calc-table thead tr{border-bottom:2px solid var(--border);}
+.calc-table th{text-align:left;padding:0.5rem 0.75rem;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:500;}
+.calc-table td{padding:0.55rem 0.75rem;border-bottom:1px solid var(--border);}
+.calc-table td.var{color:var(--blue);font-weight:500;}
+.calc-table td.formula{color:var(--muted);font-size:0.72rem;}
+.calc-table td.val{text-align:right;color:var(--text);font-weight:500;}
+.calc-table tr:last-child td{border-bottom:none;}
 
-.tab-panel { display: none; }
-.tab-panel.active { display: block; animation: fadeUp 0.2s ease; }
-@keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-
-.calc-table { width: 100%; border-collapse: collapse; font-family: 'DM Mono', monospace; font-size: 0.8rem; }
-.calc-table thead tr { border-bottom: 2px solid var(--border); }
-.calc-table th { text-align: left; padding: 0.5rem 0.75rem; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
-.calc-table td { padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border); }
-.calc-table td.var { color: var(--blue); font-weight: 500; }
-.calc-table td.formula { color: var(--muted); font-size: 0.72rem; }
-.calc-table td.val { text-align: right; color: var(--text); font-weight: 500; }
-.calc-table tr:last-child td { border-bottom: none; }
-
-.greeks-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 0.75rem; }
+/* ── GREEKS ──────────────────────────────────────────────────────────── */
+.greeks-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0.75rem;}
 @media(max-width:640px){.greeks-grid{grid-template-columns:repeat(3,1fr);}}
-.g-card { border: 1.5px solid var(--border); border-radius: 10px; padding: 1rem; text-align: center; transition: border-color 0.2s, box-shadow 0.2s; }
-.g-card:hover { border-color: var(--blue); box-shadow: 0 4px 16px var(--shadow); }
-.g-sym { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--blue); line-height: 1; margin-bottom: 2px; }
-.g-name { font-family: 'DM Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
-.g-row { display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 0.75rem; margin-bottom: 2px; }
-.g-row .lbl { color: var(--muted); font-size: 0.65rem; }
-.g-row .call-v { color: var(--call); }
-.g-row .put-v  { color: var(--put);  }
-.g-desc { font-size: 0.6rem; color: var(--muted); margin-top: 6px; line-height: 1.3; }
+.g-card{border:1.5px solid var(--border);border-radius:10px;padding:1rem;text-align:center;transition:border-color 0.2s,box-shadow 0.2s;}
+.g-card:hover{border-color:var(--blue);box-shadow:0 4px 16px var(--shadow);}
+.g-sym{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--blue);line-height:1;margin-bottom:2px;}
+.g-name{font-family:'DM Mono',monospace;font-size:0.62rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;}
+.g-row{display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:0.75rem;margin-bottom:2px;}
+.g-row .lbl{color:var(--muted);font-size:0.65rem;}
+.g-row .call-v{color:var(--call);}
+.g-row .put-v{color:var(--put);}
+.g-desc{font-size:0.6rem;color:var(--muted);margin-top:6px;line-height:1.3;}
 
-.chart-controls { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
-.chart-controls select {
-  background: var(--white); border: 1.5px solid var(--border); border-radius: 6px;
-  color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.72rem;
-  padding: 0.4rem 0.8rem; cursor: pointer; outline: none;
-}
-.chart-controls select:focus { border-color: var(--blue); }
-canvas#myChart { max-height: 300px; }
+/* ── 2D CHART ────────────────────────────────────────────────────────── */
+.chart-controls{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.2rem;}
+.chart-controls select{background:var(--white);border:1.5px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Mono',monospace;font-size:0.72rem;padding:0.4rem 0.8rem;cursor:pointer;outline:none;}
+.chart-controls select:focus{border-color:var(--blue);}
 
-#surface3d { width: 100%; height: 380px; border-radius: 8px; overflow: hidden; cursor: grab; background: var(--off); }
-#surface3d:active { cursor: grabbing; }
-.surface-legend {
-  display: flex; gap: 1.5rem; margin-top: 0.75rem;
-  font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); align-items: center; flex-wrap: wrap;
-}
-.surface-legend span { display: flex; align-items: center; gap: 5px; }
-.swatch { width: 14px; height: 14px; border-radius: 2px; }
+/* ── 3D SURFACE ──────────────────────────────────────────────────────── */
+#surface3d{width:100%;height:360px;border-radius:8px;overflow:hidden;cursor:grab;background:var(--off);}
+#surface3d:active{cursor:grabbing;}
+.surface-legend{display:flex;gap:1.5rem;margin-top:0.75rem;font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--muted);align-items:center;flex-wrap:wrap;}
+.surface-legend span{display:flex;align-items:center;gap:5px;}
+.swatch{width:14px;height:14px;border-radius:2px;}
 
-.error-msg {
-  background: #fff5f5; border: 1.5px solid #ffcdd2; border-radius: 8px; color: var(--put);
-  font-size: 0.78rem; padding: 0.7rem 1rem; margin-top: 1rem; display: none;
-  font-family: 'DM Mono', monospace;
-}
+/* ── MONTE CARLO ─────────────────────────────────────────────────────── */
+.mc-layout{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+@media(max-width:700px){.mc-layout{grid-template-columns:1fr;}}
+.mc-canvas-wrap{position:relative;background:var(--off);border-radius:10px;border:1px solid var(--border);overflow:hidden;}
+#mcCanvas{display:block;width:100%;height:260px;}
+.mc-results{display:flex;flex-direction:column;gap:0.75rem;}
+.mc-stat{background:var(--off);border:1px solid var(--border);border-radius:8px;padding:0.9rem 1rem;}
+.mc-stat .s-label{font-family:'DM Mono',monospace;font-size:0.62rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px;}
+.mc-stat .s-val{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--blue);}
+.mc-stat .s-sub{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);margin-top:2px;}
+.mc-controls{display:flex;align-items:center;gap:0.75rem;margin-top:0.75rem;flex-wrap:wrap;}
+.mc-controls label{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;}
+.mc-controls input[type=range]{flex:1;min-width:120px;accent-color:var(--blue);}
+.mc-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(0,170,102,0.1);border:1px solid rgba(0,170,102,0.3);border-radius:20px;padding:2px 10px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--green);}
+.mc-badge .pulse{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 1.2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
 
-footer {
-  border-top: 1px solid var(--border); padding: 1.5rem 2.5rem;
-  max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;
+/* ── ERROR ───────────────────────────────────────────────────────────── */
+.error-msg{background:#fff5f5;border:1.5px solid #ffcdd2;border-radius:8px;color:var(--put);font-size:0.78rem;padding:0.7rem 1rem;margin-top:1rem;display:none;font-family:'DM Mono',monospace;}
+
+/* ── WIP ─────────────────────────────────────────────────────────────── */
+.wip-container{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:420px;text-align:center;
+  border:2px dashed var(--border);border-radius:16px;padding:3rem;
 }
-footer .author-sig { font-family: 'Playfair Display', serif; font-size: 1rem; font-style: italic; color: var(--blue); }
-footer .foot-right { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted); text-align: right; line-height: 1.6; }
+.wip-icon{font-size:3rem;margin-bottom:1rem;opacity:0.4;}
+.wip-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;font-style:italic;color:var(--muted);margin-bottom:0.5rem;}
+.wip-sub{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;opacity:0.7;}
+.wip-tag{display:inline-block;margin-top:1.5rem;background:var(--off);border:1.5px solid var(--border);border-radius:20px;padding:4px 16px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;}
+
+/* ── FOOTER ──────────────────────────────────────────────────────────── */
+footer{border-top:1px solid var(--border);padding:1.5rem 2.5rem;max-width:1060px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+footer .author-sig{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--blue);}
+footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);text-align:right;line-height:1.6;}
 </style>
 </head>
 <body>
 
+<!-- TOPBAR -->
 <div class="topbar">
-  <span class="topbar-left">BLACK–SCHOLES · EUROPEAN OPTIONS PRICER</span>
-  <span class="topbar-right">© MORITZ WANJURA</span>
+  <span class="topbar-left">QUANTITATIVE FINANCE · MORITZ WANJURA</span>
+  <span class="topbar-right">© 2025 MORITZ WANJURA</span>
 </div>
 
+<!-- HERO -->
 <div class="hero">
   <div class="hero-inner">
-    <h1>Black–<em>Scholes</em><br>Options Pricer</h1>
+    <h1>Quantitative <em>Finance</em><br>Toolkit</h1>
     <div class="hero-sub">
-      <div class="badge">European Options</div>
-      <div class="badge">Merton (1973)</div>
-      <div class="author">by Moritz Wanjura</div>
+      <div class="badge">Options &amp; Derivatives</div>
+      <div class="badge">Portfolio &amp; Risk</div>
+      <div class="badge">Fixed Income</div>
+      <div class="badge">Stochastic Processes</div>
+      <div class="hero-author">by Moritz Wanjura</div>
     </div>
   </div>
 </div>
 
+<!-- CATEGORY NAV -->
+<div class="cat-nav">
+  <div class="cat-nav-inner">
+    <button class="cat-btn active" id="cnav-options"     onclick="switchCat('options')"><span class="cat-icon">◈</span>Options &amp; Derivatives</button>
+    <button class="cat-btn"        id="cnav-portfolio"   onclick="switchCat('portfolio')"><span class="cat-icon">◉</span>Portfolio &amp; Risk</button>
+    <button class="cat-btn"        id="cnav-fixed"       onclick="switchCat('fixed')"><span class="cat-icon">◇</span>Fixed Income</button>
+    <button class="cat-btn"        id="cnav-stochastic"  onclick="switchCat('stochastic')"><span class="cat-icon">∿</span>Stochastic Processes</button>
+  </div>
+</div>
+
+<!-- MAIN -->
 <div class="main">
 
-  <div class="card">
-    <div class="card-header"><div class="dot"></div><span>Parameters</span></div>
-    <div class="card-body">
-      <div class="inputs-grid">
-        <div class="field"><label>Spot Price <span class="sym">S</span></label><input type="number" id="spot" value="52" step="0.01"></div>
-        <div class="field"><label>Strike Price <span class="sym">K</span></label><input type="number" id="strike" value="50" step="0.01"></div>
-        <div class="field"><label>Maturity (yrs) <span class="sym">T</span></label><input type="number" id="maturity" value="0.25" step="0.01"></div>
-        <div class="field"><label>Risk-Free Rate % <span class="sym">r</span></label><input type="number" id="rate" value="12" step="0.1"></div>
-        <div class="field"><label>Volatility % <span class="sym">σ</span></label><input type="number" id="vol" value="30" step="0.1"></div>
-        <div class="field"><label>Dividend Yield % <span class="sym">q</span></label><input type="number" id="div" value="0" step="0.1"></div>
-      </div>
-      <div class="error-msg" id="errorMsg"></div>
-      <button class="btn-calc" onclick="calculate()">▶ &nbsp;Calculate</button>
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CAT 1: OPTIONS & DERIVATIVES -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <div class="cat-panel active" id="cat-options">
+    <div class="sec-header">
+      <h2>Options &amp; Derivatives</h2>
+      <p>Pricing engines · Greeks · Simulation · Payoff analysis</p>
     </div>
-  </div>
 
-  <div class="price-strip">
-    <div class="price-card call">
-      <div class="p-label">Call Option</div>
-      <div class="p-value" id="callPrice">—</div>
-      <div class="p-sub">C(S,K,T,r,σ,q)</div>
+    <!-- Tool selector -->
+    <div class="tool-grid">
+      <div class="tool-chip active" id="chip-bs" onclick="selectTool('bs')"><div class="chip-dot"></div>Black–Scholes Pricer</div>
+      <div class="tool-chip"       id="chip-mc" onclick="selectTool('mc')"><div class="chip-dot"></div>Monte Carlo Simulation</div>
     </div>
-    <div class="price-card put">
-      <div class="p-label">Put Option</div>
-      <div class="p-value" id="putPrice">—</div>
-      <div class="p-sub">P(S,K,T,r,σ,q)</div>
-    </div>
-  </div>
 
-  <div class="card">
-    <div class="card-body" style="padding-bottom:0.5rem;">
-      <div class="tab-bar">
-        <button class="tab-btn active" id="tb-calc"   onclick="switchTab('calc')">Calculations</button>
-        <button class="tab-btn"        id="tb-greeks" onclick="switchTab('greeks')">Greeks</button>
-        <button class="tab-btn"        id="tb-graph"  onclick="switchTab('graph')">2D Graph</button>
-        <button class="tab-btn"        id="tb-3d"     onclick="switchTab('3d')">3D Surface</button>
-      </div>
+    <!-- ── BLACK-SCHOLES TOOL ── -->
+    <div id="tool-bs">
 
-      <div class="tab-panel active" id="panel-calc">
-        <table class="calc-table">
-          <thead><tr><th>Variable</th><th>Formula</th><th style="text-align:right">Value</th></tr></thead>
-          <tbody id="calcBody">
-            <tr><td colspan="3" style="color:var(--muted);font-family:'DM Mono',monospace;font-size:0.8rem;padding:1rem 0.75rem">Press Calculate to compute.</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="tab-panel" id="panel-greeks">
-        <div class="greeks-grid" id="greeksGrid">
-          <p style="color:var(--muted);font-family:'DM Mono',monospace;font-size:0.8rem;grid-column:1/-1">Press Calculate first.</p>
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Parameters</span></div>
+        <div class="card-body">
+          <div class="inputs-grid">
+            <div class="field"><label>Spot Price <span class="sym">S</span></label><input type="number" id="spot" value="52" step="0.01"></div>
+            <div class="field"><label>Strike Price <span class="sym">K</span></label><input type="number" id="strike" value="50" step="0.01"></div>
+            <div class="field"><label>Maturity (yrs) <span class="sym">T</span></label><input type="number" id="maturity" value="0.25" step="0.01"></div>
+            <div class="field"><label>Risk-Free Rate % <span class="sym">r</span></label><input type="number" id="rate" value="12" step="0.1"></div>
+            <div class="field"><label>Volatility % <span class="sym">σ</span></label><input type="number" id="vol" value="30" step="0.1"></div>
+            <div class="field"><label>Dividend Yield % <span class="sym">q</span></label><input type="number" id="div" value="0" step="0.1"></div>
+          </div>
+          <div class="error-msg" id="errorMsg"></div>
+          <button class="btn-primary" onclick="calculate()">▶ &nbsp;Calculate</button>
         </div>
       </div>
 
-      <div class="tab-panel" id="panel-graph">
-        <div class="chart-controls">
-          <select id="chartType" onchange="drawChart()">
-            <option value="price">Option Price vs Spot</option>
-            <option value="payoff">Payoff at Expiry</option>
-            <option value="delta">Delta vs Spot</option>
-            <option value="gamma">Gamma vs Spot</option>
-            <option value="vega">Vega vs Spot</option>
-            <option value="theta">Theta vs Spot</option>
-            <option value="vol_smile">Price vs Volatility</option>
-          </select>
-        </div>
-        <canvas id="myChart"></canvas>
+      <div class="price-strip">
+        <div class="price-card call"><div class="p-label">Call Option</div><div class="p-value" id="callPrice">—</div><div class="p-sub">C(S,K,T,r,σ,q)</div></div>
+        <div class="price-card put"><div class="p-label">Put Option</div><div class="p-value" id="putPrice">—</div><div class="p-sub">P(S,K,T,r,σ,q)</div></div>
       </div>
 
-      <div class="tab-panel" id="panel-3d">
-        <p style="font-size:0.75rem;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:0.75rem;">
-          Call price surface · axes: Spot Price × Implied Volatility → Option Value · Drag to rotate
-        </p>
-        <div id="surface3d"></div>
-        <div class="surface-legend">
-          <span><div class="swatch" style="background:#1a40f5"></div>High value</span>
-          <span><div class="swatch" style="background:#7aadff"></div>Mid value</span>
-          <span><div class="swatch" style="background:#e8edff"></div>Low value</span>
-          <span style="margin-left:auto;font-size:0.62rem">X: Spot · Z: Volatility · Y: Call Price</span>
+      <div class="card">
+        <div class="card-body" style="padding-bottom:0.5rem;">
+          <div class="tab-bar">
+            <button class="tab-btn active" id="tb-calc"   onclick="switchTab('calc')">Calculations</button>
+            <button class="tab-btn"        id="tb-greeks" onclick="switchTab('greeks')">Greeks</button>
+            <button class="tab-btn"        id="tb-graph"  onclick="switchTab('graph')">2D Graph</button>
+            <button class="tab-btn"        id="tb-3d"     onclick="switchTab('3d')">3D Surface</button>
+          </div>
+
+          <div class="tab-panel active" id="panel-calc">
+            <table class="calc-table">
+              <thead><tr><th>Variable</th><th>Formula</th><th style="text-align:right">Value</th></tr></thead>
+              <tbody id="calcBody"><tr><td colspan="3" style="color:var(--muted);font-family:'DM Mono',monospace;font-size:0.8rem;padding:1rem 0.75rem">Press Calculate to compute.</td></tr></tbody>
+            </table>
+          </div>
+
+          <div class="tab-panel" id="panel-greeks">
+            <div class="greeks-grid" id="greeksGrid"><p style="color:var(--muted);font-family:'DM Mono',monospace;font-size:0.8rem;grid-column:1/-1">Press Calculate first.</p></div>
+          </div>
+
+          <div class="tab-panel" id="panel-graph">
+            <div class="chart-controls">
+              <select id="chartType" onchange="drawChart()">
+                <option value="price">Option Price vs Spot</option>
+                <option value="payoff">Payoff at Expiry</option>
+                <option value="delta">Delta vs Spot</option>
+                <option value="gamma">Gamma vs Spot</option>
+                <option value="vega">Vega vs Spot</option>
+                <option value="theta">Theta vs Spot</option>
+                <option value="vol_smile">Price vs Volatility</option>
+              </select>
+            </div>
+            <canvas id="myChart" style="max-height:300px;"></canvas>
+          </div>
+
+          <div class="tab-panel" id="panel-3d">
+            <p style="font-size:0.75rem;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:0.75rem;">Call price surface · Spot × Implied Volatility → Option Value · Drag to rotate</p>
+            <div id="surface3d"></div>
+            <div class="surface-legend">
+              <span><div class="swatch" style="background:#1a40f5"></div>High value</span>
+              <span><div class="swatch" style="background:#7aadff"></div>Mid value</span>
+              <span><div class="swatch" style="background:#e8edff"></div>Low value</span>
+              <span style="margin-left:auto;font-size:0.62rem">X: Spot · Z: Volatility · Y: Call Price</span>
+            </div>
+          </div>
         </div>
       </div>
+    </div><!-- /tool-bs -->
+
+    <!-- ── MONTE CARLO TOOL ── -->
+    <div id="tool-mc" style="display:none;">
+
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Monte Carlo Parameters</span></div>
+        <div class="card-body">
+          <div class="inputs-grid">
+            <div class="field"><label>Spot Price <span class="sym">S</span></label><input type="number" id="mc-spot" value="100" step="1"></div>
+            <div class="field"><label>Strike Price <span class="sym">K</span></label><input type="number" id="mc-strike" value="105" step="1"></div>
+            <div class="field"><label>Maturity (yrs) <span class="sym">T</span></label><input type="number" id="mc-maturity" value="1" step="0.1"></div>
+            <div class="field"><label>Risk-Free Rate % <span class="sym">r</span></label><input type="number" id="mc-rate" value="5" step="0.1"></div>
+            <div class="field"><label>Volatility % <span class="sym">σ</span></label><input type="number" id="mc-vol" value="20" step="1"></div>
+            <div class="field"><label>Option Type</label>
+              <select id="mc-type" style="width:100%;background:white;border:1.5px solid var(--border);border-radius:8px;padding:0.65rem 0.9rem;color:var(--text);font-family:'DM Mono',monospace;font-size:0.95rem;outline:none;">
+                <option value="call">Call</option>
+                <option value="put">Put</option>
+              </select>
+            </div>
+          </div>
+          <div class="mc-controls">
+            <label>Paths:</label>
+            <input type="range" id="mc-paths" min="10" max="200" value="50" oninput="document.getElementById('mc-paths-val').textContent=this.value">
+            <span id="mc-paths-val" style="font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--blue);min-width:30px;">50</span>
+            <label style="margin-left:0.5rem">Steps:</label>
+            <input type="range" id="mc-steps" min="50" max="500" value="252" step="10" oninput="document.getElementById('mc-steps-val').textContent=this.value">
+            <span id="mc-steps-val" style="font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--blue);min-width:30px;">252</span>
+          </div>
+          <button class="btn-primary" onclick="runMonteCarlo()" style="margin-top:1rem;">▶ &nbsp;Run Simulation</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="dot"></div>
+          <span>Simulation</span>
+          <div id="mc-running-badge" class="mc-badge" style="margin-left:auto;display:none;"><div class="pulse"></div>Running</div>
+        </div>
+        <div class="card-body">
+          <div class="mc-layout">
+            <div class="mc-canvas-wrap">
+              <canvas id="mcCanvas"></canvas>
+            </div>
+            <div class="mc-results">
+              <div class="mc-stat"><div class="s-label">MC Price (Call/Put)</div><div class="s-val" id="mc-price">—</div><div class="s-sub">Discounted mean payoff</div></div>
+              <div class="mc-stat"><div class="s-label">BS Analytical Price</div><div class="s-val" id="mc-bs-price" style="color:var(--muted)">—</div><div class="s-sub">Black–Scholes benchmark</div></div>
+              <div class="mc-stat"><div class="s-label">Std. Error</div><div class="s-val" id="mc-stderr" style="font-size:1.2rem;">—</div><div class="s-sub">σ / √N paths</div></div>
+              <div class="mc-stat"><div class="s-label">Paths Simulated</div><div class="s-val" id="mc-count" style="font-size:1.2rem;">—</div><div class="s-sub" id="mc-note">—</div></div>
+            </div>
+          </div>
+          <p style="font-size:0.68rem;color:var(--muted);font-family:'DM Mono',monospace;margin-top:0.5rem;">
+            Each path: S(t) = S₀ · exp[(r − ½σ²)Δt + σ√Δt · Z] where Z ~ N(0,1) · GBM simulation
+          </p>
+        </div>
+      </div>
+
+    </div><!-- /tool-mc -->
+
+  </div><!-- /cat-options -->
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CAT 2: PORTFOLIO & RISK -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <div class="cat-panel" id="cat-portfolio">
+    <div class="sec-header">
+      <h2>Portfolio &amp; Risk</h2>
+      <p>Mean-variance optimization · VaR · Sharpe ratio · Correlation analysis</p>
+    </div>
+    <div class="wip-container">
+      <div class="wip-icon">◉</div>
+      <div class="wip-title">Work in Progress</div>
+      <div class="wip-sub">Portfolio optimization tools coming soon</div>
+      <div class="wip-tag">Planned: MV Optimization · VaR · CVaR · Sharpe · Beta</div>
     </div>
   </div>
-</div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CAT 3: FIXED INCOME -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <div class="cat-panel" id="cat-fixed">
+    <div class="sec-header">
+      <h2>Fixed Income</h2>
+      <p>Bond pricing · Duration · Yield curves · Convexity</p>
+    </div>
+    <div class="wip-container">
+      <div class="wip-icon">◇</div>
+      <div class="wip-title">Work in Progress</div>
+      <div class="wip-sub">Fixed income tools coming soon</div>
+      <div class="wip-tag">Planned: Bond Pricer · Duration · YTM · Yield Curve</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- CAT 4: STOCHASTIC PROCESSES -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <div class="cat-panel" id="cat-stochastic">
+    <div class="sec-header">
+      <h2>Stochastic Processes</h2>
+      <p>Brownian motion · Geometric BM · Ornstein–Uhlenbeck · Jump diffusion</p>
+    </div>
+    <div class="wip-container">
+      <div class="wip-icon">∿</div>
+      <div class="wip-title">Work in Progress</div>
+      <div class="wip-sub">Stochastic process simulators coming soon</div>
+      <div class="wip-tag">Planned: GBM · BM · OU Process · Heston · SABR</div>
+    </div>
+  </div>
+
+</div><!-- /main -->
 
 <footer>
   <div class="author-sig">Moritz Wanjura</div>
   <div class="foot-right">
-    Black–Scholes–Merton Model (1973)<br>
+    Quantitative Finance Toolkit<br>
     For educational purposes · Not financial advice
   </div>
 </footer>
 
 <script>
+// ════════════════════════════════════════════════════════════════════════
+// MATH HELPERS
+// ════════════════════════════════════════════════════════════════════════
 function erf(x){
   const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;
   const s=x<0?-1:1;x=Math.abs(x);const t=1/(1+p*x);
@@ -324,18 +481,40 @@ function greeks(S,K,T,r,sigma,q){
   const d1=(Math.log(S/K)+(r-q+0.5*sigma**2)*T)/(sigma*Math.sqrt(T));
   const d2=d1-sigma*Math.sqrt(T),sqT=Math.sqrt(T);
   return{
-    dC: Math.exp(-q*T)*N(d1),
-    dP:-Math.exp(-q*T)*N(-d1),
+    dC:Math.exp(-q*T)*N(d1),dP:-Math.exp(-q*T)*N(-d1),
     gam:Math.exp(-q*T)*nd(d1)/(S*sigma*sqT),
     veg:S*Math.exp(-q*T)*nd(d1)*sqT/100,
     tC:(-S*Math.exp(-q*T)*nd(d1)*sigma/(2*sqT)-r*K*Math.exp(-r*T)*N(d2)+q*S*Math.exp(-q*T)*N(d1))/365,
     tP:(-S*Math.exp(-q*T)*nd(d1)*sigma/(2*sqT)+r*K*Math.exp(-r*T)*N(-d2)-q*S*Math.exp(-q*T)*N(-d1))/365,
-    rC:K*T*Math.exp(-r*T)*N(d2)/100,
-    rP:-K*T*Math.exp(-r*T)*N(-d2)/100,
+    rC:K*T*Math.exp(-r*T)*N(d2)/100,rP:-K*T*Math.exp(-r*T)*N(-d2)/100,
   };
 }
 
-let chartInst=null, activeTab='calc', lastP=null;
+// ════════════════════════════════════════════════════════════════════════
+// CATEGORY NAVIGATION
+// ════════════════════════════════════════════════════════════════════════
+function switchCat(name){
+  document.querySelectorAll('.cat-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('cat-'+name).classList.add('active');
+  document.getElementById('cnav-'+name).classList.add('active');
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// TOOL SELECTOR (Options tab)
+// ════════════════════════════════════════════════════════════════════════
+function selectTool(name){
+  document.querySelectorAll('.tool-chip').forEach(c=>c.classList.remove('active'));
+  document.getElementById('chip-'+name).classList.add('active');
+  document.getElementById('tool-bs').style.display = name==='bs'?'block':'none';
+  document.getElementById('tool-mc').style.display = name==='mc'?'block':'none';
+  if(name==='mc') initMcCanvas();
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// BLACK-SCHOLES
+// ════════════════════════════════════════════════════════════════════════
+let chartInst=null,activeTab='calc',lastP=null;
 let renderer3d=null,scene3d=null,camera3d=null,animId=null,rotGroup=null;
 let isDrag=false,prevMouse={x:0,y:0};
 
@@ -349,7 +528,7 @@ function calculate(){
   document.getElementById('errorMsg').style.display='none';
   const p=getP();
   if([p.S,p.K,p.T,p.r,p.sigma].some(isNaN)||p.S<=0||p.K<=0||p.T<0||p.sigma<=0){
-    const e=document.getElementById('errorMsg');e.textContent='⚠ Enter valid positive numbers for all fields.';e.style.display='block';return;
+    const e=document.getElementById('errorMsg');e.textContent='⚠ Enter valid positive numbers.';e.style.display='block';return;
   }
   lastP=p;
   const res=bs(p.S,p.K,p.T,p.r,p.sigma,p.q);
@@ -460,80 +639,49 @@ function draw3D(){
   const cont=document.getElementById('surface3d');
   if(renderer3d){renderer3d.dispose();cont.innerHTML='';}
   if(animId){cancelAnimationFrame(animId);animId=null;}
-
-  const W=cont.clientWidth||900,H=380;
+  const W=cont.clientWidth||900,H=360;
   const{S,K,T,r,sigma,q}=lastP;
   const NX=42,NZ=42;
   const spots=Array.from({length:NX},(_,i)=>S*0.45+i*(S*1.1/(NX-1)));
   const vols= Array.from({length:NZ},(_,i)=>0.05+i*(0.75/(NZ-1)));
-
-  const prices=[];
-  let minP=Infinity,maxP=-Infinity;
-  for(let iz=0;iz<NZ;iz++){
-    for(let ix=0;ix<NX;ix++){
-      const p=bs(spots[ix],K,Math.max(T,0.02),r,vols[iz],q).call;
-      prices.push(p);if(p<minP)minP=p;if(p>maxP)maxP=p;
-    }
+  const prices=[];let minP=Infinity,maxP=-Infinity;
+  for(let iz=0;iz<NZ;iz++)for(let ix=0;ix<NX;ix++){
+    const p=bs(spots[ix],K,Math.max(T,0.02),r,vols[iz],q).call;
+    prices.push(p);if(p<minP)minP=p;if(p>maxP)maxP=p;
   }
-
-  scene3d=new THREE.Scene();
-  scene3d.background=new THREE.Color(0xf5f7ff);
-  camera3d=new THREE.PerspectiveCamera(45,W/H,0.1,1000);
-  camera3d.position.set(22,18,28);camera3d.lookAt(0,0,0);
-
-  renderer3d=new THREE.WebGLRenderer({antialias:true});
-  renderer3d.setSize(W,H);renderer3d.setPixelRatio(Math.min(devicePixelRatio,2));
+  scene3d=new THREE.Scene();scene3d.background=new THREE.Color(0xf5f7ff);
+  camera3d=new THREE.PerspectiveCamera(45,W/H,0.1,1000);camera3d.position.set(22,18,28);camera3d.lookAt(0,0,0);
+  renderer3d=new THREE.WebGLRenderer({antialias:true});renderer3d.setSize(W,H);renderer3d.setPixelRatio(Math.min(devicePixelRatio,2));
   cont.appendChild(renderer3d.domElement);
-
   scene3d.add(new THREE.AmbientLight(0xffffff,0.65));
   const dl=new THREE.DirectionalLight(0xffffff,0.85);dl.position.set(20,30,20);scene3d.add(dl);
-
   rotGroup=new THREE.Group();scene3d.add(rotGroup);
-
-  const geom=new THREE.BufferGeometry();
-  const pos=[],col=[],idx=[];
+  const geom=new THREE.BufferGeometry();const pos=[],col=[],idx=[];
   const cLow=new THREE.Color(0xdce8ff),cMid=new THREE.Color(0x6699ff),cHi=new THREE.Color(0x0a2acc);
   const scY=9;
-
-  for(let iz=0;iz<NZ;iz++){
-    for(let ix=0;ix<NX;ix++){
-      const px=(ix/(NX-1)-0.5)*18;
-      const pz=(iz/(NZ-1)-0.5)*18;
-      const raw=prices[iz*NX+ix];
-      const py=((raw-minP)/(maxP-minP))*scY;
-      pos.push(px,py,pz);
-      const t=(raw-minP)/(maxP-minP);
-      const c=t<0.5?cLow.clone().lerp(cMid,t*2):cMid.clone().lerp(cHi,(t-0.5)*2);
-      col.push(c.r,c.g,c.b);
-    }
+  for(let iz=0;iz<NZ;iz++)for(let ix=0;ix<NX;ix++){
+    const px=(ix/(NX-1)-0.5)*18,pz=(iz/(NZ-1)-0.5)*18;
+    const raw=prices[iz*NX+ix],py=((raw-minP)/(maxP-minP))*scY;
+    pos.push(px,py,pz);
+    const t=(raw-minP)/(maxP-minP);
+    const c=t<0.5?cLow.clone().lerp(cMid,t*2):cMid.clone().lerp(cHi,(t-0.5)*2);
+    col.push(c.r,c.g,c.b);
   }
-  for(let iz=0;iz<NZ-1;iz++){
-    for(let ix=0;ix<NX-1;ix++){
-      const a=iz*NX+ix,b=a+1,c=a+NX,d=c+1;
-      idx.push(a,c,b,b,c,d);
-    }
+  for(let iz=0;iz<NZ-1;iz++)for(let ix=0;ix<NX-1;ix++){
+    const a=iz*NX+ix,b=a+1,c=a+NX,d=c+1;idx.push(a,c,b,b,c,d);
   }
   geom.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
   geom.setAttribute('color',new THREE.Float32BufferAttribute(col,3));
   geom.setIndex(idx);geom.computeVertexNormals();
-
   rotGroup.add(new THREE.Mesh(geom,new THREE.MeshPhongMaterial({vertexColors:true,side:THREE.DoubleSide,shininess:50})));
   rotGroup.add(new THREE.Mesh(geom,new THREE.MeshBasicMaterial({color:0xffffff,wireframe:true,opacity:0.1,transparent:true})));
-
-  const mkLine=(pts,c)=>{
-    const g=new THREE.BufferGeometry().setFromPoints(pts.map(p=>new THREE.Vector3(...p)));
-    return new THREE.Line(g,new THREE.LineBasicMaterial({color:c,linewidth:2}));
-  };
+  const mkLine=(pts,c)=>{const g=new THREE.BufferGeometry().setFromPoints(pts.map(p=>new THREE.Vector3(...p)));return new THREE.Line(g,new THREE.LineBasicMaterial({color:c}));};
   rotGroup.add(mkLine([[-9,-0.1,-9],[9,-0.1,-9]],0x1a40f5));
   rotGroup.add(mkLine([[-9,-0.1,-9],[-9,scY+1,-9]],0xe0312b));
   rotGroup.add(mkLine([[-9,-0.1,-9],[-9,-0.1,9]],0x00aa66));
-
-  rotGroup.rotation.y=-0.45;
-  rotGroup.position.y=-3.5;
-
+  rotGroup.rotation.y=-0.45;rotGroup.position.y=-3.5;
   function loop(){animId=requestAnimationFrame(loop);renderer3d.render(scene3d,camera3d);}
   loop();
-
   cont.addEventListener('mousedown',e=>{isDrag=true;prevMouse={x:e.clientX,y:e.clientY};});
   window.addEventListener('mouseup',()=>isDrag=false);
   window.addEventListener('mousemove',e=>{
@@ -544,14 +692,147 @@ function draw3D(){
   });
   cont.addEventListener('touchstart',e=>{isDrag=true;prevMouse={x:e.touches[0].clientX,y:e.touches[0].clientY};},{passive:true});
   window.addEventListener('touchend',()=>isDrag=false);
-  window.addEventListener('touchmove',e=>{
-    if(!isDrag)return;
-    rotGroup.rotation.y+=(e.touches[0].clientX-prevMouse.x)*0.008;
-    prevMouse={x:e.touches[0].clientX,y:e.touches[0].clientY};
-  },{passive:true});
+  window.addEventListener('touchmove',e=>{if(!isDrag)return;rotGroup.rotation.y+=(e.touches[0].clientX-prevMouse.x)*0.008;prevMouse={x:e.touches[0].clientX,y:e.touches[0].clientY};},{passive:true});
 }
 
-window.onload=calculate;
+// ════════════════════════════════════════════════════════════════════════
+// MONTE CARLO
+// ════════════════════════════════════════════════════════════════════════
+let mcCtx=null, mcAnimFrame=null, mcPaths=[], mcAnimStep=0, mcTotalSteps=0;
+
+function initMcCanvas(){
+  const canvas=document.getElementById('mcCanvas');
+  const wrap=canvas.parentElement;
+  canvas.width=wrap.clientWidth*devicePixelRatio||600;
+  canvas.height=260*devicePixelRatio;
+  canvas.style.width='100%';canvas.style.height='260px';
+  mcCtx=canvas.getContext('2d');
+  mcCtx.scale(devicePixelRatio,devicePixelRatio);
+  drawMcPlaceholder();
+}
+
+function drawMcPlaceholder(){
+  if(!mcCtx)return;
+  const W=mcCtx.canvas.width/devicePixelRatio, H=mcCtx.canvas.height/devicePixelRatio;
+  mcCtx.clearRect(0,0,W,H);
+  mcCtx.fillStyle='#f5f7ff';mcCtx.fillRect(0,0,W,H);
+  mcCtx.fillStyle='#7a85bb';mcCtx.font="0.75rem 'DM Mono',monospace";mcCtx.textAlign='center';
+  mcCtx.fillText('Run simulation to animate paths',W/2,H/2);
+}
+
+function runMonteCarlo(){
+  if(mcAnimFrame)cancelAnimationFrame(mcAnimFrame);
+  const S0=+document.getElementById('mc-spot').value;
+  const K =+document.getElementById('mc-strike').value;
+  const T =+document.getElementById('mc-maturity').value;
+  const r =+document.getElementById('mc-rate').value/100;
+  const sig=+document.getElementById('mc-vol').value/100;
+  const type=document.getElementById('mc-type').value;
+  const nPaths=+document.getElementById('mc-paths').value;
+  const nSteps=+document.getElementById('mc-steps').value;
+  const dt=T/nSteps;
+  const badge=document.getElementById('mc-running-badge');
+  badge.style.display='inline-flex';
+
+  // Generate all paths
+  mcPaths=[];
+  const payoffs=[];
+  for(let p=0;p<nPaths;p++){
+    let S=S0;const path=[S];
+    for(let i=0;i<nSteps;i++){
+      const z=(()=>{let u=0,v=0;while(u===0)u=Math.random();while(v===0)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);})();
+      S=S*Math.exp((r-0.5*sig**2)*dt+sig*Math.sqrt(dt)*z);
+      path.push(S);
+    }
+    mcPaths.push(path);
+    payoffs.push(type==='call'?Math.max(path[path.length-1]-K,0):Math.max(K-path[path.length-1],0));
+  }
+
+  // Stats
+  const discount=Math.exp(-r*T);
+  const mean=payoffs.reduce((a,b)=>a+b,0)/nPaths;
+  const mcPrice=discount*mean;
+  const variance=payoffs.reduce((a,b)=>a+(b-mean)**2,0)/(nPaths-1);
+  const stdErr=Math.sqrt(variance/nPaths)*discount;
+  const bsRes=bs(S0,K,T,r,sig,0);
+  const bsRef=type==='call'?bsRes.call:bsRes.put;
+
+  document.getElementById('mc-price').textContent=mcPrice.toFixed(4);
+  document.getElementById('mc-bs-price').textContent=bsRef.toFixed(4);
+  document.getElementById('mc-stderr').textContent='± '+stdErr.toFixed(4);
+  document.getElementById('mc-count').textContent=nPaths.toLocaleString();
+  document.getElementById('mc-note').textContent=nSteps+' steps · GBM · risk-neutral measure';
+
+  // Animate paths one by one
+  mcAnimStep=0; mcTotalSteps=nSteps;
+  if(!mcCtx)initMcCanvas();
+
+  const W=mcCtx.canvas.width/devicePixelRatio;
+  const H=mcCtx.canvas.height/devicePixelRatio;
+  const allVals=mcPaths.flat();
+  const minS=Math.min(...allVals)*0.97, maxS=Math.max(...allVals)*1.03;
+  const xScale=s=>s/(nSteps)*W;
+  const yScale=v=>H-((v-minS)/(maxS-minS))*H*0.88-H*0.06;
+
+  // Color palette — blues and one red for last drawn path
+  const palette=['rgba(26,64,245,0.35)','rgba(74,107,255,0.3)','rgba(100,140,255,0.25)','rgba(26,64,245,0.2)'];
+
+  let pathIndex=0;
+
+  function animStep(){
+    // Draw one path per frame (or a few for speed)
+    const batchSize=Math.max(1,Math.floor(nPaths/80));
+    for(let b=0;b<batchSize&&pathIndex<nPaths;b++){
+      const path=mcPaths[pathIndex];
+      mcCtx.beginPath();
+      mcCtx.moveTo(xScale(0),yScale(S0));
+      for(let i=1;i<path.length;i++)mcCtx.lineTo(xScale(i),yScale(path[i]));
+      mcCtx.strokeStyle=pathIndex===nPaths-1?'rgba(224,49,43,0.7)':palette[pathIndex%palette.length];
+      mcCtx.lineWidth=pathIndex===nPaths-1?1.5:0.8;
+      mcCtx.stroke();
+      pathIndex++;
+    }
+
+    // Draw strike line
+    mcCtx.setLineDash([4,4]);
+    mcCtx.beginPath();mcCtx.moveTo(0,yScale(K));mcCtx.lineTo(W,yScale(K));
+    mcCtx.strokeStyle='rgba(224,49,43,0.5)';mcCtx.lineWidth=1;mcCtx.stroke();
+    mcCtx.setLineDash([]);
+
+    // Labels
+    mcCtx.fillStyle='rgba(224,49,43,0.8)';mcCtx.font="0.62rem 'DM Mono',monospace";mcCtx.textAlign='left';
+    mcCtx.fillText('K = '+K,4,yScale(K)-4);
+    mcCtx.fillStyle='rgba(26,64,245,0.7)';
+    mcCtx.fillText('S₀ = '+S0,4,yScale(S0)+12);
+
+    if(pathIndex<nPaths){
+      mcAnimFrame=requestAnimationFrame(animStep);
+    } else {
+      badge.style.display='none';
+      // Final price distribution label
+      mcCtx.fillStyle='rgba(10,18,64,0.7)';mcCtx.font="bold 0.7rem 'DM Mono',monospace";mcCtx.textAlign='right';
+      mcCtx.fillText('MC Price: '+mcPrice.toFixed(4)+'  |  BS: '+bsRef.toFixed(4),W-8,14);
+    }
+  }
+
+  // Clear and draw background
+  mcCtx.clearRect(0,0,W,H);
+  mcCtx.fillStyle='#f5f7ff';mcCtx.fillRect(0,0,W,H);
+  // Grid lines
+  mcCtx.strokeStyle='rgba(26,64,245,0.06)';mcCtx.lineWidth=1;
+  for(let g=0;g<=4;g++){const y=H*0.06+g*(H*0.88/4);mcCtx.beginPath();mcCtx.moveTo(0,y);mcCtx.lineTo(W,y);mcCtx.stroke();}
+  for(let g=0;g<=6;g++){const x=g*(W/6);mcCtx.beginPath();mcCtx.moveTo(x,0);mcCtx.lineTo(x,H);mcCtx.stroke();}
+
+  mcAnimFrame=requestAnimationFrame(animStep);
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════════════════════
+window.onload=()=>{
+  calculate();
+  initMcCanvas();
+};
 </script>
 </body>
 </html>
