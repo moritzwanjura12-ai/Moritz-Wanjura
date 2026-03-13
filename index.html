@@ -317,7 +317,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
       <div>
         <h2 style="font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--text);margin-bottom:0.3rem;">Welcome<em style="font-style:italic;color:var(--muted);"> to the Toolkit.</em></h2>
-        <p style="font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--muted);letter-spacing:0.06em;">12 interactive models · 4 categories · no installation required</p>
+        <p style="font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--muted);letter-spacing:0.06em;">15 interactive models · 4 categories · no installation required</p>
       </div>
       <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
         <span style="background:rgba(26,64,245,0.08);border:1px solid rgba(26,64,245,0.2);border-radius:20px;padding:4px 14px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--blue);letter-spacing:0.08em;">Educational</span>
@@ -330,11 +330,14 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
       <div onclick="switchCat('options')" style="background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:1.5rem;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;" onmouseover="this.style.borderColor='var(--blue)';this.style.boxShadow='0 4px 24px var(--shadow)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
         <div style="position:absolute;right:-20px;top:-20px;font-size:5rem;opacity:0.04;pointer-events:none;">◈</div>
         <div style="font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--blue);margin-bottom:0.75rem;font-weight:500;">◈ Options &amp; Derivatives</div>
-        <p style="font-size:0.82rem;color:var(--muted);line-height:1.7;margin-bottom:1.1rem;">Analytical and simulation-based pricing engines for European and American options — with Greeks, payoff diagrams and a 3D volatility surface.</p>
+        <p style="font-size:0.82rem;color:var(--muted);line-height:1.7;margin-bottom:1.1rem;">Analytical and simulation-based pricing engines for European and American options — with Greeks, payoff diagrams, 3D volatility surface, implied vol calculator, strategy builder and Greeks heatmap.</p>
         <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1.1rem;">
           <span style="background:var(--off);border:1px solid var(--border);border-radius:4px;padding:3px 9px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);">Black–Scholes</span>
           <span style="background:var(--off);border:1px solid var(--border);border-radius:4px;padding:3px 9px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);">Monte Carlo</span>
           <span style="background:var(--off);border:1px solid var(--border);border-radius:4px;padding:3px 9px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);">Binomial Tree</span>
+          <span style="background:var(--off);border:1px solid var(--border);border-radius:4px;padding:3px 9px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);">Implied Vol</span>
+          <span style="background:var(--off);border:1px solid var(--border);border-radius:4px;padding:3px 9px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);">Strategy Builder</span>
+          <span style="background:var(--off);border:1px solid var(--border);border-radius:4px;padding:3px 9px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);">Greeks Heatmap</span>
         </div>
         <div style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--blue);letter-spacing:0.08em;">Open →</div>
       </div>
@@ -383,7 +386,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
       <div style="display:flex;flex-direction:column;gap:0.75rem;">
         <div style="background:var(--off);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;">
           <div style="font-family:'DM Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px;">Models</div>
-          <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--blue);">12</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--blue);">15</div>
           <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);">Across 4 categories</div>
         </div>
         <div style="background:var(--off);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;">
@@ -418,9 +421,12 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
     </div>
 
     <div class="tool-grid">
-      <div class="tool-chip active" id="chip-bs" onclick="selectTool('bs')"><div class="chip-dot"></div>Black–Scholes Pricer</div>
-      <div class="tool-chip"       id="chip-mc"  onclick="selectTool('mc')"><div class="chip-dot"></div>Monte Carlo Simulation</div>
-      <div class="tool-chip"       id="chip-bin" onclick="selectTool('bin')"><div class="chip-dot"></div>Binomial Tree Model</div>
+      <div class="tool-chip active" id="chip-bs"  onclick="selectTool('bs')"><div class="chip-dot"></div>Black–Scholes Pricer</div>
+      <div class="tool-chip"        id="chip-mc"   onclick="selectTool('mc')"><div class="chip-dot"></div>Monte Carlo Simulation</div>
+      <div class="tool-chip"        id="chip-bin"  onclick="selectTool('bin')"><div class="chip-dot"></div>Binomial Tree Model</div>
+      <div class="tool-chip"        id="chip-iv"   onclick="selectTool('iv')"><div class="chip-dot"></div>Implied Volatility</div>
+      <div class="tool-chip"        id="chip-strat" onclick="selectTool('strat')"><div class="chip-dot"></div>Strategy Builder</div>
+      <div class="tool-chip"        id="chip-hmap" onclick="selectTool('hmap')"><div class="chip-dot"></div>Greeks Heatmap</div>
     </div>
 
     <!-- BLACK-SCHOLES TOOL -->
@@ -620,6 +626,212 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
         </div>
       </div>
     </div><!-- /tool-bin -->
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- IMPLIED VOLATILITY TOOL                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="tool-iv" style="display:none;">
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Implied Volatility Calculator</span><span class="info-toggle" onclick="toggleInfo('iv',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
+        <div class="info-panel" id="info-iv">
+          <h3>Implied Volatility (IV)</h3>
+          <div class="info-subtitle">Black–Scholes inverted via Newton–Raphson iteration</div>
+          <div class="info-section"><h4>What is it?</h4><p>Implied Volatility is the market's forward-looking estimate of volatility, embedded in an option's market price. It answers: "What volatility σ would make Black–Scholes produce exactly this market price?" Unlike historical volatility (backward-looking), IV reflects market expectations.</p></div>
+          <div class="info-section"><h4>Algorithm: Newton–Raphson</h4><div class="info-formula">σ_{n+1} = σ_n − [BS(σ_n) − C_market] / Vega(σ_n)<br><br><span class="f-comment">Converges in ≈4–7 iterations · seed σ₀ = Manaster–Koehler approximation</span></div></div>
+          <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Enter market parameters: S, K, T, r, q</li><li>Enter the observed market price of the option</li><li>Select Call or Put</li><li>Click Solve → IV is returned with convergence diagnostics</li><li>The IV scanner below computes a full smile across multiple strikes</li></ol></div>
+          <div class="info-section"><h4>Interpreting IV</h4><p>IV &gt; 30% is generally high. Equity indices typically show IV skew: lower strikes have higher IV (downside fear). Single stocks show a <span class="info-tag">smile</span>. If IV &gt; historical vol → options are "expensive".</p></div>
+        </div>
+        <div class="card-body">
+          <div class="inputs-grid">
+            <div class="field"><label>Spot Price <span class="sym">S</span></label><input type="number" id="iv-spot" value="100" step="0.01"></div>
+            <div class="field"><label>Strike Price <span class="sym">K</span></label><input type="number" id="iv-strike" value="105" step="0.01"></div>
+            <div class="field"><label>Maturity (yrs) <span class="sym">T</span></label><input type="number" id="iv-T" value="0.5" step="0.01"></div>
+            <div class="field"><label>Risk-Free Rate % <span class="sym">r</span></label><input type="number" id="iv-r" value="5" step="0.1"></div>
+            <div class="field"><label>Dividend Yield % <span class="sym">q</span></label><input type="number" id="iv-q" value="0" step="0.1"></div>
+            <div class="field"><label>Market Option Price <span class="sym">C*</span></label><input type="number" id="iv-mktprice" value="7.20" step="0.01"></div>
+          </div>
+          <div style="display:flex;gap:0;background:var(--off);border:1.5px solid var(--border);border-radius:8px;overflow:hidden;width:fit-content;margin-top:1rem;">
+            <button id="iv-type-call" onclick="setIVType('call')" style="padding:0.55rem 1.2rem;border:none;background:var(--blue);color:white;font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;">Call</button>
+            <button id="iv-type-put"  onclick="setIVType('put')"  style="padding:0.55rem 1.2rem;border:none;background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;">Put</button>
+          </div>
+          <button class="btn-primary" onclick="runIV()" style="margin-top:1rem;">▶ &nbsp;Solve for IV</button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+        <div class="price-card call"><div class="p-label">Implied Volatility</div><div class="p-value" id="iv-result" style="font-size:1.9rem;">—</div><div class="p-sub">σ_implied</div></div>
+        <div class="price-card put" style="border-color:var(--blue);"><div class="p-label" style="color:var(--blue);">BS Model Price</div><div class="p-value" id="iv-bsprice" style="color:var(--blue);font-size:1.9rem;">—</div><div class="p-sub">At solved σ</div></div>
+        <div class="price-card put" style="border-color:var(--green);"><div class="p-label" style="color:var(--green);">Iterations</div><div class="p-value" id="iv-iters" style="color:var(--green);font-size:1.9rem;">—</div><div class="p-sub">Newton–Raphson</div></div>
+        <div class="price-card put" style="border-color:var(--muted);"><div class="p-label" style="color:var(--muted);">Pricing Error</div><div class="p-value" id="iv-error" style="color:var(--muted);font-size:1.9rem;">—</div><div class="p-sub">|BS(σ) − C*|</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>IV Greeks at Solved Volatility</span></div>
+        <div class="card-body">
+          <div class="greeks-grid" id="iv-greeks-grid"><p style="color:var(--muted);font-family:'DM Mono',monospace;font-size:0.8rem;grid-column:1/-1">Solve first.</p></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Volatility Smile Scanner — IV across Strikes</span></div>
+        <div class="card-body">
+          <p style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--muted);margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.08em;">Enter market prices for multiple strikes → plots the vol smile</p>
+          <div id="iv-smile-rows" style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:0.75rem;"></div>
+          <div style="display:flex;gap:0.75rem;margin-bottom:1.25rem;">
+            <button onclick="addSmileRow()" style="padding:0.4rem 1rem;background:transparent;border:1.5px dashed var(--border);border-radius:8px;font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">+ Add Strike</button>
+            <button onclick="runSmile()" class="btn-secondary">▶ Plot Smile</button>
+          </div>
+          <canvas id="iv-smile-chart" style="max-height:280px;"></canvas>
+        </div>
+      </div>
+    </div><!-- /tool-iv -->
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- OPTIONS STRATEGY BUILDER                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="tool-strat" style="display:none;">
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Strategy Builder — Combine Option Legs</span><span class="info-toggle" onclick="toggleInfo('strat',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
+        <div class="info-panel" id="info-strat">
+          <h3>Options Strategy Builder</h3>
+          <div class="info-subtitle">Multi-leg payoff diagram · P&amp;L at expiry and today</div>
+          <div class="info-section"><h4>What is it?</h4><p>Option strategies combine multiple legs (calls, puts, stock) to create custom risk/reward profiles. The payoff diagram shows the net profit/loss at expiry across a range of underlying prices. Each leg can be long or short with any quantity.</p></div>
+          <div class="info-section"><h4>Common strategies</h4><div class="info-grid">
+            <div class="info-box"><div class="ib-label">Bull Call Spread</div><div class="ib-desc">Long Call K₁ + Short Call K₂ (K₂&gt;K₁). Limited upside, cheap.</div></div>
+            <div class="info-box"><div class="ib-label">Straddle</div><div class="ib-desc">Long Call K + Long Put K. Profit if large move in either direction.</div></div>
+            <div class="info-box"><div class="ib-label">Butterfly</div><div class="ib-desc">Long K₁, Short 2×K₂, Long K₃. Profit if price stays near K₂.</div></div>
+            <div class="info-box"><div class="ib-label">Risk Reversal</div><div class="ib-desc">Long Call K₂ + Short Put K₁. Bullish directional with no net premium.</div></div>
+          </div></div>
+          <div class="info-section"><h4>Presets</h4><p>Use the preset buttons to instantly load common strategies. Or build your own by adding legs manually.</p></div>
+        </div>
+        <div class="card-body">
+          <div class="inputs-grid" style="margin-bottom:1.25rem;">
+            <div class="field"><label>Spot Price <span class="sym">S</span></label><input type="number" id="strat-spot" value="100" step="1"></div>
+            <div class="field"><label>Risk-Free Rate % <span class="sym">r</span></label><input type="number" id="strat-r" value="5" step="0.1"></div>
+            <div class="field"><label>Volatility % <span class="sym">σ</span></label><input type="number" id="strat-vol" value="25" step="1"></div>
+          </div>
+
+          <div style="margin-bottom:1rem;">
+            <p style="font-family:'DM Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.6rem;">Presets</p>
+            <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+              <button class="btn-secondary" onclick="loadPreset('straddle')" style="font-size:0.65rem;padding:0.4rem 0.8rem;">Straddle</button>
+              <button class="btn-secondary" onclick="loadPreset('strangle')" style="font-size:0.65rem;padding:0.4rem 0.8rem;">Strangle</button>
+              <button class="btn-secondary" onclick="loadPreset('bull_spread')" style="font-size:0.65rem;padding:0.4rem 0.8rem;">Bull Call Spread</button>
+              <button class="btn-secondary" onclick="loadPreset('bear_spread')" style="font-size:0.65rem;padding:0.4rem 0.8rem;">Bear Put Spread</button>
+              <button class="btn-secondary" onclick="loadPreset('butterfly')" style="font-size:0.65rem;padding:0.4rem 0.8rem;">Butterfly</button>
+              <button class="btn-secondary" onclick="loadPreset('condor')" style="font-size:0.65rem;padding:0.4rem 0.8rem;">Iron Condor</button>
+              <button class="btn-secondary" onclick="loadPreset('covered_call')" style="font-size:0.65rem;padding:0.4rem 0.8rem;">Covered Call</button>
+              <button class="btn-secondary" onclick="loadPreset('protective_put')" style="font-size:0.65rem;padding:0.4rem 0.8rem;">Protective Put</button>
+              <button class="btn-secondary" onclick="loadPreset('risk_reversal')" style="font-size:0.65rem;padding:0.4rem 0.8rem;">Risk Reversal</button>
+            </div>
+          </div>
+
+          <div style="height:1px;background:var(--border);margin:1rem 0;"></div>
+          <p style="font-family:'DM Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.6rem;">Legs — Type · Direction · Strike · Maturity (yrs) · Qty</p>
+          <div id="strat-legs"></div>
+          <button onclick="addStratLeg()" style="margin-top:0.5rem;padding:0.4rem 1rem;background:transparent;border:1.5px dashed var(--border);border-radius:8px;font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">+ Add Leg</button>
+
+          <button class="btn-primary" onclick="runStrategy()" style="margin-top:1rem;">▶ &nbsp;Plot Strategy</button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;" id="strat-kpis">
+        <div class="price-card put" style="border-color:var(--blue);"><div class="p-label" style="color:var(--blue);">Net Premium</div><div class="p-value" id="strat-net-prem" style="color:var(--blue);font-size:1.9rem;">—</div><div class="p-sub">Cost to enter</div></div>
+        <div class="price-card put" style="border-color:var(--green);"><div class="p-label" style="color:var(--green);">Max Profit</div><div class="p-value" id="strat-max-profit" style="color:var(--green);font-size:1.9rem;">—</div><div class="p-sub">Per unit</div></div>
+        <div class="price-card put" style="border-color:var(--put);"><div class="p-label" style="color:var(--put);">Max Loss</div><div class="p-value" id="strat-max-loss" style="color:var(--put);font-size:1.9rem;">—</div><div class="p-sub">Per unit</div></div>
+        <div class="price-card put" style="border-color:var(--muted);"><div class="p-label" style="color:var(--muted);">Breakeven(s)</div><div class="p-value" id="strat-breakeven" style="color:var(--muted);font-size:1.2rem;line-height:1.3;">—</div><div class="p-sub">S at expiry</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Payoff Diagram</span>
+          <span id="strat-name-label" style="margin-left:auto;font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--blue);"></span>
+        </div>
+        <div class="card-body" style="padding:1rem;">
+          <canvas id="strat-chart" style="max-height:360px;"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Legs Summary</span></div>
+        <div class="card-body">
+          <table class="calc-table">
+            <thead><tr><th>Leg</th><th>Type</th><th>Direction</th><th>Strike</th><th>Mat</th><th>Qty</th><th>BS Price</th><th style="text-align:right">Net Cost</th></tr></thead>
+            <tbody id="strat-legs-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </div><!-- /tool-strat -->
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- GREEKS HEATMAP / VOL SURFACE                                   -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="tool-hmap" style="display:none;">
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Greeks Heatmap &amp; Vol Surface Parameters</span><span class="info-toggle" onclick="toggleInfo('hmap',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
+        <div class="info-panel" id="info-hmap">
+          <h3>Greeks Heatmap &amp; Implied Vol Surface</h3>
+          <div class="info-subtitle">Strike × Maturity grid · Delta, Gamma, Vega, Theta, IV surface</div>
+          <div class="info-section"><h4>What is it?</h4><p>The heatmap visualises any Greek or the option price across a full grid of strikes and maturities simultaneously. This reveals how sensitivity changes across the entire option chain, not just at one point. The IV surface tab shows how implied volatility would vary if you fed in a parametric smile model.</p></div>
+          <div class="info-section"><h4>Vol Smile model</h4><div class="info-formula">σ_imp(K) = σ_atm + skew·(F−K)/F + kurtosis·[(F−K)/F]²<br><br><span class="f-comment">F = forward price = S·e^(rT) · skew &lt; 0 = typical equity skew</span></div></div>
+          <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Set base parameters: S, r, σ_ATM</li><li>Choose which Greek to display in the heatmap</li><li>Click Generate → colour-coded grid appears</li><li>Switch to "IV Surface" tab to see the parametric vol smile across strikes and maturities</li></ol></div>
+        </div>
+        <div class="card-body">
+          <div class="inputs-grid">
+            <div class="field"><label>Spot Price <span class="sym">S</span></label><input type="number" id="hmap-spot" value="100" step="1"></div>
+            <div class="field"><label>Risk-Free Rate % <span class="sym">r</span></label><input type="number" id="hmap-r" value="5" step="0.1"></div>
+            <div class="field"><label>ATM Vol % <span class="sym">σ_atm</span></label><input type="number" id="hmap-vol" value="25" step="1"></div>
+            <div class="field"><label>Skew (equity &lt;0)</label><input type="number" id="hmap-skew" value="-0.05" step="0.01"></div>
+            <div class="field"><label>Kurtosis (smile)</label><input type="number" id="hmap-kurt" value="0.1" step="0.01"></div>
+            <div class="field"><label>Option Type</label>
+              <select id="hmap-opttype" style="width:100%;background:white;border:1.5px solid var(--border);border-radius:8px;padding:0.65rem 0.9rem;color:var(--text);font-family:'DM Mono',monospace;font-size:0.9rem;outline:none;">
+                <option value="call">Call</option>
+                <option value="put">Put</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-top:1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+            <div style="display:flex;gap:0;background:var(--off);border:1.5px solid var(--border);border-radius:8px;overflow:hidden;">
+              <button id="hmap-m-delta"  onclick="setHmapMetric('delta')"  style="padding:0.45rem 0.9rem;border:none;background:var(--blue);color:white;font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;cursor:pointer;">Delta</button>
+              <button id="hmap-m-gamma"  onclick="setHmapMetric('gamma')"  style="padding:0.45rem 0.9rem;border:none;background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;cursor:pointer;">Gamma</button>
+              <button id="hmap-m-vega"   onclick="setHmapMetric('vega')"   style="padding:0.45rem 0.9rem;border:none;background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;cursor:pointer;">Vega</button>
+              <button id="hmap-m-theta"  onclick="setHmapMetric('theta')"  style="padding:0.45rem 0.9rem;border:none;background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;cursor:pointer;">Theta</button>
+              <button id="hmap-m-price"  onclick="setHmapMetric('price')"  style="padding:0.45rem 0.9rem;border:none;background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;cursor:pointer;">Price</button>
+            </div>
+          </div>
+          <button class="btn-primary" onclick="runHmap()" style="margin-top:1rem;">▶ &nbsp;Generate Heatmap</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body" style="padding-bottom:0.5rem;">
+          <div class="tab-bar">
+            <button class="tab-btn active" id="htb-hmap"    onclick="switchHmapTab('hmap')">Greeks Heatmap</button>
+            <button class="tab-btn"        id="htb-ivsurf"  onclick="switchHmapTab('ivsurf')">IV Surface (Smile)</button>
+            <button class="tab-btn"        id="htb-ivskew"  onclick="switchHmapTab('ivskew')">Vol Skew by Maturity</button>
+          </div>
+          <div class="tab-panel active" id="hpanel-hmap">
+            <p style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:0.08em;">Rows = Strikes · Columns = Maturities · Colour = <span id="hmap-metric-label">Delta</span></p>
+            <div style="overflow-x:auto;"><div id="hmap-grid" style="font-family:'DM Mono',monospace;font-size:0.68rem;"></div></div>
+            <div style="display:flex;gap:1.5rem;margin-top:1rem;align-items:center;flex-wrap:wrap;">
+              <div style="display:flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);">
+                <div style="width:80px;height:12px;background:linear-gradient(to right,#e8edff,#4a6bff,#0a2acc);border-radius:2px;"></div>
+                Low → High
+              </div>
+              <span id="hmap-range-label" style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);margin-left:auto;"></span>
+            </div>
+          </div>
+          <div class="tab-panel" id="hpanel-ivsurf">
+            <p style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:0.08em;">Parametric vol surface · Strike vs Implied Vol by Maturity</p>
+            <canvas id="hmap-ivsurf-chart" style="max-height:340px;"></canvas>
+          </div>
+          <div class="tab-panel" id="hpanel-ivskew">
+            <p style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:0.08em;">Vol Skew — Forward moneyness vs IV for each maturity</p>
+            <canvas id="hmap-ivskew-chart" style="max-height:320px;"></canvas>
+          </div>
+        </div>
+      </div>
+    </div><!-- /tool-hmap -->
+
   </div><!-- /cat-options -->
 
   <!-- CAT 2: PORTFOLIO & RISK -->
@@ -1165,12 +1377,13 @@ function switchCat(name){
 // TOOL SELECTOR (Options tab)
 // ════════════════════════════════════════════════════════════════════════
 function selectTool(name){
-  document.querySelectorAll('#cat-options .tool-chip').forEach(c=>c.classList.remove('active'));
-  document.getElementById('chip-'+name).classList.add('active');
-  document.getElementById('tool-bs').style.display=name==='bs'?'block':'none';
-  document.getElementById('tool-mc').style.display=name==='mc'?'block':'none';
-  document.getElementById('tool-bin').style.display=name==='bin'?'block':'none';
+  ['bs','mc','bin','iv','strat','hmap'].forEach(t=>{
+    document.getElementById('chip-'+t).classList.toggle('active',t===name);
+    document.getElementById('tool-'+t).style.display=t===name?'block':'none';
+  });
   if(name==='mc')initMcCanvas();
+  if(name==='strat')initStratLegs();
+  if(name==='hmap')initSmileRows_hmap();
 }
 
 // ════════════════════════════════════════════════════════════════════════
@@ -2391,11 +2604,515 @@ function runEF(){
 
 document.addEventListener('DOMContentLoaded',()=>{
   buildCorrMatrix();
+  initStratLegs();
+  initSmileRows();
 });
 window.onload=()=>{
   calculate();
   initMcCanvas();
 };
+
+// ════════════════════════════════════════════════════════════════════════
+// IMPLIED VOLATILITY — Newton–Raphson
+// ════════════════════════════════════════════════════════════════════════
+let ivType='call', ivSmileChart=null;
+
+function setIVType(t){
+  ivType=t;
+  ['call','put'].forEach(x=>{
+    const el=document.getElementById('iv-type-'+x);
+    el.style.background=x===t?'var(--blue)':'transparent';
+    el.style.color=x===t?'white':'var(--muted)';
+  });
+}
+
+function solveIV(S,K,T,r,q,mktPrice,type,maxIter=100,tol=1e-8){
+  if(T<=0)return{iv:NaN,iters:0,err:Infinity};
+  // Manaster-Koehler seed
+  let sigma=Math.sqrt(Math.abs(Math.log(S/K)+(r-q)*T)*2/T)||0.3;
+  sigma=Math.max(0.001,Math.min(sigma,5));
+  let iter=0,err=Infinity;
+  while(iter<maxIter){
+    const res=bs(S,K,T,r,sigma,q);
+    const price=type==='call'?res.call:res.put;
+    const vega=S*Math.exp(-q*T)*nd(res.d1)*Math.sqrt(T);
+    err=price-mktPrice;
+    if(Math.abs(err)<tol)break;
+    if(Math.abs(vega)<1e-12)break;
+    sigma=sigma-err/vega;
+    sigma=Math.max(0.0001,Math.min(sigma,10));
+    iter++;
+  }
+  return{iv:sigma,iters:iter,err:Math.abs(err)};
+}
+
+function runIV(){
+  const S=+document.getElementById('iv-spot').value;
+  const K=+document.getElementById('iv-strike').value;
+  const T=+document.getElementById('iv-T').value;
+  const r=+document.getElementById('iv-r').value/100;
+  const q=+document.getElementById('iv-q').value/100;
+  const mktPrice=+document.getElementById('iv-mktprice').value;
+  const{iv,iters,err}=solveIV(S,K,T,r,q,mktPrice,ivType);
+  if(isNaN(iv)||iv<=0){
+    document.getElementById('iv-result').textContent='No sol.';
+    return;
+  }
+  const res=bs(S,K,T,r,iv,q);
+  const bsP=ivType==='call'?res.call:res.put;
+  document.getElementById('iv-result').textContent=(iv*100).toFixed(3)+'%';
+  document.getElementById('iv-bsprice').textContent=bsP.toFixed(4);
+  document.getElementById('iv-iters').textContent=iters;
+  document.getElementById('iv-error').textContent=err.toExponential(2);
+  // Greeks
+  const g=greeks(S,K,T,r,iv,q);
+  const items=[
+    {sym:'Δ',name:'Delta',c:g.dC,p:g.dP,desc:'∂V/∂S'},
+    {sym:'Γ',name:'Gamma',c:g.gam,p:g.gam,desc:'∂²V/∂S²'},
+    {sym:'ν',name:'Vega',c:g.veg,p:g.veg,desc:'per 1% vol'},
+    {sym:'Θ',name:'Theta',c:g.tC,p:g.tP,desc:'daily decay'},
+    {sym:'ρ',name:'Rho',c:g.rC,p:g.rP,desc:'per 1% rate'},
+  ];
+  document.getElementById('iv-greeks-grid').innerHTML=items.map(i=>`
+    <div class="g-card">
+      <div class="g-sym">${i.sym}</div><div class="g-name">${i.name}</div>
+      <div class="g-row"><span class="lbl">C</span><span class="call-v">${i.c.toFixed(4)}</span></div>
+      <div class="g-row"><span class="lbl">P</span><span class="put-v">${i.p.toFixed(4)}</span></div>
+      <div class="g-desc">${i.desc}</div>
+    </div>`).join('');
+}
+
+function initSmileRows(){
+  const container=document.getElementById('iv-smile-rows');
+  if(container&&container.children.length===0){
+    [[90,5.5],[95,4.2],[100,3.8],[105,4.1],[110,5.0],[115,6.5]].forEach(([k,p])=>addSmileRowWith(k,p));
+  }
+}
+
+function addSmileRow(){addSmileRowWith(100,4);}
+
+function addSmileRowWith(k,p){
+  const row=document.createElement('div');
+  row.style.cssText='display:flex;gap:0.5rem;align-items:center;';
+  row.innerHTML=`
+    <input type="number" class="var-inp smile-k" placeholder="Strike" value="${k}" step="1" style="flex:1;background:white;border:1.5px solid var(--border);border-radius:8px;padding:0.5rem 0.75rem;font-family:'DM Mono',monospace;font-size:0.82rem;color:var(--text);outline:none;">
+    <input type="number" class="var-inp smile-p" placeholder="Mkt Price" value="${p}" step="0.01" style="flex:1;background:white;border:1.5px solid var(--border);border-radius:8px;padding:0.5rem 0.75rem;font-family:'DM Mono',monospace;font-size:0.82rem;color:var(--text);outline:none;">
+    <button class="var-rm" onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;padding:0 0.25rem;">✕</button>`;
+  document.getElementById('iv-smile-rows').appendChild(row);
+}
+
+function runSmile(){
+  const S=+document.getElementById('iv-spot').value;
+  const T=+document.getElementById('iv-T').value;
+  const r=+document.getElementById('iv-r').value/100;
+  const q=+document.getElementById('iv-q').value/100;
+  const rows=document.querySelectorAll('#iv-smile-rows > div');
+  const data=[];
+  rows.forEach(row=>{
+    const k=+row.querySelector('.smile-k').value;
+    const p=+row.querySelector('.smile-p').value;
+    const{iv}=solveIV(S,k,T,r,q,p,ivType);
+    if(!isNaN(iv)&&iv>0) data.push({k,iv:iv*100});
+  });
+  data.sort((a,b)=>a.k-b.k);
+  const ctx=document.getElementById('iv-smile-chart').getContext('2d');
+  if(ivSmileChart)ivSmileChart.destroy();
+  ivSmileChart=new Chart(ctx,{type:'line',data:{
+    labels:data.map(d=>d.k),
+    datasets:[{
+      label:'Implied Volatility (%)',
+      data:data.map(d=>d.iv),
+      borderColor:'#1a40f5',backgroundColor:'rgba(26,64,245,0.08)',
+      borderWidth:2.5,pointRadius:6,pointBackgroundColor:'#1a40f5',fill:true,tension:0.3
+    }]
+  },options:{responsive:true,
+    plugins:{legend:{labels:{color:'#7a85bb',font:{family:'DM Mono',size:11}}},
+      tooltip:{backgroundColor:'#fff',borderColor:'#d8e0f5',borderWidth:1,titleColor:'#1a40f5',bodyColor:'#0d1240',
+        callbacks:{label:c=>` IV: ${c.raw.toFixed(2)}%`}}},
+    scales:{
+      x:{title:{display:true,text:'Strike',color:'var(--muted)',font:{family:'DM Mono',size:10}},
+        ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10}},grid:{color:'rgba(26,64,245,0.06)'}},
+      y:{title:{display:true,text:'Implied Vol (%)',color:'var(--muted)',font:{family:'DM Mono',size:10}},
+        ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10},callback:v=>v+'%'},grid:{color:'rgba(26,64,245,0.06)'}}
+    }
+  }});
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// OPTIONS STRATEGY BUILDER
+// ════════════════════════════════════════════════════════════════════════
+let stratChart=null;
+
+const PRESETS={
+  straddle:{name:'Straddle',legs:[
+    {type:'call',dir:'long', K:100,T:0.5,qty:1},
+    {type:'put', dir:'long', K:100,T:0.5,qty:1},
+  ]},
+  strangle:{name:'Strangle',legs:[
+    {type:'call',dir:'long', K:105,T:0.5,qty:1},
+    {type:'put', dir:'long', K:95, T:0.5,qty:1},
+  ]},
+  bull_spread:{name:'Bull Call Spread',legs:[
+    {type:'call',dir:'long',  K:95, T:0.5,qty:1},
+    {type:'call',dir:'short', K:105,T:0.5,qty:1},
+  ]},
+  bear_spread:{name:'Bear Put Spread',legs:[
+    {type:'put',dir:'long',  K:105,T:0.5,qty:1},
+    {type:'put',dir:'short', K:95, T:0.5,qty:1},
+  ]},
+  butterfly:{name:'Long Butterfly',legs:[
+    {type:'call',dir:'long',  K:90, T:0.5,qty:1},
+    {type:'call',dir:'short', K:100,T:0.5,qty:2},
+    {type:'call',dir:'long',  K:110,T:0.5,qty:1},
+  ]},
+  condor:{name:'Iron Condor',legs:[
+    {type:'put', dir:'long',  K:85, T:0.5,qty:1},
+    {type:'put', dir:'short', K:95, T:0.5,qty:1},
+    {type:'call',dir:'short', K:105,T:0.5,qty:1},
+    {type:'call',dir:'long',  K:115,T:0.5,qty:1},
+  ]},
+  covered_call:{name:'Covered Call',legs:[
+    {type:'stock',dir:'long', K:100,T:0.5,qty:1},
+    {type:'call', dir:'short',K:105,T:0.5,qty:1},
+  ]},
+  protective_put:{name:'Protective Put',legs:[
+    {type:'stock',dir:'long',K:100,T:0.5,qty:1},
+    {type:'put',  dir:'long',K:95, T:0.5,qty:1},
+  ]},
+  risk_reversal:{name:'Risk Reversal',legs:[
+    {type:'call',dir:'long', K:105,T:0.5,qty:1},
+    {type:'put', dir:'short',K:95, T:0.5,qty:1},
+  ]},
+};
+
+function initStratLegs(){
+  if(document.getElementById('strat-legs').children.length===0){
+    loadPreset('straddle');
+  }
+}
+
+function makeLegRow(leg){
+  const row=document.createElement('div');
+  row.className='strat-leg-row';
+  row.style.cssText='display:flex;gap:0.5rem;align-items:center;margin-bottom:0.5rem;flex-wrap:wrap;';
+  const typeOpts=['call','put','stock'].map(t=>`<option value="${t}"${leg.type===t?' selected':''}>${t.charAt(0).toUpperCase()+t.slice(1)}</option>`).join('');
+  const dirOpts=['long','short'].map(d=>`<option value="${d}"${leg.dir===d?' selected':''}>${d.charAt(0).toUpperCase()+d.slice(1)}</option>`).join('');
+  const sel=(opts,cls)=>`<select class="var-inp ${cls}" style="flex:1;min-width:80px;background:white;border:1.5px solid var(--border);border-radius:8px;padding:0.5rem 0.6rem;font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--text);outline:none;">${opts}</select>`;
+  const inp=(cls,val,ph,step='1')=>`<input type="number" class="var-inp ${cls}" placeholder="${ph}" value="${val}" step="${step}" style="flex:1;min-width:70px;background:white;border:1.5px solid var(--border);border-radius:8px;padding:0.5rem 0.6rem;font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--text);outline:none;">`;
+  row.innerHTML=
+    sel(typeOpts,'sl-type')+
+    sel(dirOpts,'sl-dir')+
+    inp('sl-K',leg.K,'Strike')+
+    inp('sl-T',leg.T,'Mat','0.01')+
+    inp('sl-qty',leg.qty,'Qty','0.1')+
+    `<button class="var-rm" onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;padding:0 0.25rem;flex-shrink:0;">✕</button>`;
+  return row;
+}
+
+function addStratLeg(){
+  document.getElementById('strat-legs').appendChild(makeLegRow({type:'call',dir:'long',K:100,T:0.5,qty:1}));
+}
+
+function loadPreset(key){
+  const p=PRESETS[key];
+  const container=document.getElementById('strat-legs');
+  container.innerHTML='';
+  p.legs.forEach(leg=>container.appendChild(makeLegRow(leg)));
+  document.getElementById('strat-name-label').textContent=p.name;
+}
+
+function getStratLegs(){
+  return Array.from(document.querySelectorAll('.strat-leg-row')).map(row=>({
+    type: row.querySelector('.sl-type').value,
+    dir:  row.querySelector('.sl-dir').value,
+    K:    +row.querySelector('.sl-K').value,
+    T:    +row.querySelector('.sl-T').value,
+    qty:  +row.querySelector('.sl-qty').value,
+  }));
+}
+
+function runStrategy(){
+  const S0=+document.getElementById('strat-spot').value;
+  const r=+document.getElementById('strat-r').value/100;
+  const sig=+document.getElementById('strat-vol').value/100;
+  const legs=getStratLegs();
+
+  // compute premium per leg
+  const legPrices=legs.map(leg=>{
+    if(leg.type==='stock') return S0;
+    const res=bs(S0,leg.K,leg.T,r,sig,0);
+    return leg.type==='call'?res.call:res.put;
+  });
+
+  const netPrem=legs.reduce((s,leg,i)=>{
+    const sign=leg.dir==='long'?-1:1; // debit if long
+    return s+sign*legPrices[i]*leg.qty;
+  },0); // positive = credit received
+
+  // payoff range
+  const range=S0*0.5;
+  const nPts=300;
+  const spots=Array.from({length:nPts},(_,i)=>S0-range+i*(2*range/(nPts-1)));
+
+  // payoff at expiry
+  const payoffExpiry=spots.map(S=>{
+    return legs.reduce((sum,leg,i)=>{
+      let legPayoff;
+      if(leg.type==='stock') legPayoff=S-S0; // P&L from stock position
+      else if(leg.type==='call') legPayoff=Math.max(S-leg.K,0);
+      else legPayoff=Math.max(leg.K-S,0);
+      const sign=leg.dir==='long'?1:-1;
+      return sum+sign*leg.qty*legPayoff;
+    },0)+netPrem;
+  });
+
+  // today P&L (BS-priced)
+  const payoffToday=spots.map(S=>{
+    const todayPnl=legs.reduce((sum,leg,i)=>{
+      let currentPrice;
+      if(leg.type==='stock') currentPrice=S-S0;
+      else{
+        const res=bs(S,leg.K,leg.T,r,sig,0);
+        currentPrice=(leg.type==='call'?res.call:res.put)-legPrices[i];
+      }
+      const sign=leg.dir==='long'?1:-1;
+      return sum+sign*leg.qty*currentPrice;
+    },0);
+    return todayPnl;
+  });
+
+  const maxP=Math.max(...payoffExpiry);
+  const minL=Math.min(...payoffExpiry);
+  const breakevens=[];
+  for(let i=1;i<spots.length;i++){
+    if(payoffExpiry[i-1]*payoffExpiry[i]<=0){
+      const be=spots[i-1]+(-payoffExpiry[i-1])/(payoffExpiry[i]-payoffExpiry[i-1])*(spots[i]-spots[i-1]);
+      breakevens.push(be.toFixed(2));
+    }
+  }
+
+  document.getElementById('strat-net-prem').textContent=(netPrem>=0?'+':'')+netPrem.toFixed(2);
+  document.getElementById('strat-net-prem').style.color=netPrem>=0?'var(--green)':'var(--put)';
+  document.getElementById('strat-max-profit').textContent=isFinite(maxP)&&maxP<1e6?maxP.toFixed(2):'∞';
+  document.getElementById('strat-max-loss').textContent=isFinite(minL)&&minL>-1e6?minL.toFixed(2):'-∞';
+  document.getElementById('strat-breakeven').textContent=breakevens.length?breakevens.join(' / '):'—';
+
+  // legs table
+  document.getElementById('strat-legs-table').innerHTML=legs.map((leg,i)=>`
+    <tr>
+      <td class="var">${i+1}</td>
+      <td>${leg.type.charAt(0).toUpperCase()+leg.type.slice(1)}</td>
+      <td style="color:${leg.dir==='long'?'var(--green)':'var(--put)'}">${leg.dir.charAt(0).toUpperCase()+leg.dir.slice(1)}</td>
+      <td>${leg.K}</td>
+      <td>${leg.T}y</td>
+      <td>${leg.qty}</td>
+      <td style="color:var(--blue)">${leg.type==='stock'?'—':legPrices[i].toFixed(4)}</td>
+      <td class="val" style="color:${leg.dir==='long'?'var(--put)':'var(--green)'}">
+        ${leg.dir==='long'?'-':'+'} ${(legPrices[i]*leg.qty).toFixed(2)}
+      </td>
+    </tr>`).join('');
+
+  const ctx=document.getElementById('strat-chart').getContext('2d');
+  if(stratChart)stratChart.destroy();
+
+  const zeroLine=spots.map(()=>0);
+  stratChart=new Chart(ctx,{type:'line',data:{
+    labels:spots.map(s=>s.toFixed(1)),
+    datasets:[
+      {label:'P&L at Expiry',data:payoffExpiry,
+        borderColor:'#1a40f5',backgroundColor:payoffExpiry.map(v=>v>=0?'rgba(0,170,102,0.12)':'rgba(224,49,43,0.10)'),
+        borderWidth:2.5,pointRadius:0,tension:0,fill:'origin'},
+      {label:'P&L Today',data:payoffToday,
+        borderColor:'rgba(122,161,250,0.7)',backgroundColor:'transparent',
+        borderWidth:1.5,pointRadius:0,tension:0.3,borderDash:[4,3]},
+      {label:'Zero',data:zeroLine,borderColor:'rgba(0,0,0,0.12)',borderWidth:1,pointRadius:0,borderDash:[2,3],fill:false},
+    ]
+  },options:{responsive:true,interaction:{mode:'index',intersect:false},
+    plugins:{
+      legend:{labels:{color:'#7a85bb',font:{family:'DM Mono',size:11}}},
+      tooltip:{backgroundColor:'#fff',borderColor:'#d8e0f5',borderWidth:1,titleColor:'#1a40f5',bodyColor:'#0d1240',
+        callbacks:{
+          title:function(i){return 'S = '+i[0].label;},
+          label:function(c){return c.dataset.label==='Zero'?null:' '+c.dataset.label+': '+c.raw.toFixed(2);}
+        }}
+    },
+    scales:{
+      x:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:9},maxTicksLimit:14},
+        title:{display:true,text:'Underlying Price (S)',color:'var(--muted)',font:{family:'DM Mono',size:10}},
+        grid:{color:'rgba(26,64,245,0.05)'}},
+      y:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10}},
+        title:{display:true,text:'Profit / Loss',color:'var(--muted)',font:{family:'DM Mono',size:10}},
+        grid:{color:'rgba(26,64,245,0.06)'}}
+    }
+  }});
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// GREEKS HEATMAP
+// ════════════════════════════════════════════════════════════════════════
+let hmapMetric='delta', hmapIVSurfChart=null, hmapIVSkewChart=null;
+
+function setHmapMetric(m){
+  hmapMetric=m;
+  ['delta','gamma','vega','theta','price'].forEach(x=>{
+    const el=document.getElementById('hmap-m-'+x);
+    el.style.background=x===m?'var(--blue)':'transparent';
+    el.style.color=x===m?'white':'var(--muted)';
+  });
+}
+
+function switchHmapTab(name){
+  document.querySelectorAll('#tool-hmap .tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('#tool-hmap .tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('hpanel-'+name).classList.add('active');
+  document.getElementById('htb-'+name).classList.add('active');
+}
+
+function initSmileRows_hmap(){}
+
+function smileVol(F,K,T,sigAtm,skew,kurt){
+  const m=(F-K)/F;
+  return Math.max(0.01, sigAtm + skew*m + kurt*m*m);
+}
+
+function runHmap(){
+  const S=+document.getElementById('hmap-spot').value;
+  const r=+document.getElementById('hmap-r').value/100;
+  const sigAtm=+document.getElementById('hmap-vol').value/100;
+  const skew=+document.getElementById('hmap-skew').value;
+  const kurt=+document.getElementById('hmap-kurt').value;
+  const optType=document.getElementById('hmap-opttype').value;
+
+  // Strike range: 70% to 130% of spot
+  const strikes=[70,75,80,85,90,92.5,95,97.5,100,102.5,105,107.5,110,115,120,125,130].map(k=>S*k/100);
+  // Maturities
+  const maturities=[0.083,0.25,0.5,0.75,1,1.5,2];
+  const matLabels=['1M','3M','6M','9M','1Y','18M','2Y'];
+
+  document.getElementById('hmap-metric-label').textContent=hmapMetric.charAt(0).toUpperCase()+hmapMetric.slice(1);
+
+  // Compute grid
+  const grid=[];
+  let minVal=Infinity, maxVal=-Infinity;
+  strikes.forEach(K=>{
+    const row=[];
+    maturities.forEach((T,ti)=>{
+      const F=S*Math.exp(r*T);
+      const sig=smileVol(F,K,T,sigAtm,skew,kurt);
+      const res=bs(S,K,T,r,sig,0);
+      const g=greeks(S,K,T,r,sig,0);
+      let val;
+      if(hmapMetric==='delta') val=optType==='call'?g.dC:g.dP;
+      else if(hmapMetric==='gamma') val=g.gam;
+      else if(hmapMetric==='vega') val=g.veg;
+      else if(hmapMetric==='theta') val=optType==='call'?g.tC:g.tP;
+      else val=optType==='call'?res.call:res.put;
+      row.push(val);
+      if(val<minVal)minVal=val;
+      if(val>maxVal)maxVal=val;
+    });
+    grid.push(row);
+  });
+
+  // Colour interpolation
+  function valToColor(v){
+    const t=(v-minVal)/(maxVal-minVal||1);
+    // low = light blue #e8edff, mid = #4a6bff, high = #0a2acc
+    const r1=232,g1=237,b1=255;
+    const r2=10,g2=42,b2=204;
+    const rr=Math.round(r1+(r2-r1)*t);
+    const gg=Math.round(g1+(g2-g1)*t);
+    const bb=Math.round(b1+(b2-b1)*t);
+    const textColor=t>0.55?'white':'var(--text)';
+    return{bg:`rgb(${rr},${gg},${bb})`,text:textColor};
+  }
+
+  // Build HTML table
+  const fmt=v=>{
+    if(Math.abs(v)<0.001)return v.toExponential(1);
+    if(Math.abs(v)<10)return v.toFixed(3);
+    return v.toFixed(1);
+  };
+
+  let html=`<table style="border-collapse:collapse;min-width:600px;">`;
+  html+=`<tr><th style="padding:6px 10px;font-family:'DM Mono',monospace;font-size:0.62rem;text-transform:uppercase;color:var(--muted);text-align:left;background:var(--off);border:1px solid var(--border);">Strike \\ Mat</th>`;
+  matLabels.forEach(m=>html+=`<th style="padding:6px 10px;font-family:'DM Mono',monospace;font-size:0.62rem;text-transform:uppercase;color:var(--blue);text-align:center;background:var(--off);border:1px solid var(--border);">${m}</th>`);
+  html+=`</tr>`;
+
+  strikes.forEach((K,ki)=>{
+    const pct=(K/S*100).toFixed(0);
+    const moneyness=K===S*1?'ATM':K<S?'ITM (C)':'OTM (C)';
+    html+=`<tr>`;
+    html+=`<td style="padding:5px 10px;font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--text);background:var(--off);border:1px solid var(--border);white-space:nowrap;font-weight:${Math.abs(K-S)<2?'700':'400'}">${K.toFixed(1)} <span style="color:var(--muted);font-size:0.58rem;">${pct}%</span></td>`;
+    grid[ki].forEach(val=>{
+      const{bg,text}=valToColor(val);
+      html+=`<td style="padding:5px 8px;text-align:center;font-family:'DM Mono',monospace;font-size:0.68rem;background:${bg};color:${text};border:1px solid rgba(255,255,255,0.3);">${fmt(val)}</td>`;
+    });
+    html+=`</tr>`;
+  });
+  html+=`</table>`;
+  document.getElementById('hmap-grid').innerHTML=html;
+  document.getElementById('hmap-range-label').textContent=`Range: ${fmt(minVal)} – ${fmt(maxVal)}`;
+
+  // IV SURFACE CHART
+  const moreStrikes=Array.from({length:50},(_,i)=>S*(0.65+i*0.7/49));
+  const palette6=['#0a2acc','#1a40f5','#4a6bff','#7aadff','#e0312b','#f5b700'];
+  const ivSurfDatasets=maturities.map((T,ti)=>{
+    const F=S*Math.exp(r*T);
+    return{
+      label:matLabels[ti],
+      data:moreStrikes.map(K=>smileVol(F,K,T,sigAtm,skew,kurt)*100),
+      borderColor:palette6[ti%palette6.length],
+      borderWidth:2,pointRadius:0,fill:false,tension:0.3
+    };
+  });
+
+  const ivSurfCtx=document.getElementById('hmap-ivsurf-chart').getContext('2d');
+  if(hmapIVSurfChart)hmapIVSurfChart.destroy();
+  hmapIVSurfChart=new Chart(ivSurfCtx,{type:'line',data:{
+    labels:moreStrikes.map(k=>k.toFixed(1)),
+    datasets:ivSurfDatasets
+  },options:{responsive:true,interaction:{mode:'index',intersect:false},
+    plugins:{legend:{labels:{color:'#7a85bb',font:{family:'DM Mono',size:11}}},
+      tooltip:{backgroundColor:'#fff',borderColor:'#d8e0f5',borderWidth:1,titleColor:'#1a40f5',bodyColor:'#0d1240',
+        callbacks:{label:c=>` ${c.dataset.label}: ${c.raw.toFixed(2)}%`}}},
+    scales:{
+      x:{title:{display:true,text:'Strike',color:'var(--muted)',font:{family:'DM Mono',size:10}},
+        ticks:{color:'#7a85bb',font:{family:'DM Mono',size:9},maxTicksLimit:10},grid:{color:'rgba(26,64,245,0.06)'}},
+      y:{title:{display:true,text:'Implied Volatility (%)',color:'var(--muted)',font:{family:'DM Mono',size:10}},
+        ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10},callback:v=>v+'%'},grid:{color:'rgba(26,64,245,0.06)'}}
+    }
+  }});
+
+  // VOL SKEW CHART — moneyness vs IV
+  const moneyness=Array.from({length:40},(_,i)=>-0.3+i*0.6/39);
+  const ivSkewDatasets=maturities.map((T,ti)=>{
+    const F=S*Math.exp(r*T);
+    return{
+      label:matLabels[ti],
+      data:moneyness.map(m=>smileVol(F,F*(1-m),T,sigAtm,skew,kurt)*100),
+      borderColor:palette6[ti%palette6.length],
+      borderWidth:2,pointRadius:0,fill:false,tension:0.3
+    };
+  });
+  const ivSkewCtx=document.getElementById('hmap-ivskew-chart').getContext('2d');
+  if(hmapIVSkewChart)hmapIVSkewChart.destroy();
+  hmapIVSkewChart=new Chart(ivSkewCtx,{type:'line',data:{
+    labels:moneyness.map(m=>(m*100).toFixed(0)+'%'),
+    datasets:ivSkewDatasets
+  },options:{responsive:true,interaction:{mode:'index',intersect:false},
+    plugins:{legend:{labels:{color:'#7a85bb',font:{family:'DM Mono',size:11}}},
+      tooltip:{backgroundColor:'#fff',borderColor:'#d8e0f5',borderWidth:1,titleColor:'#1a40f5',bodyColor:'#0d1240',
+        callbacks:{label:c=>` ${c.dataset.label}: ${c.raw.toFixed(2)}%`}}},
+    scales:{
+      x:{title:{display:true,text:'Forward Moneyness (F-K)/F',color:'var(--muted)',font:{family:'DM Mono',size:10}},
+        ticks:{color:'#7a85bb',font:{family:'DM Mono',size:9},maxTicksLimit:10},grid:{color:'rgba(26,64,245,0.06)'}},
+      y:{title:{display:true,text:'Implied Volatility (%)',color:'var(--muted)',font:{family:'DM Mono',size:10}},
+        ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10},callback:v=>v+'%'},grid:{color:'rgba(26,64,245,0.06)'}}
+    }
+  }});
+}
+
 </script>
 
 <!-- FEEDBACK WIDGET -->
