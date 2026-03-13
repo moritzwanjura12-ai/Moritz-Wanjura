@@ -432,7 +432,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
     <div id="tool-bs">
 
       <div class="card">
-        <div class="card-header"><div class="dot"></div><span>Parameters</span><span class="info-toggle" onclick="toggleInfo('bs',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
+        <div class="card-header"><div class="dot"></div><span>Parameters</span><span class="info-toggle" onclick="toggleInfo('bs')"><span class="info-icon">ⓘ</span> Explain model</span></div>
       <div class="info-panel" id="info-bs">
         <h3>Black–Scholes Model</h3>
         <div class="info-subtitle">Analytical options pricing formula · Fischer Black &amp; Myron Scholes, 1973</div>
@@ -515,7 +515,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
     <div id="tool-mc" style="display:none;">
 
       <div class="card">
-        <div class="card-header"><div class="dot"></div><span>Monte Carlo Parameters</span><span class="info-toggle" onclick="toggleInfo('mc',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
+        <div class="card-header"><div class="dot"></div><span>Monte Carlo Parameters</span><span class="info-toggle" onclick="toggleInfo('mc')"><span class="info-icon">ⓘ</span> Explain model</span></div>
       <div class="info-panel" id="info-mc">
         <h3>Monte Carlo Simulation</h3>
         <div class="info-subtitle">Stochastic options pricing via path simulation</div>
@@ -582,7 +582,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
     <div id="tool-bin" style="display:none;">
 
       <div class="card">
-        <div class="card-header"><div class="dot"></div><span>Binomial Tree Parameters</span><span class="info-toggle" onclick="toggleInfo('bin',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
+        <div class="card-header"><div class="dot"></div><span>Binomial Tree Parameters</span><span class="info-toggle" onclick="toggleInfo('bin')"><span class="info-icon">ⓘ</span> Explain model</span></div>
       <div class="info-panel" id="info-bin">
         <h3>Binomial Tree Model</h3>
         <div class="info-subtitle">Discrete options pricing · Cox, Ross &amp; Rubinstein, 1979</div>
@@ -667,7 +667,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
     <div id="tool-var">
 
       <div class="card">
-        <div class="card-header"><div class="dot"></div><span>Portfolio &amp; Method</span><span class="info-toggle" onclick="toggleInfo('var',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
+        <div class="card-header"><div class="dot"></div><span>Portfolio &amp; Method</span><span class="info-toggle" onclick="toggleInfo('var')"><span class="info-icon">ⓘ</span> Explain model</span></div>
       <div class="info-panel" id="info-var">
         <h3>Value at Risk &amp; CVaR</h3>
         <div class="info-subtitle">Portfolio loss measures · Regulatory standard (Basel III)</div>
@@ -789,7 +789,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
     <div id="tool-ef" style="display:none;">
 
       <div class="card">
-        <div class="card-header"><div class="dot"></div><span>Assets &amp; Correlation Matrix</span><span class="info-toggle" onclick="toggleInfo('ef',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
+        <div class="card-header"><div class="dot"></div><span>Assets &amp; Correlation Matrix</span><span class="info-toggle" onclick="toggleInfo('ef')"><span class="info-icon">ⓘ</span> Explain model</span></div>
       <div class="info-panel" id="info-ef">
         <h3>Efficient Frontier &amp; Portfolio Optimisation</h3>
         <div class="info-subtitle">Mean-variance optimisation · Harry Markowitz, 1952</div>
@@ -909,7 +909,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
     <div id="tool-bond">
 
       <div class="card">
-        <div class="card-header"><div class="dot"></div><span>Bond Parameters</span><span class="info-toggle" onclick="toggleInfo('bond',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
+        <div class="card-header"><div class="dot"></div><span>Bond Parameters</span><span class="info-toggle" onclick="toggleInfo('bond')"><span class="info-icon">ⓘ</span> Explain model</span></div>
       <div class="info-panel" id="info-bond">
         <h3>Bond Pricer</h3>
         <div class="info-subtitle">Bond pricing · Duration · Convexity · Sensitivity analysis</div>
@@ -1033,7 +1033,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
     <div id="tool-yc" style="display:none;">
 
       <div class="card">
-        <div class="card-header"><div class="dot"></div><span>Yield Curve Builder</span><span class="info-toggle" onclick="toggleInfo('yc',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
+        <div class="card-header"><div class="dot"></div><span>Yield Curve Builder</span><span class="info-toggle" onclick="toggleInfo('yc')"><span class="info-icon">ⓘ</span> Explain model</span></div>
       <div class="info-panel" id="info-yc">
         <h3>Yield Curve Builder</h3>
         <div class="info-subtitle">Term structure of interest rates · Spreads · Recession indicator</div>
@@ -1094,7 +1094,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
     <!-- ── GBM ── -->
     <div id="tool-gbm">
       <div class="card">
-        <div class="card-header"><div class="dot"></div><span>Geometric Brownian Motion — dS = μS dt + σS dW</span><span class="info-toggle" onclick="toggleInfo('gbm',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
+        <div class="card-header"><div class="dot"></div><span>Geometric Brownian Motion — dS = μS dt + σS dW</span><span class="info-toggle" onclick="toggleInfo('gbm')"><span class="info-icon">ⓘ</span> Explain model</span></div>
       <div class="info-panel" id="info-gbm">
         <h3>Geometric Brownian Motion</h3>
         <div class="info-subtitle">The standard model for stock prices · Foundation of Black–Scholes</div>
@@ -1131,7 +1131,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
     <!-- ── BM ── -->
     <div id="tool-bm" style="display:none;">
       <div class="card">
-        <div class="card-header"><div class="dot"></div><span>Standard Brownian Motion — dW ~ N(0, dt)</span><span class="info-toggle" onclick="toggleInfo('bm',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
+        <div class="card-header"><div class="dot"></div><span>Standard Brownian Motion — dW ~ N(0, dt)</span><span class="info-toggle" onclick="toggleInfo('bm')"><span class="info-icon">ⓘ</span> Explain model</span></div>
       <div class="info-panel" id="info-bm">
         <h3>Standard Brownian Motion</h3>
         <div class="info-subtitle">Wiener process · The fundamental stochastic process</div>
@@ -1158,7 +1158,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
     <!-- ── OU ── -->
     <div id="tool-ou" style="display:none;">
       <div class="card">
-        <div class="card-header"><div class="dot"></div><span>Ornstein–Uhlenbeck — dX = θ(μ − X)dt + σ dW</span><span class="info-toggle" onclick="toggleInfo('ou',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
+        <div class="card-header"><div class="dot"></div><span>Ornstein–Uhlenbeck — dX = θ(μ − X)dt + σ dW</span><span class="info-toggle" onclick="toggleInfo('ou')"><span class="info-icon">ⓘ</span> Explain model</span></div>
       <div class="info-panel" id="info-ou">
         <h3>Ornstein–Uhlenbeck Process</h3>
         <div class="info-subtitle">Mean-reverting process · Interest rates, spreads, commodities</div>
@@ -1188,7 +1188,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
     <!-- ── JUMP DIFFUSION ── -->
     <div id="tool-jd" style="display:none;">
       <div class="card">
-        <div class="card-header"><div class="dot"></div><span>Merton Jump Diffusion — dS = μS dt + σS dW + S dJ</span><span class="info-toggle" onclick="toggleInfo('jd',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
+        <div class="card-header"><div class="dot"></div><span>Merton Jump Diffusion — dS = μS dt + σS dW + S dJ</span><span class="info-toggle" onclick="toggleInfo('jd')"><span class="info-icon">ⓘ</span> Explain model</span></div>
       <div class="info-panel" id="info-jd">
         <h3>Merton Jump Diffusion</h3>
         <div class="info-subtitle">GBM + Poisson jumps · Robert Merton, 1976</div>
@@ -1275,11 +1275,12 @@ function greeks(S,K,T,r,sigma,q){
   };
 }
 
-function toggleInfo(id,btn){
+function toggleInfo(id){
   const panel=document.getElementById('info-'+id);
+  const toggle=document.querySelector('[onclick="toggleInfo(''+id+'')"]');
   const isOpen=panel.classList.contains('open');
   panel.classList.toggle('open');
-  btn.innerHTML=isOpen
+  toggle.innerHTML=isOpen
     ?'<span class="info-icon">ⓘ</span> Explain model'
     :'<span class="info-icon">ⓘ</span> Close explanation';
 }
