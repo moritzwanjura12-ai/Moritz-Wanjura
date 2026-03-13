@@ -620,6 +620,94 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
       </div>
 
     </div><!-- /tool-var -->
+    <div class="tool-chip" id="chip-ef" onclick="selectPortfolioTool('ef')"><div class="chip-dot"></div>Efficient Frontier</div>
+    <div class="tool-chip active" id="chip-var" onclick="selectPortfolioTool('var')"><div class="chip-dot"></div>VaR &amp; CVaR</div>
+    <!-- ── EFFICIENT FRONTIER TOOL ── -->
+    <div id="tool-ef" style="display:none;">
+
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Assets &amp; Correlation Matrix</span></div>
+        <div class="card-body">
+          <p style="font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.75rem;">Assets — Name · Expected Return % · Volatility %</p>
+          <div id="ef-assets">
+            <div class="var-asset-row">
+              <input type="text"   class="var-inp var-name" placeholder="Asset" value="Equities">
+              <input type="number" class="var-inp var-mu"   placeholder="Return %" value="10" step="0.1">
+              <input type="number" class="var-inp var-sig"  placeholder="Vol %"    value="20" step="0.1">
+              <button class="var-rm" onclick="efRemoveAsset(this)">✕</button>
+            </div>
+            <div class="var-asset-row">
+              <input type="text"   class="var-inp var-name" placeholder="Asset" value="Bonds">
+              <input type="number" class="var-inp var-mu"   placeholder="Return %" value="4" step="0.1">
+              <input type="number" class="var-inp var-sig"  placeholder="Vol %"    value="7"  step="0.1">
+              <button class="var-rm" onclick="efRemoveAsset(this)">✕</button>
+            </div>
+            <div class="var-asset-row">
+              <input type="text"   class="var-inp var-name" placeholder="Asset" value="Real Estate">
+              <input type="number" class="var-inp var-mu"   placeholder="Return %" value="7" step="0.1">
+              <input type="number" class="var-inp var-sig"  placeholder="Vol %"    value="15" step="0.1">
+              <button class="var-rm" onclick="efRemoveAsset(this)">✕</button>
+            </div>
+            <div class="var-asset-row">
+              <input type="text"   class="var-inp var-name" placeholder="Asset" value="Commodities">
+              <input type="number" class="var-inp var-mu"   placeholder="Return %" value="6" step="0.1">
+              <input type="number" class="var-inp var-sig"  placeholder="Vol %"    value="18" step="0.1">
+              <button class="var-rm" onclick="efRemoveAsset(this)">✕</button>
+            </div>
+          </div>
+          <button onclick="efAddAsset()" style="margin-top:0.5rem;padding:0.4rem 1rem;background:transparent;border:1.5px dashed var(--border);border-radius:8px;font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">+ Add Asset</button>
+
+          <div style="height:1px;background:var(--border);margin:1.25rem 0;"></div>
+
+          <p style="font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.75rem;">Correlation Matrix (auto-sized · edit values between −1 and 1)</p>
+          <div id="ef-corr-wrap" style="overflow-x:auto;"></div>
+
+          <div style="height:1px;background:var(--border);margin:1.25rem 0;"></div>
+
+          <div class="inputs-grid" style="grid-template-columns:repeat(3,1fr);">
+            <div class="field"><label>Risk-Free Rate % <span class="sym">r_f</span></label><input type="number" id="ef-rf" value="4" step="0.1"></div>
+            <div class="field"><label>Portfolios to Sample</label><input type="number" id="ef-sims" value="5000" step="1000"></div>
+            <div class="field"><label>Allow Short Selling</label>
+              <select id="ef-short" style="width:100%;background:white;border:1.5px solid var(--border);border-radius:8px;padding:0.65rem 0.9rem;color:var(--text);font-family:'DM Mono',monospace;font-size:0.9rem;outline:none;">
+                <option value="0">No (long only)</option>
+                <option value="1">Yes</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-primary" onclick="runEF()">▶ &nbsp;Optimize Portfolio</button>
+        </div>
+      </div>
+
+      <!-- RESULT STRIP -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;" id="ef-strip">
+        <div class="price-card call"><div class="p-label">Max Sharpe Ratio</div><div class="p-value" id="ef-sharpe" style="font-size:1.8rem;">—</div><div class="p-sub">Optimal risk-adjusted return</div></div>
+        <div class="price-card put" style="border-color:#7a1fa2;"><div class="p-label" style="color:#7a1fa2;">Max Sharpe Return</div><div class="p-value" id="ef-sharpe-ret" style="color:#7a1fa2;font-size:1.8rem;">—</div><div class="p-sub">Tangency portfolio</div></div>
+        <div class="price-card put" style="border-color:var(--blue);"><div class="p-label" style="color:var(--blue);">Max Sharpe Vol</div><div class="p-value" id="ef-sharpe-vol" style="color:var(--blue);font-size:1.8rem;">—</div><div class="p-sub">Tangency portfolio σ</div></div>
+        <div class="price-card put" style="border-color:var(--green);"><div class="p-label" style="color:var(--green);">Min Variance Vol</div><div class="p-value" id="ef-minvol" style="color:var(--green);font-size:1.8rem;">—</div><div class="p-sub">Global minimum variance</div></div>
+      </div>
+
+      <!-- CHART + WEIGHTS -->
+      <div style="display:grid;grid-template-columns:3fr 2fr;gap:1rem;margin-bottom:1.5rem;">
+        <div class="card">
+          <div class="card-header"><div class="dot"></div><span>Efficient Frontier</span></div>
+          <div class="card-body" style="padding:1rem;">
+            <canvas id="ef-chart" style="max-height:360px;"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="dot"></div><span>Optimal Weights</span></div>
+          <div class="card-body" style="padding:1rem;">
+            <canvas id="ef-weights-chart" style="max-height:200px;margin-bottom:1rem;"></canvas>
+            <table class="calc-table">
+              <thead><tr><th>Asset</th><th>Max Sharpe</th><th style="text-align:right">Min Var</th></tr></thead>
+              <tbody id="ef-weights-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tool-ef -->
+  
 
     <style>
     .var-asset-row{display:flex;gap:0.5rem;margin-bottom:0.5rem;align-items:center;}
@@ -1479,6 +1567,9 @@ let varMethod='parametric', varChartInst=null;
 function selectPortfolioTool(name){
   document.querySelectorAll('#cat-portfolio .tool-chip').forEach(c=>c.classList.remove('active'));
   document.getElementById('chip-'+name).classList.add('active');
+  document.getElementById('tool-var').style.display=name==='var'?'block':'none';
+  document.getElementById('tool-ef').style.display=name==='ef'?'block':'none';
+  if(name==='ef') buildCorrMatrix();
 }
 
 function setVarMethod(m){
@@ -2079,6 +2170,206 @@ function runStoch(type){
     drawHistChart('jd-hist',terminals,'Terminal Price (with jumps)');
   }
 }
+// ════════════════════════════════════════════════════════════════════════
+// EFFICIENT FRONTIER
+// ════════════════════════════════════════════════════════════════════════
+let efChart=null, efWeightsChart=null;
+
+function efAddAsset(){
+  const row=document.createElement('div');
+  row.className='var-asset-row';
+  row.innerHTML=`
+    <input type="text"   class="var-inp var-name" placeholder="Asset" value="Asset">
+    <input type="number" class="var-inp var-mu"   placeholder="Return %" value="8" step="0.1">
+    <input type="number" class="var-inp var-sig"  placeholder="Vol %"    value="15" step="0.1">
+    <button class="var-rm" onclick="efRemoveAsset(this)">✕</button>`;
+  document.getElementById('ef-assets').appendChild(row);
+  buildCorrMatrix();
+}
+
+function efRemoveAsset(btn){
+  const rows=document.querySelectorAll('#ef-assets .var-asset-row');
+  if(rows.length>2){btn.parentElement.remove();buildCorrMatrix();}
+}
+
+function getEFAssets(){
+  const rows=document.querySelectorAll('#ef-assets .var-asset-row');
+  return Array.from(rows).map(r=>({
+    name:r.querySelector('.var-name').value||'Asset',
+    mu:+r.querySelector('.var-mu').value/100,
+    sig:+r.querySelector('.var-sig').value/100,
+  }));
+}
+
+function buildCorrMatrix(){
+  const assets=getEFAssets();
+  const n=assets.length;
+  const wrap=document.getElementById('ef-corr-wrap');
+  // Preserve existing values
+  const old={};
+  wrap.querySelectorAll('input[data-i][data-j]').forEach(inp=>{
+    old[inp.dataset.i+','+inp.dataset.j]=+inp.value;
+  });
+  let html=`<table style="border-collapse:collapse;font-family:'DM Mono',monospace;font-size:0.72rem;">`;
+  html+=`<tr><th style="padding:4px 8px;color:var(--muted);"></th>`;
+  assets.forEach(a=>html+=`<th style="padding:4px 8px;color:var(--blue);text-align:center;">${a.name.slice(0,6)}</th>`);
+  html+=`</tr>`;
+  for(let i=0;i<n;i++){
+    html+=`<tr><td style="padding:4px 8px;color:var(--blue);font-weight:500;">${assets[i].name.slice(0,6)}</td>`;
+    for(let j=0;j<n;j++){
+      if(i===j){
+        html+=`<td style="padding:4px;"><input type="number" value="1" min="-1" max="1" step="0.05" disabled
+          style="width:60px;padding:4px 6px;background:var(--off);border:1px solid var(--border);border-radius:4px;font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted);text-align:center;"></td>`;
+      } else {
+        const v=old[i+','+j]??old[j+','+i]??0.3;
+        html+=`<td style="padding:4px;"><input type="number" data-i="${i}" data-j="${j}" value="${v}" min="-1" max="1" step="0.05"
+          style="width:60px;padding:4px 6px;background:white;border:1.5px solid var(--border);border-radius:4px;font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--text);text-align:center;outline:none;"
+          onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'"></td>`;
+      }
+    }
+    html+=`</tr>`;
+  }
+  html+=`</table>`;
+  wrap.innerHTML=html;
+}
+
+function getCorrMatrix(){
+  const assets=getEFAssets();
+  const n=assets.length;
+  const corr=Array.from({length:n},(_,i)=>Array.from({length:n},(_,j)=>i===j?1:0));
+  document.getElementById('ef-corr-wrap').querySelectorAll('input[data-i][data-j]').forEach(inp=>{
+    const i=+inp.dataset.i, j=+inp.dataset.j, v=Math.max(-0.999,Math.min(0.999,+inp.value));
+    corr[i][j]=v; corr[j][i]=v;
+  });
+  return corr;
+}
+
+function portfolioStats(w, mus, sigs, corr){
+  const n=w.length;
+  let ret=0;
+  for(let i=0;i<n;i++) ret+=w[i]*mus[i];
+  let variance=0;
+  for(let i=0;i<n;i++) for(let j=0;j<n;j++)
+    variance+=w[i]*w[j]*sigs[i]*sigs[j]*corr[i][j];
+  return{ret, vol:Math.sqrt(Math.max(0,variance))};
+}
+
+function randomWeights(n, allowShort){
+  if(allowShort){
+    const w=Array.from({length:n},()=>Math.random()*2-1);
+    const s=w.reduce((a,b)=>a+b,0); return w.map(x=>x/s);
+  }
+  const w=Array.from({length:n},()=>Math.random());
+  const s=w.reduce((a,b)=>a+b,0); return w.map(x=>x/s);
+}
+
+function runEF(){
+  const assets=getEFAssets();
+  const n=assets.length;
+  const mus=assets.map(a=>a.mu);
+  const sigs=assets.map(a=>a.sig);
+  const corr=getCorrMatrix();
+  const rf=+document.getElementById('ef-rf').value/100;
+  const nSims=+document.getElementById('ef-sims').value;
+  const allowShort=+document.getElementById('ef-short').value===1;
+
+  const portfolios=[];
+  for(let s=0;s<nSims;s++){
+    const w=randomWeights(n,allowShort);
+    const{ret,vol}=portfolioStats(w,mus,sigs,corr);
+    const sharpe=(ret-rf)/vol;
+    portfolios.push({w,ret,vol,sharpe});
+  }
+
+  // Efficient frontier — sort by vol, keep pareto-optimal
+  portfolios.sort((a,b)=>a.vol-b.vol);
+  const maxSharpe=portfolios.reduce((best,p)=>p.sharpe>best.sharpe?p:best,portfolios[0]);
+  const minVol=portfolios[0];
+
+  // Frontier line: for each vol bucket take max return
+  const buckets=60;
+  const minV=Math.min(...portfolios.map(p=>p.vol));
+  const maxV=Math.max(...portfolios.map(p=>p.vol));
+  const bw=(maxV-minV)/buckets;
+  const frontier=[];
+  for(let b=0;b<buckets;b++){
+    const inBucket=portfolios.filter(p=>p.vol>=minV+b*bw&&p.vol<minV+(b+1)*bw);
+    if(inBucket.length>0){
+      const best=inBucket.reduce((a,c)=>c.ret>a.ret?c:a);
+      frontier.push({vol:best.vol*100,ret:best.ret*100});
+    }
+  }
+  frontier.sort((a,b)=>a.vol-b.vol);
+
+  // Update strip
+  document.getElementById('ef-sharpe').textContent=maxSharpe.sharpe.toFixed(3);
+  document.getElementById('ef-sharpe-ret').textContent=(maxSharpe.ret*100).toFixed(2)+'%';
+  document.getElementById('ef-sharpe-vol').textContent=(maxSharpe.vol*100).toFixed(2)+'%';
+  document.getElementById('ef-minvol').textContent=(minVol.vol*100).toFixed(2)+'%';
+
+  // Scatter + frontier chart
+  const scatterData=portfolios.filter((_,i)=>i%Math.max(1,Math.floor(nSims/800))===0)
+    .map(p=>({x:p.vol*100,y:p.ret*100,sharpe:p.sharpe}));
+
+  if(efChart)efChart.destroy();
+  const ctx=document.getElementById('ef-chart').getContext('2d');
+  efChart=new Chart(ctx,{type:'scatter',data:{datasets:[
+    {label:'Portfolios',data:scatterData,
+      backgroundColor:scatterData.map(p=>{
+        const t=Math.max(0,Math.min(1,(p.sharpe-(maxSharpe.sharpe-2))/(2)));
+        return `rgba(${Math.round(26+t*200)},${Math.round(64+t*50)},${Math.round(245-t*200)},0.4)`;
+      }),
+      pointRadius:2,pointHoverRadius:4},
+    {label:'Efficient Frontier',data:frontier.map(p=>({x:p.vol,y:p.ret})),
+      type:'line',borderColor:'#1a40f5',borderWidth:2.5,pointRadius:0,tension:0.4,fill:false,showLine:true},
+    {label:'Max Sharpe',data:[{x:maxSharpe.vol*100,y:maxSharpe.ret*100}],
+      backgroundColor:'#f5b700',pointRadius:10,pointStyle:'star',pointHoverRadius:13},
+    {label:'Min Variance',data:[{x:minVol.vol*100,y:minVol.ret*100}],
+      backgroundColor:'var(--green)',pointRadius:8,pointStyle:'rectRot',pointHoverRadius:11},
+    {label:'Capital Market Line',
+      data:[{x:0,y:rf*100},{x:maxSharpe.vol*100*1.8,y:rf*100+maxSharpe.sharpe*maxSharpe.vol*100*1.8}],
+      type:'line',borderColor:'rgba(224,49,43,0.6)',borderWidth:1.5,borderDash:[5,5],pointRadius:0,fill:false,showLine:true},
+  ]},options:{responsive:true,
+    plugins:{legend:{labels:{color:'#7a85bb',font:{family:'DM Mono',size:11}}},
+      tooltip:{backgroundColor:'#fff',borderColor:'#d8e0f5',borderWidth:1,titleColor:'#1a40f5',bodyColor:'#0d1240',
+        callbacks:{label:c=>{
+          if(c.dataset.label==='Portfolios') return[` Vol: ${c.raw.x.toFixed(2)}%`,` Ret: ${c.raw.y.toFixed(2)}%`,` Sharpe: ${c.raw.sharpe?.toFixed(3)??''}`];
+          return` ${c.dataset.label}: (${c.raw.x.toFixed(2)}%, ${c.raw.y.toFixed(2)}%)`;
+        }}}},
+    scales:{
+      x:{title:{display:true,text:'Volatility (%)',color:'var(--muted)',font:{family:'DM Mono',size:10}},
+        ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10},callback:v=>v+'%'},grid:{color:'rgba(26,64,245,0.06)'}},
+      y:{title:{display:true,text:'Expected Return (%)',color:'var(--muted)',font:{family:'DM Mono',size:10}},
+        ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10},callback:v=>v+'%'},grid:{color:'rgba(26,64,245,0.06)'}}
+    }
+  }});
+
+  // Weights donut
+  if(efWeightsChart)efWeightsChart.destroy();
+  const wCtx=document.getElementById('ef-weights-chart').getContext('2d');
+  const palette=['#1a40f5','#e0312b','#00aa66','#f5b700','#7a1fa2','#4a6bff'];
+  efWeightsChart=new Chart(wCtx,{type:'doughnut',data:{
+    labels:assets.map(a=>a.name),
+    datasets:[{data:maxSharpe.w.map(w=>+(w*100).toFixed(2)),
+      backgroundColor:palette,borderWidth:2,borderColor:'white'}]
+  },options:{responsive:true,cutout:'60%',
+    plugins:{legend:{position:'right',labels:{color:'#7a85bb',font:{family:'DM Mono',size:10},boxWidth:12}},
+      tooltip:{callbacks:{label:c=>` ${c.label}: ${c.raw.toFixed(1)}%`}}}
+  }});
+
+  // Weights table
+  document.getElementById('ef-weights-table').innerHTML=assets.map((a,i)=>`
+    <tr>
+      <td class="var">${a.name}</td>
+      <td style="color:${maxSharpe.w[i]>=0?'var(--blue)':'var(--put)'};">${(maxSharpe.w[i]*100).toFixed(2)}%</td>
+      <td class="val" style="color:${minVol.w[i]>=0?'var(--green)':'var(--put)'};">${(minVol.w[i]*100).toFixed(2)}%</td>
+    </tr>`).join('');
+}
+
+// Build correlation matrix on page load
+document.addEventListener('DOMContentLoaded',()=>{
+  buildCorrMatrix();
+});
 window.onload=()=>{
   calculate();
   initMcCanvas();
