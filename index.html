@@ -810,12 +810,118 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
       <h2>Stochastic Processes</h2>
       <p>Brownian motion · Geometric BM · Ornstein–Uhlenbeck · Jump diffusion</p>
     </div>
-    <div class="wip-container">
-      <div class="wip-icon">∿</div>
-      <div class="wip-title">Work in Progress</div>
-      <div class="wip-sub">Stochastic process simulators coming soon</div>
-      <div class="wip-tag">Planned: GBM · BM · OU Process · Heston · SABR</div>
+    <div class="tool-grid">
+      <div class="tool-chip active" id="chip-gbm" onclick="selectStochTool('gbm')"><div class="chip-dot"></div>Geometric Brownian Motion</div>
+      <div class="tool-chip"        id="chip-bm"  onclick="selectStochTool('bm')"><div class="chip-dot"></div>Brownian Motion</div>
+      <div class="tool-chip"        id="chip-ou"  onclick="selectStochTool('ou')"><div class="chip-dot"></div>Ornstein–Uhlenbeck</div>
+      <div class="tool-chip"        id="chip-jd"  onclick="selectStochTool('jd')"><div class="chip-dot"></div>Jump Diffusion</div>
     </div>
+
+    <!-- ── GBM ── -->
+    <div id="tool-gbm">
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Geometric Brownian Motion — dS = μS dt + σS dW</span></div>
+        <div class="card-body">
+          <div class="inputs-grid">
+            <div class="field"><label>Initial Price <span class="sym">S₀</span></label><input type="number" id="gbm-s0" value="100" step="1"></div>
+            <div class="field"><label>Drift % <span class="sym">μ</span></label><input type="number" id="gbm-mu" value="8" step="0.1"></div>
+            <div class="field"><label>Volatility % <span class="sym">σ</span></label><input type="number" id="gbm-sig" value="20" step="0.1"></div>
+            <div class="field"><label>Time Horizon (yrs) <span class="sym">T</span></label><input type="number" id="gbm-T" value="1" step="0.1"></div>
+            <div class="field"><label>Steps <span class="sym">N</span></label><input type="number" id="gbm-steps" value="252" step="10"></div>
+            <div class="field"><label>Paths</label><input type="number" id="gbm-paths" value="30" min="1" max="200" step="5"></div>
+          </div>
+          <button class="btn-primary" onclick="runStoch('gbm')">▶ &nbsp;Simulate</button>
+        </div>
+      </div>
+      <div class="stoch-results-strip" id="gbm-strip"></div>
+      <div class="card"><div class="card-header"><div class="dot"></div><span>Simulation</span></div>
+        <div class="card-body" style="padding:1rem;">
+          <canvas id="gbm-canvas" style="max-height:340px;"></canvas>
+        </div>
+      </div>
+      <div class="card"><div class="card-header"><div class="dot"></div><span>Terminal Distribution</span></div>
+        <div class="card-body" style="padding:1rem;">
+          <canvas id="gbm-hist" style="max-height:220px;"></canvas>
+        </div>
+      </div>
+    </div><!-- /tool-gbm -->
+
+    <!-- ── BM ── -->
+    <div id="tool-bm" style="display:none;">
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Standard Brownian Motion — dW ~ N(0, dt)</span></div>
+        <div class="card-body">
+          <div class="inputs-grid">
+            <div class="field"><label>Time Horizon (yrs) <span class="sym">T</span></label><input type="number" id="bm-T" value="1" step="0.1"></div>
+            <div class="field"><label>Steps <span class="sym">N</span></label><input type="number" id="bm-steps" value="500" step="50"></div>
+            <div class="field"><label>Paths</label><input type="number" id="bm-paths" value="20" min="1" max="100" step="5"></div>
+          </div>
+          <button class="btn-primary" onclick="runStoch('bm')">▶ &nbsp;Simulate</button>
+        </div>
+      </div>
+      <div class="stoch-results-strip" id="bm-strip"></div>
+      <div class="card"><div class="card-header"><div class="dot"></div><span>Simulation</span></div>
+        <div class="card-body" style="padding:1rem;"><canvas id="bm-canvas" style="max-height:340px;"></canvas></div>
+      </div>
+    </div><!-- /tool-bm -->
+
+    <!-- ── OU ── -->
+    <div id="tool-ou" style="display:none;">
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Ornstein–Uhlenbeck — dX = θ(μ − X)dt + σ dW</span></div>
+        <div class="card-body">
+          <div class="inputs-grid">
+            <div class="field"><label>Initial Value <span class="sym">X₀</span></label><input type="number" id="ou-x0" value="0" step="0.1"></div>
+            <div class="field"><label>Long-run Mean <span class="sym">μ</span></label><input type="number" id="ou-mu" value="0" step="0.1"></div>
+            <div class="field"><label>Mean Reversion <span class="sym">θ</span></label><input type="number" id="ou-theta" value="2" step="0.1"></div>
+            <div class="field"><label>Volatility <span class="sym">σ</span></label><input type="number" id="ou-sig" value="0.5" step="0.05"></div>
+            <div class="field"><label>Time Horizon (yrs) <span class="sym">T</span></label><input type="number" id="ou-T" value="5" step="0.5"></div>
+            <div class="field"><label>Paths</label><input type="number" id="ou-paths" value="20" min="1" max="100" step="5"></div>
+          </div>
+          <button class="btn-primary" onclick="runStoch('ou')">▶ &nbsp;Simulate</button>
+        </div>
+      </div>
+      <div class="stoch-results-strip" id="ou-strip"></div>
+      <div class="card"><div class="card-header"><div class="dot"></div><span>Simulation</span></div>
+        <div class="card-body" style="padding:1rem;"><canvas id="ou-canvas" style="max-height:340px;"></canvas></div>
+      </div>
+    </div><!-- /tool-ou -->
+
+    <!-- ── JUMP DIFFUSION ── -->
+    <div id="tool-jd" style="display:none;">
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Merton Jump Diffusion — dS = μS dt + σS dW + S dJ</span></div>
+        <div class="card-body">
+          <div class="inputs-grid">
+            <div class="field"><label>Initial Price <span class="sym">S₀</span></label><input type="number" id="jd-s0" value="100" step="1"></div>
+            <div class="field"><label>Drift % <span class="sym">μ</span></label><input type="number" id="jd-mu" value="8" step="0.1"></div>
+            <div class="field"><label>Volatility % <span class="sym">σ</span></label><input type="number" id="jd-sig" value="15" step="0.1"></div>
+            <div class="field"><label>Jump Intensity <span class="sym">λ</span></label><input type="number" id="jd-lambda" value="3" step="0.5" title="Expected jumps per year"></div>
+            <div class="field"><label>Jump Mean % <span class="sym">μⱼ</span></label><input type="number" id="jd-jmu" value="-5" step="1"></div>
+            <div class="field"><label>Jump Vol % <span class="sym">σⱼ</span></label><input type="number" id="jd-jsig" value="8" step="1"></div>
+            <div class="field"><label>Time Horizon (yrs) <span class="sym">T</span></label><input type="number" id="jd-T" value="1" step="0.1"></div>
+            <div class="field"><label>Steps <span class="sym">N</span></label><input type="number" id="jd-steps" value="252" step="10"></div>
+            <div class="field"><label>Paths</label><input type="number" id="jd-paths" value="25" min="1" max="150" step="5"></div>
+          </div>
+          <button class="btn-primary" onclick="runStoch('jd')">▶ &nbsp;Simulate</button>
+        </div>
+      </div>
+      <div class="stoch-results-strip" id="jd-strip"></div>
+      <div class="card"><div class="card-header"><div class="dot"></div><span>Simulation</span></div>
+        <div class="card-body" style="padding:1rem;"><canvas id="jd-canvas" style="max-height:340px;"></canvas></div>
+      </div>
+      <div class="card"><div class="card-header"><div class="dot"></div><span>Terminal Distribution</span></div>
+        <div class="card-body" style="padding:1rem;"><canvas id="jd-hist" style="max-height:220px;"></canvas></div>
+      </div>
+    </div><!-- /tool-jd -->
+
+    <style>
+    .stoch-results-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;}
+    .stoch-stat{background:var(--off);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;}
+    .stoch-stat .ss-label{font-family:'DM Mono',monospace;font-size:0.62rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px;}
+    .stoch-stat .ss-val{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--blue);}
+    .stoch-stat .ss-sub{font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--muted);margin-top:2px;}
+    </style>
   </div>
 
 </div><!-- /main -->
@@ -1770,6 +1876,208 @@ function runYieldCurve(){
          title:{display:true,text:'Yield (%)',color:'var(--muted)',font:{family:'DM Mono',size:10}}}
     }
   }});
+}
+// ════════════════════════════════════════════════════════════════════════
+// STOCHASTIC PROCESSES
+// ════════════════════════════════════════════════════════════════════════
+let stochCharts={};
+
+function selectStochTool(name){
+  ['gbm','bm','ou','jd'].forEach(t=>{
+    document.getElementById('chip-'+t).classList.toggle('active',t===name);
+    document.getElementById('tool-'+t).style.display=t===name?'block':'none';
+  });
+}
+
+function randn(){
+  let u=0,v=0;
+  while(u===0)u=Math.random();
+  while(v===0)v=Math.random();
+  return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);
+}
+
+function stochStatStrip(id, stats){
+  document.getElementById(id).innerHTML=stats.map(s=>`
+    <div class="stoch-stat">
+      <div class="ss-label">${s.label}</div>
+      <div class="ss-val" style="color:${s.color||'var(--blue)'};">${s.val}</div>
+      <div class="ss-sub">${s.sub}</div>
+    </div>`).join('');
+}
+
+function destroyChart(id){
+  if(stochCharts[id]){stochCharts[id].destroy();delete stochCharts[id];}
+}
+
+function drawPathChart(canvasId, paths, labels, title, color){
+  destroyChart(canvasId);
+  const palette=[
+    'rgba(26,64,245,0.45)','rgba(74,107,255,0.35)','rgba(100,140,255,0.3)',
+    'rgba(26,64,245,0.25)','rgba(10,42,204,0.4)','rgba(122,161,250,0.5)',
+  ];
+  const datasets=paths.map((p,i)=>({
+    data:p,
+    borderColor:i===paths.length-1?'rgba(224,49,43,0.75)':palette[i%palette.length],
+    borderWidth:i===paths.length-1?1.8:0.9,
+    pointRadius:0,tension:0,fill:false,
+  }));
+  const ctx=document.getElementById(canvasId).getContext('2d');
+  stochCharts[canvasId]=new Chart(ctx,{type:'line',data:{labels,datasets},
+    options:{responsive:true,animation:{duration:400},
+      plugins:{legend:{display:false},
+        tooltip:{backgroundColor:'#fff',borderColor:'#d8e0f5',borderWidth:1,titleColor:'#1a40f5',bodyColor:'#0d1240',
+          callbacks:{label:c=>` ${c.raw.toFixed(3)}`}}},
+      scales:{
+        x:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:9},maxTicksLimit:10},grid:{color:'rgba(26,64,245,0.05)'}},
+        y:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10}},grid:{color:'rgba(26,64,245,0.06)'}}
+      }
+    }
+  });
+}
+
+function drawHistChart(canvasId, terminals, label){
+  destroyChart(canvasId);
+  const bins=40;
+  const minV=Math.min(...terminals), maxV=Math.max(...terminals);
+  const bw=(maxV-minV)/bins;
+  const counts=Array(bins).fill(0);
+  terminals.forEach(v=>{const i=Math.min(bins-1,Math.floor((v-minV)/bw));counts[i]++;});
+  const binLabels=Array.from({length:bins},(_,i)=>(minV+i*bw).toFixed(1));
+  const ctx=document.getElementById(canvasId).getContext('2d');
+  stochCharts[canvasId]=new Chart(ctx,{type:'bar',
+    data:{labels:binLabels,datasets:[{label,data:counts,
+      backgroundColor:'rgba(26,64,245,0.55)',borderColor:'#1a40f5',borderWidth:0,borderRadius:2}]},
+    options:{responsive:true,plugins:{
+      legend:{labels:{color:'#7a85bb',font:{family:'DM Mono',size:11}}},
+      tooltip:{backgroundColor:'#fff',borderColor:'#d8e0f5',borderWidth:1,
+        callbacks:{title:i=>'Value: '+i[0].label,label:c=>'Count: '+c.raw}}
+    },scales:{
+      x:{ticks:{display:false},grid:{display:false}},
+      y:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10}},grid:{color:'rgba(26,64,245,0.06)'}}
+    }}
+  });
+}
+
+function runStoch(type){
+  if(type==='gbm'){
+    const S0=+document.getElementById('gbm-s0').value;
+    const mu=+document.getElementById('gbm-mu').value/100;
+    const sig=+document.getElementById('gbm-sig').value/100;
+    const T=+document.getElementById('gbm-T').value;
+    const N=+document.getElementById('gbm-steps').value;
+    const nP=+document.getElementById('gbm-paths').value;
+    const dt=T/N;
+    const paths=[], terminals=[];
+    for(let p=0;p<nP;p++){
+      let S=S0; const path=[S];
+      for(let i=0;i<N;i++){S*=Math.exp((mu-0.5*sig**2)*dt+sig*Math.sqrt(dt)*randn()); path.push(S);}
+      paths.push(path); terminals.push(S);
+    }
+    const labels=Array.from({length:N+1},(_,i)=>(i*dt).toFixed(2));
+    const mean=terminals.reduce((a,b)=>a+b,0)/nP;
+    const std=Math.sqrt(terminals.reduce((a,b)=>a+(b-mean)**2,0)/nP);
+    const theorMean=S0*Math.exp(mu*T);
+    const pctPos=terminals.filter(v=>v>S0).length/nP*100;
+    stochStatStrip('gbm-strip',[
+      {label:'Mean Terminal S',val:'€'+mean.toFixed(2),sub:'Simulated mean',color:'var(--blue)'},
+      {label:'Theoretical E[S]',val:'€'+theorMean.toFixed(2),sub:'S₀·e^(μT)',color:'var(--muted)'},
+      {label:'Std Deviation',val:'€'+std.toFixed(2),sub:'Terminal dispersion',color:'var(--blue)'},
+      {label:'% Paths S > S₀',val:pctPos.toFixed(1)+'%',sub:'Fraction above start',color:pctPos>=50?'var(--green)':'var(--put)'},
+    ]);
+    drawPathChart('gbm-canvas',paths,labels,'GBM');
+    drawHistChart('gbm-hist',terminals,'Terminal Price');
+  }
+
+  else if(type==='bm'){
+    const T=+document.getElementById('bm-T').value;
+    const N=+document.getElementById('bm-steps').value;
+    const nP=+document.getElementById('bm-paths').value;
+    const dt=T/N;
+    const paths=[], terminals=[];
+    for(let p=0;p<nP;p++){
+      let W=0; const path=[0];
+      for(let i=0;i<N;i++){W+=Math.sqrt(dt)*randn(); path.push(W);}
+      paths.push(path); terminals.push(W);
+    }
+    const labels=Array.from({length:N+1},(_,i)=>(i*dt).toFixed(3));
+    const mean=terminals.reduce((a,b)=>a+b,0)/nP;
+    const variance=terminals.reduce((a,b)=>a+b**2,0)/nP;
+    const theorVar=T;
+    stochStatStrip('bm-strip',[
+      {label:'Mean W(T)',val:mean.toFixed(4),sub:'Should be ≈ 0',color:'var(--blue)'},
+      {label:'Simulated Var',val:variance.toFixed(4),sub:'Should be ≈ T',color:'var(--blue)'},
+      {label:'Theoretical Var',val:theorVar.toFixed(4),sub:'Var[W(T)] = T',color:'var(--muted)'},
+      {label:'Paths',val:nP,sub:'Simulated trajectories',color:'var(--muted)'},
+    ]);
+    drawPathChart('bm-canvas',paths,labels,'BM');
+  }
+
+  else if(type==='ou'){
+    const X0=+document.getElementById('ou-x0').value;
+    const mu=+document.getElementById('ou-mu').value;
+    const theta=+document.getElementById('ou-theta').value;
+    const sig=+document.getElementById('ou-sig').value;
+    const T=+document.getElementById('ou-T').value;
+    const N=252*T;
+    const nP=+document.getElementById('ou-paths').value;
+    const dt=T/N;
+    const paths=[], terminals=[];
+    for(let p=0;p<nP;p++){
+      let X=X0; const path=[X];
+      for(let i=0;i<N;i++){X+=theta*(mu-X)*dt+sig*Math.sqrt(dt)*randn(); path.push(X);}
+      paths.push(path); terminals.push(X);
+    }
+    const labels=Array.from({length:N+1},(_,i)=>(i*dt).toFixed(2));
+    const mean=terminals.reduce((a,b)=>a+b,0)/nP;
+    const theorMean=mu+(X0-mu)*Math.exp(-theta*T);
+    const theorVar=sig**2/(2*theta)*(1-Math.exp(-2*theta*T));
+    stochStatStrip('ou-strip',[
+      {label:'Mean X(T)',val:mean.toFixed(4),sub:'Simulated',color:'var(--blue)'},
+      {label:'Theoretical E[X(T)]',val:theorMean.toFixed(4),sub:'μ+(X₀−μ)e^(−θT)',color:'var(--muted)'},
+      {label:'Theoretical Var',val:theorVar.toFixed(4),sub:'σ²/2θ·(1−e^(−2θT))',color:'var(--muted)'},
+      {label:'Half-life',val:(Math.log(2)/theta).toFixed(3)+' yrs',sub:'ln(2)/θ',color:'var(--blue)'},
+    ]);
+    drawPathChart('ou-canvas',paths,labels,'OU');
+  }
+
+  else if(type==='jd'){
+    const S0=+document.getElementById('jd-s0').value;
+    const mu=+document.getElementById('jd-mu').value/100;
+    const sig=+document.getElementById('jd-sig').value/100;
+    const lambda=+document.getElementById('jd-lambda').value;
+    const jmu=+document.getElementById('jd-jmu').value/100;
+    const jsig=+document.getElementById('jd-jsig').value/100;
+    const T=+document.getElementById('jd-T').value;
+    const N=+document.getElementById('jd-steps').value;
+    const nP=+document.getElementById('jd-paths').value;
+    const dt=T/N;
+    const muAdj=mu-lambda*(Math.exp(jmu+0.5*jsig**2)-1);
+    const paths=[], terminals=[], jumpCounts=[];
+    for(let p=0;p<nP;p++){
+      let S=S0; const path=[S]; let jumps=0;
+      for(let i=0;i<N;i++){
+        const diff=Math.exp((muAdj-0.5*sig**2)*dt+sig*Math.sqrt(dt)*randn());
+        const nJumps=Math.random()<lambda*dt?1:0;
+        jumps+=nJumps;
+        const jFactor=nJumps>0?Math.exp(jmu+jsig*randn()):1;
+        S*=diff*jFactor;
+        path.push(S);
+      }
+      paths.push(path); terminals.push(S); jumpCounts.push(jumps);
+    }
+    const labels=Array.from({length:N+1},(_,i)=>(i*dt).toFixed(2));
+    const mean=terminals.reduce((a,b)=>a+b,0)/nP;
+    const avgJumps=jumpCounts.reduce((a,b)=>a+b,0)/nP;
+    const std=Math.sqrt(terminals.reduce((a,b)=>a+(b-mean)**2,0)/nP);
+    stochStatStrip('jd-strip',[
+      {label:'Mean Terminal S',val:'€'+mean.toFixed(2),sub:'Simulated mean',color:'var(--blue)'},
+      {label:'Std Deviation',val:'€'+std.toFixed(2),sub:'Terminal dispersion',color:'var(--blue)'},
+      {label:'Avg Jumps/Path',val:avgJumps.toFixed(2),sub:'Expected: '+lambda*T,color:'var(--put)'},
+      {label:'Jump Intensity λ',val:lambda+'/yr',sub:'Poisson arrival rate',color:'var(--muted)'},
+    ]);
+    drawPathChart('jd-canvas',paths,labels,'Jump Diffusion');
+    drawHistChart('jd-hist',terminals,'Terminal Price (with jumps)');
+  }
 }
 window.onload=()=>{
   calculate();
