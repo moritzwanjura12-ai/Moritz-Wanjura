@@ -279,7 +279,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
 <div class="notice-bar">
   <div class="notice-inner">
     <span class="notice-icon">◈</span>
-    <span class="notice-text">Moin. Have Fun And Give Feedback. - MW </span>
+    <span class="notice-text">Moin. Viel Spaß mit den Anwendungen. Ich freue mich über Feedback auf LinkedIn. - MW </span>
   </div>
 </div>
 
@@ -311,9 +311,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
 <!-- MAIN -->
 <div class="main">
 
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
   <!-- HOME -->
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
   <div class="cat-panel active" id="cat-home">
 
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
@@ -412,37 +410,33 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
 
   </div><!-- /cat-home -->
 
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
   <!-- CAT 1: OPTIONS & DERIVATIVES -->
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
   <div class="cat-panel" id="cat-options">
     <div class="sec-header">
       <h2>Options &amp; Derivatives</h2>
       <p>Pricing engines · Greeks · Simulation · Payoff analysis</p>
     </div>
 
-    <!-- Tool selector -->
     <div class="tool-grid">
       <div class="tool-chip active" id="chip-bs" onclick="selectTool('bs')"><div class="chip-dot"></div>Black–Scholes Pricer</div>
       <div class="tool-chip"       id="chip-mc"  onclick="selectTool('mc')"><div class="chip-dot"></div>Monte Carlo Simulation</div>
       <div class="tool-chip"       id="chip-bin" onclick="selectTool('bin')"><div class="chip-dot"></div>Binomial Tree Model</div>
     </div>
 
-    <!-- ── BLACK-SCHOLES TOOL ── -->
+    <!-- BLACK-SCHOLES TOOL -->
     <div id="tool-bs">
-
       <div class="card">
         <div class="card-header"><div class="dot"></div><span>Parameters</span><span class="info-toggle" onclick="toggleInfo('bs',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
-      <div class="info-panel" id="info-bs">
-        <h3>Black–Scholes Model</h3>
-        <div class="info-subtitle">Analytical options pricing formula · Fischer Black &amp; Myron Scholes, 1973</div>
-        <div class="info-section"><h4>What is it?</h4><p>The Black–Scholes model is the foundational formula for pricing European options. It assumes the stock price follows a geometric Brownian motion — continuously and randomly fluctuating with a fixed drift and fixed volatility. From this assumption, an analytically exact price for calls and puts can be derived without simulation.</p></div>
-        <div class="info-section"><h4>Core formulas</h4><div class="info-formula">C = S·e<sup>−qT</sup>·N(d₁) − K·e<sup>−rT</sup>·N(d₂)<br>P = K·e<sup>−rT</sup>·N(−d₂) − S·e<sup>−qT</sup>·N(−d₁)<br><br>d₁ = [ln(S/K) + (r − q + ½σ²)·T] / (σ·√T)<br>d₂ = d₁ − σ·√T<br><br><span class="f-comment">S = Spot, K = Strike, T = Maturity, r = risk-free rate, σ = volatility, q = dividend yield, N() = normal CDF</span></div></div>
-        <div class="info-section"><h4>Example</h4><div class="info-grid"><div class="info-box"><div class="ib-label">Scenario</div><div class="ib-val">S=52, K=50, T=0.25</div><div class="ib-desc">Stock above strike, 3 months to expiry</div></div><div class="info-box"><div class="ib-label">Parameters</div><div class="ib-val">r=12%, σ=30%</div><div class="ib-desc">High rate + moderate volatility</div></div><div class="info-box"><div class="ib-label">Call result</div><div class="ib-val">≈ 5.06</div><div class="ib-desc">Option is in-the-money (ITM) — high intrinsic value</div></div><div class="info-box"><div class="ib-label">Put result</div><div class="ib-val">≈ 1.54</div><div class="ib-desc">Put-call parity confirms both prices</div></div></div></div>
-        <div class="info-section"><h4>Interpreting the Greeks</h4><p>Delta (Δ) shows how much the option price changes per €1 move in the underlying. Gamma (Γ) measures curvature — how fast Delta itself changes. Vega (ν) is critical: a 1% rise in volatility increases the option price by Vega. Theta (Θ) shows daily time decay — options lose value every day even if the stock doesn't move.</p></div>
-        <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Enter Spot price (S) — current market price of the stock</li><li>Enter Strike price (K) — the option's exercise price</li><li>Set Maturity (T) in years — e.g. 3 months = 0.25</li><li>Set Risk-Free Rate (r) % — e.g. current central bank rate</li><li>Set Volatility (σ) % — historical or implied vol</li><li>Click Calculate → Call/Put price appears instantly</li><li>Explore tabs: Greeks, 2D Chart (7 modes), and 3D Surface</li></ol></div>
-        <div class="info-section"><h4>Model limitations</h4><p>Black–Scholes assumes constant volatility — in reality a <span class="info-tag">volatility smile</span> exists. It only applies to <span class="info-tag">European options</span> (no early exercise). For American options or volatility surfaces, Binomial Tree or Heston models are more accurate.</p></div>
-      </div>
+        <div class="info-panel" id="info-bs">
+          <h3>Black–Scholes Model</h3>
+          <div class="info-subtitle">Analytical options pricing formula · Fischer Black &amp; Myron Scholes, 1973</div>
+          <div class="info-section"><h4>What is it?</h4><p>The Black–Scholes model is the foundational formula for pricing European options. It assumes the stock price follows a geometric Brownian motion — continuously and randomly fluctuating with a fixed drift and fixed volatility. From this assumption, an analytically exact price for calls and puts can be derived without simulation.</p></div>
+          <div class="info-section"><h4>Core formulas</h4><div class="info-formula">C = S·e<sup>−qT</sup>·N(d₁) − K·e<sup>−rT</sup>·N(d₂)<br>P = K·e<sup>−rT</sup>·N(−d₂) − S·e<sup>−qT</sup>·N(−d₁)<br><br>d₁ = [ln(S/K) + (r − q + ½σ²)·T] / (σ·√T)<br>d₂ = d₁ − σ·√T<br><br><span class="f-comment">S = Spot, K = Strike, T = Maturity, r = risk-free rate, σ = volatility, q = dividend yield, N() = normal CDF</span></div></div>
+          <div class="info-section"><h4>Example</h4><div class="info-grid"><div class="info-box"><div class="ib-label">Scenario</div><div class="ib-val">S=52, K=50, T=0.25</div><div class="ib-desc">Stock above strike, 3 months to expiry</div></div><div class="info-box"><div class="ib-label">Parameters</div><div class="ib-val">r=12%, σ=30%</div><div class="ib-desc">High rate + moderate volatility</div></div><div class="info-box"><div class="ib-label">Call result</div><div class="ib-val">≈ 5.06</div><div class="ib-desc">Option is in-the-money (ITM) — high intrinsic value</div></div><div class="info-box"><div class="ib-label">Put result</div><div class="ib-val">≈ 1.54</div><div class="ib-desc">Put-call parity confirms both prices</div></div></div></div>
+          <div class="info-section"><h4>Interpreting the Greeks</h4><p>Delta (Δ) shows how much the option price changes per €1 move in the underlying. Gamma (Γ) measures curvature — how fast Delta itself changes. Vega (ν) is critical: a 1% rise in volatility increases the option price by Vega. Theta (Θ) shows daily time decay — options lose value every day even if the stock doesn't move.</p></div>
+          <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Enter Spot price (S) — current market price of the stock</li><li>Enter Strike price (K) — the option's exercise price</li><li>Set Maturity (T) in years — e.g. 3 months = 0.25</li><li>Set Risk-Free Rate (r) % — e.g. current central bank rate</li><li>Set Volatility (σ) % — historical or implied vol</li><li>Click Calculate → Call/Put price appears instantly</li><li>Explore tabs: Greeks, 2D Chart (7 modes), and 3D Surface</li></ol></div>
+          <div class="info-section"><h4>Model limitations</h4><p>Black–Scholes assumes constant volatility — in reality a <span class="info-tag">volatility smile</span> exists. It only applies to <span class="info-tag">European options</span> (no early exercise). For American options or volatility surfaces, Binomial Tree or Heston models are more accurate.</p></div>
+        </div>
         <div class="card-body">
           <div class="inputs-grid">
             <div class="field"><label>Spot Price <span class="sym">S</span></label><input type="number" id="spot" value="52" step="0.01"></div>
@@ -470,18 +464,15 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
             <button class="tab-btn"        id="tb-graph"  onclick="switchTab('graph')">2D Graph</button>
             <button class="tab-btn"        id="tb-3d"     onclick="switchTab('3d')">3D Surface</button>
           </div>
-
           <div class="tab-panel active" id="panel-calc">
             <table class="calc-table">
               <thead><tr><th>Variable</th><th>Formula</th><th style="text-align:right">Value</th></tr></thead>
               <tbody id="calcBody"><tr><td colspan="3" style="color:var(--muted);font-family:'DM Mono',monospace;font-size:0.8rem;padding:1rem 0.75rem">Press Calculate to compute.</td></tr></tbody>
             </table>
           </div>
-
           <div class="tab-panel" id="panel-greeks">
             <div class="greeks-grid" id="greeksGrid"><p style="color:var(--muted);font-family:'DM Mono',monospace;font-size:0.8rem;grid-column:1/-1">Press Calculate first.</p></div>
           </div>
-
           <div class="tab-panel" id="panel-graph">
             <div class="chart-controls">
               <select id="chartType" onchange="drawChart()">
@@ -496,7 +487,6 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
             </div>
             <canvas id="myChart" style="max-height:300px;"></canvas>
           </div>
-
           <div class="tab-panel" id="panel-3d">
             <p style="font-size:0.75rem;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:0.75rem;">Call price surface · Spot × Implied Volatility → Option Value · Drag to rotate</p>
             <div id="surface3d"></div>
@@ -511,20 +501,17 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
       </div>
     </div><!-- /tool-bs -->
 
-    <!-- ── MONTE CARLO TOOL ── -->
+    <!-- MONTE CARLO TOOL -->
     <div id="tool-mc" style="display:none;">
-
       <div class="card">
         <div class="card-header"><div class="dot"></div><span>Monte Carlo Parameters</span><span class="info-toggle" onclick="toggleInfo('mc',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
-      <div class="info-panel" id="info-mc">
-        <h3>Monte Carlo Simulation</h3>
-        <div class="info-subtitle">Stochastic options pricing via path simulation</div>
-        <div class="info-section"><h4>What is it?</h4><p>Monte Carlo prices options by simulating thousands of possible price paths. Each path follows geometric Brownian motion. At expiry, the payoff is calculated for each path — the discounted average of all payoffs gives the option price. The method is universally applicable, including for path-dependent options (Asian, Barrier, etc.).</p></div>
-        <div class="info-section"><h4>Core formula</h4><div class="info-formula">S(t+Δt) = S(t) · exp[(r − ½σ²)Δt + σ·√Δt · Z]<br><br>C ≈ e<sup>−rT</sup> · (1/N) · Σ max(S_T − K, 0)<br><br><span class="f-comment">Z ~ N(0,1) · standard normal · convergence error ∝ 1/√N</span></div></div>
-        <div class="info-section"><h4>Example</h4><div class="info-grid"><div class="info-box"><div class="ib-label">50 paths, 252 steps</div><div class="ib-val">Rough estimate</div><div class="ib-desc">Fast, but high standard error (~15%)</div></div><div class="info-box"><div class="ib-label">200 paths, 252 steps</div><div class="ib-val">Good estimate</div><div class="ib-desc">Converges close to the BS price</div></div></div></div>
-        <div class="info-section"><h4>Interpretation</h4><p>The <span class="info-tag">standard error</span> shows the uncertainty of the MC price. More paths → smaller error, but compute time grows with √N. The <span class="info-tag">BS benchmark</span> serves as reference: for European options, MC should converge to BS.</p></div>
-        <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Enter market parameters (S, K, T, r, σ) as in Black–Scholes</li><li>Select option type: Call or Put</li><li>Paths slider: more paths = more accurate but slower</li><li>Steps slider: 252 steps corresponds to one trading year</li><li>Click Run Simulation → paths are animated live on the canvas</li><li>Red line = last simulated path · Dashed line = Strike K</li></ol></div>
-      </div>
+        <div class="info-panel" id="info-mc">
+          <h3>Monte Carlo Simulation</h3>
+          <div class="info-subtitle">Stochastic options pricing via path simulation</div>
+          <div class="info-section"><h4>What is it?</h4><p>Monte Carlo prices options by simulating thousands of possible price paths. Each path follows geometric Brownian motion. At expiry, the payoff is calculated for each path — the discounted average of all payoffs gives the option price. The method is universally applicable, including for path-dependent options (Asian, Barrier, etc.).</p></div>
+          <div class="info-section"><h4>Core formula</h4><div class="info-formula">S(t+Δt) = S(t) · exp[(r − ½σ²)Δt + σ·√Δt · Z]<br><br>C ≈ e<sup>−rT</sup> · (1/N) · Σ max(S_T − K, 0)<br><br><span class="f-comment">Z ~ N(0,1) · standard normal · convergence error ∝ 1/√N</span></div></div>
+          <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Enter market parameters (S, K, T, r, σ) as in Black–Scholes</li><li>Select option type: Call or Put</li><li>Paths slider: more paths = more accurate but slower</li><li>Steps slider: 252 steps corresponds to one trading year</li><li>Click Run Simulation → paths are animated live on the canvas</li><li>Red line = last simulated path · Dashed line = Strike K</li></ol></div>
+        </div>
         <div class="card-body">
           <div class="inputs-grid">
             <div class="field"><label>Spot Price <span class="sym">S</span></label><input type="number" id="mc-spot" value="100" step="1"></div>
@@ -550,7 +537,6 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
           <button class="btn-primary" onclick="runMonteCarlo()" style="margin-top:1rem;">▶ &nbsp;Run Simulation</button>
         </div>
       </div>
-
       <div class="card">
         <div class="card-header">
           <div class="dot"></div>
@@ -559,9 +545,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
         </div>
         <div class="card-body">
           <div class="mc-layout">
-            <div class="mc-canvas-wrap">
-              <canvas id="mcCanvas"></canvas>
-            </div>
+            <div class="mc-canvas-wrap"><canvas id="mcCanvas"></canvas></div>
             <div class="mc-results">
               <div class="mc-stat"><div class="s-label">MC Price (Call/Put)</div><div class="s-val" id="mc-price">—</div><div class="s-sub">Discounted mean payoff</div></div>
               <div class="mc-stat"><div class="s-label">BS Analytical Price</div><div class="s-val" id="mc-bs-price" style="color:var(--muted)">—</div><div class="s-sub">Black–Scholes benchmark</div></div>
@@ -574,23 +558,19 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
           </p>
         </div>
       </div>
+    </div><!-- /tool-mc -->
 
-    
-	</div><!-- /tool-mc -->
-
-    <!-- ── BINOMIAL TREE TOOL ── -->
+    <!-- BINOMIAL TREE TOOL -->
     <div id="tool-bin" style="display:none;">
-
       <div class="card">
         <div class="card-header"><div class="dot"></div><span>Binomial Tree Parameters</span><span class="info-toggle" onclick="toggleInfo('bin',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
-      <div class="info-panel" id="info-bin">
-        <h3>Binomial Tree Model</h3>
-        <div class="info-subtitle">Discrete options pricing · Cox, Ross &amp; Rubinstein, 1979</div>
-        <div class="info-section"><h4>What is it?</h4><p>The Binomial Tree model divides the life of an option into discrete time steps. At each step, the price can either move up by factor u or down by factor d. Starting from today's price, a tree of all possible paths is built. Option values are computed backwards — from terminal payoffs back to the root. Crucially, for American options, each node compares whether immediate exercise is more profitable than holding.</p></div>
-        <div class="info-section"><h4>Core formulas</h4><div class="info-formula">u = e<sup>σ√Δt</sup>  d = 1/u  Δt = T/N<br>p = (e<sup>rΔt</sup> − d) / (u − d)  <span class="f-comment">← risk-neutral probability</span><br><br>V_node = e<sup>−rΔt</sup> · [p · V_up + (1−p) · V_down]<br><span class="f-comment">American: V_node = max(V_hold, Intrinsic Value)</span></div></div>
-        <div class="info-section"><h4>Node colour guide</h4><div class="info-grid"><div class="info-box"><div class="ib-label">Green nodes</div><div class="ib-val">Early exercise</div><div class="ib-desc">For American puts: immediate exercise beats holding</div></div><div class="info-box"><div class="ib-label">Red nodes</div><div class="ib-val">In the money</div><div class="ib-desc">Positive payoffs at the terminal nodes</div></div><div class="info-box"><div class="ib-label">N = 1–5</div><div class="ib-val">Rough approximation</div><div class="ib-desc">Useful for visualising the logic of the model</div></div><div class="info-box"><div class="ib-label">N = 10</div><div class="ib-val">Good approximation</div><div class="ib-desc">Converges noticeably towards the BS price</div></div></div></div>
-        <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Enter parameters: S, K, T, r, σ as usual</li><li>Choose Steps N: 1–10 (small = clearer tree, large = more accurate)</li><li>Select Call or Put, then European or American</li><li>Click Build Tree → tree is drawn with colour-coded nodes</li><li>Top number = stock price, bottom number = option value at each node</li><li>Parameter table below shows u, d, p and discount factor</li></ol></div>
-      </div>
+        <div class="info-panel" id="info-bin">
+          <h3>Binomial Tree Model</h3>
+          <div class="info-subtitle">Discrete options pricing · Cox, Ross &amp; Rubinstein, 1979</div>
+          <div class="info-section"><h4>What is it?</h4><p>The Binomial Tree model divides the life of an option into discrete time steps. At each step, the price can either move up by factor u or down by factor d. Starting from today's price, a tree of all possible paths is built. Option values are computed backwards — from terminal payoffs back to the root. Crucially, for American options, each node compares whether immediate exercise is more profitable than holding.</p></div>
+          <div class="info-section"><h4>Core formulas</h4><div class="info-formula">u = e<sup>σ√Δt</sup>  d = 1/u  Δt = T/N<br>p = (e<sup>rΔt</sup> − d) / (u − d)  <span class="f-comment">← risk-neutral probability</span><br><br>V_node = e<sup>−rΔt</sup> · [p · V_up + (1−p) · V_down]<br><span class="f-comment">American: V_node = max(V_hold, Intrinsic Value)</span></div></div>
+          <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Enter parameters: S, K, T, r, σ as usual</li><li>Choose Steps N: 1–10 (small = clearer tree, large = more accurate)</li><li>Select Call or Put, then European or American</li><li>Click Build Tree → tree is drawn with colour-coded nodes</li><li>Top number = stock price, bottom number = option value at each node</li><li>Parameter table below shows u, d, p and discount factor</li></ol></div>
+        </div>
         <div class="card-body">
           <div class="inputs-grid">
             <div class="field"><label>Spot Price <span class="sym">S</span></label><input type="number" id="bin-spot" value="100" step="1"></div>
@@ -613,12 +593,10 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
           </div>
         </div>
       </div>
-
       <div class="price-strip">
         <div class="price-card call"><div class="p-label" id="bin-card-label">Option Price</div><div class="p-value" id="bin-price">—</div><div class="p-sub">Binomial model</div></div>
         <div class="price-card put" style="border-color:var(--blue);"><div class="p-label" style="color:var(--blue);">BS Benchmark</div><div class="p-value" id="bin-bs-price" style="color:var(--blue);">—</div><div class="p-sub">Black–Scholes reference</div></div>
       </div>
-
       <div class="card">
         <div class="card-header"><div class="dot"></div><span>Tree Diagram</span>
           <span id="bin-params-label" style="margin-left:auto;font-size:0.65rem;color:var(--muted);font-family:'DM Mono',monospace;"></span>
@@ -632,7 +610,6 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
           <div style="display:flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);"><div style="width:32px;height:14px;background:rgba(224,49,43,0.1);border:1.5px solid var(--put);border-radius:3px;"></div>In-the-money at expiry</div>
         </div>
       </div>
-
       <div class="card">
         <div class="card-header"><div class="dot"></div><span>Model Parameters</span></div>
         <div class="card-body">
@@ -642,44 +619,32 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
           </table>
         </div>
       </div>
-
     </div><!-- /tool-bin -->
-
   </div><!-- /cat-options -->
 
- 
-
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
   <!-- CAT 2: PORTFOLIO & RISK -->
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
   <div class="cat-panel" id="cat-portfolio">
     <div class="sec-header">
       <h2>Portfolio &amp; Risk</h2>
       <p>Mean-variance optimization · VaR · Sharpe ratio · Correlation analysis</p>
     </div>
-    <!-- Tool selector -->
     <div class="tool-grid">
       <div class="tool-chip active" id="chip-var" onclick="selectPortfolioTool('var')"><div class="chip-dot"></div>VaR &amp; CVaR</div>
       <div class="tool-chip" id="chip-ef" onclick="selectPortfolioTool('ef')"><div class="chip-dot"></div>Efficient Frontier</div>
     </div>
 
-    <!-- ── VAR TOOL ── -->
+    <!-- VAR TOOL -->
     <div id="tool-var">
-
       <div class="card">
         <div class="card-header"><div class="dot"></div><span>Portfolio &amp; Method</span><span class="info-toggle" onclick="toggleInfo('var',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
-      <div class="info-panel" id="info-var">
-        <h3>Value at Risk &amp; CVaR</h3>
-        <div class="info-subtitle">Portfolio loss measures · Regulatory standard (Basel III)</div>
-        <div class="info-section"><h4>What is it?</h4><p>VaR answers: "What is the maximum I can lose over the next h days with probability α%?" CVaR (Expected Shortfall) goes further: "What is the average loss when VaR is exceeded?" CVaR is more coherent and increasingly preferred by regulators.</p></div>
-        <div class="info-section"><h4>Core formulas</h4><div class="info-formula">Parametric: VaR = −(μ_p − z_α · σ_p) · √h · W<br>CVaR = (μ_p · W) + σ_p · W · φ(z_α)/α · √h<br><br>σ_p² = Σ Σ w_i · w_j · σ_i · σ_j · ρ_ij<br><br><span class="f-comment">z_α = normal quantile (99% → z = 2.326) · φ() = normal PDF · W = portfolio value</span></div></div>
-        <div class="info-section"><h4>Three methods compared</h4><div class="info-grid"><div class="info-box"><div class="ib-label">Parametric</div><div class="ib-val">Fast &amp; analytical</div><div class="ib-desc">Assumes normality — underestimates tail risks (fat tails)</div></div><div class="info-box"><div class="ib-label">Monte Carlo</div><div class="ib-val">Flexible &amp; precise</div><div class="ib-desc">Simulates 50,000+ scenarios, no distribution assumption needed</div></div><div class="info-box"><div class="ib-label">Historical</div><div class="ib-val">Realistic tails</div><div class="ib-desc">Based on actual past market movements</div></div><div class="info-box"><div class="ib-label">Loss histogram</div><div class="ib-val">Red zone = tail</div><div class="ib-desc">Losses beyond VaR are highlighted in red</div></div></div></div>
-        <div class="info-section"><h4>Interpretation</h4><p>A 99% VaR of €5,000 means: with 99% probability, the portfolio will not lose more than €5,000 in one day. The <span class="info-tag">CVaR</span> might then be €8,000 — the average loss in the worst 1% of scenarios.</p></div>
-        <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Enter assets: name, weight %, expected return %, and volatility %</li><li>Weights don't need to sum to 100 — they are normalised internally</li><li>Confidence level: 95% (internal), 99% (standard), 99.9% (stress test)</li><li>Horizon: 1 day (trading), 10 days (regulatory), 252 days (annual VaR)</li><li>Select method → click Calculate VaR &amp; CVaR</li><li>Comparison table shows all three methods side by side</li></ol></div>
-      </div>
+        <div class="info-panel" id="info-var">
+          <h3>Value at Risk &amp; CVaR</h3>
+          <div class="info-subtitle">Portfolio loss measures · Regulatory standard (Basel III)</div>
+          <div class="info-section"><h4>What is it?</h4><p>VaR answers: "What is the maximum I can lose over the next h days with probability α%?" CVaR (Expected Shortfall) goes further: "What is the average loss when VaR is exceeded?" CVaR is more coherent and increasingly preferred by regulators.</p></div>
+          <div class="info-section"><h4>Core formulas</h4><div class="info-formula">Parametric: VaR = −(μ_p − z_α · σ_p) · √h · W<br>CVaR = (μ_p · W) + σ_p · W · φ(z_α)/α · √h<br><br>σ_p² = Σ Σ w_i · w_j · σ_i · σ_j · ρ_ij<br><br><span class="f-comment">z_α = normal quantile (99% → z = 2.326) · φ() = normal PDF · W = portfolio value</span></div></div>
+          <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Enter assets: name, weight %, expected return %, and volatility %</li><li>Weights don't need to sum to 100 — they are normalised internally</li><li>Confidence level: 95% (internal), 99% (standard), 99.9% (stress test)</li><li>Horizon: 1 day (trading), 10 days (regulatory), 252 days (annual VaR)</li><li>Select method → click Calculate VaR &amp; CVaR</li><li>Comparison table shows all three methods side by side</li></ol></div>
+        </div>
         <div class="card-body">
-
-          <!-- Portfolio input -->
           <p style="font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.75rem;">Portfolio Assets (ticker · weight · annual return % · annual vol %)</p>
           <div id="var-assets">
             <div class="var-asset-row">
@@ -701,7 +666,6 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
 
           <div style="height:1px;background:var(--border);margin:1.25rem 0;"></div>
 
-          <!-- Parameters -->
           <div class="inputs-grid" style="grid-template-columns:repeat(4,1fr);">
             <div class="field">
               <label>Confidence Level</label>
@@ -716,7 +680,6 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
             <div class="field"><label>MC Simulations</label><input type="number" id="var-sims" value="50000" step="10000"></div>
           </div>
 
-          <!-- Method toggle -->
           <div style="margin-top:1rem;display:flex;gap:0;background:var(--off);border:1.5px solid var(--border);border-radius:8px;overflow:hidden;width:fit-content;">
             <button id="var-m-param" onclick="setVarMethod('parametric')" style="padding:0.55rem 1.2rem;border:none;background:var(--blue);color:white;font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;">Parametric</button>
             <button id="var-m-mc"    onclick="setVarMethod('montecarlo')" style="padding:0.55rem 1.2rem;border:none;background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;">Monte Carlo</button>
@@ -727,7 +690,6 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
         </div>
       </div>
 
-      <!-- RESULTS STRIP -->
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
         <div class="price-card call" style="background:var(--blue);">
           <div class="p-label">VaR (<span id="res-conf">99%</span>)</div>
@@ -751,7 +713,6 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
         </div>
       </div>
 
-      <!-- CHART + TABLE -->
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
         <div class="card">
           <div class="card-header"><div class="dot"></div><span>Loss Distribution</span></div>
@@ -775,7 +736,6 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
         </div>
       </div>
 
-      <!-- FORMULA NOTE -->
       <div style="background:var(--off);border:1px solid var(--border);border-radius:8px;padding:1rem 1.25rem;">
         <p style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--muted);line-height:1.8;" id="var-formula-note">
           <strong style="color:var(--blue);">Parametric:</strong> VaR = -(μ_p - z_α · σ_p) · √h · W &nbsp;|&nbsp;
@@ -783,21 +743,19 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
           <strong style="color:var(--blue);">Monte Carlo:</strong> GBM simulation of portfolio returns, empirical quantile
         </p>
       </div>
-
     </div><!-- /tool-var -->
-    <!-- ── EFFICIENT FRONTIER TOOL ── -->
-    <div id="tool-ef" style="display:none;">
 
+    <!-- EFFICIENT FRONTIER TOOL -->
+    <div id="tool-ef" style="display:none;">
       <div class="card">
         <div class="card-header"><div class="dot"></div><span>Assets &amp; Correlation Matrix</span><span class="info-toggle" onclick="toggleInfo('ef',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
-      <div class="info-panel" id="info-ef">
-        <h3>Efficient Frontier &amp; Portfolio Optimisation</h3>
-        <div class="info-subtitle">Mean-variance optimisation · Harry Markowitz, 1952</div>
-        <div class="info-section"><h4>What is it?</h4><p>The Efficient Frontier is the set of all portfolios that achieve the highest return for a given level of risk — or the lowest risk for a given return. No portfolio above the frontier is achievable, and no portfolio below it is optimal. Through diversification (correlation &lt; 1), portfolio risk falls below the weighted average of individual risks.</p></div>
-        <div class="info-section"><h4>Core formulas</h4><div class="info-formula">E[R_p] = Σ w_i · μ_i<br>σ_p² = Σ Σ w_i · w_j · σ_i · σ_j · ρ_ij<br><br>Sharpe Ratio = (E[R_p] − r_f) / σ_p<br><br><span class="f-comment">w_i = weights (sum to 1) · ρ_ij = correlation between asset i and j</span></div></div>
-        <div class="info-section"><h4>Key points in the chart</h4><div class="info-grid"><div class="info-box"><div class="ib-label">★ Max Sharpe (yellow)</div><div class="ib-val">Tangency portfolio</div><div class="ib-desc">Best risk-adjusted return — intersection of Capital Market Line and frontier</div></div><div class="info-box"><div class="ib-label">◆ Min Variance (green)</div><div class="ib-val">Global minimum variance</div><div class="ib-desc">Lowest achievable risk, independent of return</div></div><div class="info-box"><div class="ib-label">Capital Market Line</div><div class="ib-val">Red dashed line</div><div class="ib-desc">Combination of risk-free asset and tangency portfolio</div></div><div class="info-box"><div class="ib-label">Point colour scale</div><div class="ib-val">Blue = high Sharpe</div><div class="ib-desc">Each point is a randomly sampled portfolio from 5,000 simulations</div></div></div></div>
-        <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Enter assets: name, expected annual return %, annual volatility %</li><li>Edit the correlation matrix — values between −1 and 1</li><li>Set risk-free rate r_f (e.g. current central bank rate)</li><li>Portfolios to sample: more = more accurate frontier (but slower)</li><li>Short selling: "No" = long only (more realistic for retail investors)</li><li>Click Optimize Portfolio → scatter plot, frontier line and weights donut appear</li></ol></div>
-      </div>
+        <div class="info-panel" id="info-ef">
+          <h3>Efficient Frontier &amp; Portfolio Optimisation</h3>
+          <div class="info-subtitle">Mean-variance optimisation · Harry Markowitz, 1952</div>
+          <div class="info-section"><h4>What is it?</h4><p>The Efficient Frontier is the set of all portfolios that achieve the highest return for a given level of risk — or the lowest risk for a given return. No portfolio above the frontier is achievable, and no portfolio below it is optimal. Through diversification (correlation &lt; 1), portfolio risk falls below the weighted average of individual risks.</p></div>
+          <div class="info-section"><h4>Core formulas</h4><div class="info-formula">E[R_p] = Σ w_i · μ_i<br>σ_p² = Σ Σ w_i · w_j · σ_i · σ_j · ρ_ij<br><br>Sharpe Ratio = (E[R_p] − r_f) / σ_p<br><br><span class="f-comment">w_i = weights (sum to 1) · ρ_ij = correlation between asset i and j</span></div></div>
+          <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Enter assets: name, expected annual return %, annual volatility %</li><li>Edit the correlation matrix — values between −1 and 1</li><li>Set risk-free rate r_f (e.g. current central bank rate)</li><li>Portfolios to sample: more = more accurate frontier (but slower)</li><li>Short selling: "No" = long only (more realistic for retail investors)</li><li>Click Optimize Portfolio → scatter plot, frontier line and weights donut appear</li></ol></div>
+        </div>
         <div class="card-body">
           <p style="font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.75rem;">Assets — Name · Expected Return % · Volatility %</p>
           <div id="ef-assets">
@@ -849,7 +807,6 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
         </div>
       </div>
 
-      <!-- RESULT STRIP -->
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;" id="ef-strip">
         <div class="price-card call"><div class="p-label">Max Sharpe Ratio</div><div class="p-value" id="ef-sharpe" style="font-size:1.8rem;">—</div><div class="p-sub">Optimal risk-adjusted return</div></div>
         <div class="price-card put" style="border-color:#7a1fa2;"><div class="p-label" style="color:#7a1fa2;">Max Sharpe Return</div><div class="p-value" id="ef-sharpe-ret" style="color:#7a1fa2;font-size:1.8rem;">—</div><div class="p-sub">Tangency portfolio</div></div>
@@ -857,7 +814,6 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
         <div class="price-card put" style="border-color:var(--green);"><div class="p-label" style="color:var(--green);">Min Variance Vol</div><div class="p-value" id="ef-minvol" style="color:var(--green);font-size:1.8rem;">—</div><div class="p-sub">Global minimum variance</div></div>
       </div>
 
-      <!-- CHART + WEIGHTS -->
       <div style="display:grid;grid-template-columns:3fr 2fr;gap:1rem;margin-bottom:1.5rem;">
         <div class="card">
           <div class="card-header"><div class="dot"></div><span>Efficient Frontier</span></div>
@@ -876,9 +832,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
           </div>
         </div>
       </div>
-
     </div><!-- /tool-ef -->
-  
 
     <style>
     .var-asset-row{display:flex;gap:0.5rem;margin-bottom:0.5rem;align-items:center;}
@@ -890,11 +844,9 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
     .var-rm:hover{color:var(--put);}
     @media(max-width:600px){.var-asset-row{flex-wrap:wrap;}.var-name{flex:1 1 100%;}}
     </style>
-  </div>
+  </div><!-- /cat-portfolio -->
 
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
   <!-- CAT 3: FIXED INCOME -->
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
   <div class="cat-panel" id="cat-fixed">
     <div class="sec-header">
       <h2>Fixed Income</h2>
@@ -905,19 +857,17 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
       <div class="tool-chip"        id="chip-yc"   onclick="selectFixedTool('yc')"><div class="chip-dot"></div>Yield Curve</div>
     </div>
 
-    <!-- ── BOND PRICER TOOL ── -->
+    <!-- BOND PRICER -->
     <div id="tool-bond">
-
       <div class="card">
         <div class="card-header"><div class="dot"></div><span>Bond Parameters</span><span class="info-toggle" onclick="toggleInfo('bond',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
-      <div class="info-panel" id="info-bond">
-        <h3>Bond Pricer</h3>
-        <div class="info-subtitle">Bond pricing · Duration · Convexity · Sensitivity analysis</div>
-        <div class="info-section"><h4>What is it?</h4><p>A bond pays periodic coupons and returns face value at maturity. The fair price is the present value of all future cash flows, discounted at the market yield (YTM). When market yields rise, bond prices fall — and vice versa. This inverse relationship is fundamental for all fixed income investors.</p></div>
-        <div class="info-section"><h4>Core formulas</h4><div class="info-formula">P = Σ [C / (1 + y/m)^t] + F / (1 + y/m)^n<br><br>D_Mac = Σ [t · PV(CF_t)] / P  <span class="f-comment">← Macaulay Duration (years)</span><br>D_Mod = D_Mac / (1 + y/m)     <span class="f-comment">← price sensitivity</span><br>DV01 = D_Mod · P · 0.0001     <span class="f-comment">← € change per basis point</span><br><br><span class="f-comment">C = coupon · F/m, y = YTM, m = frequency, n = periods</span></div></div>
-        <div class="info-section"><h4>Example</h4><div class="info-grid"><div class="info-box"><div class="ib-label">Coupon 5%, YTM 6%</div><div class="ib-val">Price &lt; 100</div><div class="ib-desc">Bond trades below par (discount bond)</div></div><div class="info-box"><div class="ib-label">Coupon 5%, YTM 4%</div><div class="ib-val">Price &gt; 100</div><div class="ib-desc">Bond trades above par (premium bond)</div></div><div class="info-box"><div class="ib-label">Duration 7 years</div><div class="ib-val">High sensitivity</div><div class="ib-desc">+1% rate rise → price loss ≈ 7%</div></div><div class="info-box"><div class="ib-label">DV01 = €65</div><div class="ib-val">Per basis point</div><div class="ib-desc">1bp yield change = €65 price change</div></div></div></div>
-        <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Enter face value (F), coupon rate %, maturity in years and YTM %</li><li>Frequency: Semi-Annual (US standard), Annual (EU government bonds)</li><li>Optionally enter market price P* → YTM is back-calculated</li><li>Click Price Bond → price, duration, convexity appear</li><li>Click through tabs: Cash Flows → Price vs YTM → Duration Chart → Sensitivity</li></ol></div>
-      </div>
+        <div class="info-panel" id="info-bond">
+          <h3>Bond Pricer</h3>
+          <div class="info-subtitle">Bond pricing · Duration · Convexity · Sensitivity analysis</div>
+          <div class="info-section"><h4>What is it?</h4><p>A bond pays periodic coupons and returns face value at maturity. The fair price is the present value of all future cash flows, discounted at the market yield (YTM). When market yields rise, bond prices fall — and vice versa.</p></div>
+          <div class="info-section"><h4>Core formulas</h4><div class="info-formula">P = Σ [C / (1 + y/m)^t] + F / (1 + y/m)^n<br><br>D_Mac = Σ [t · PV(CF_t)] / P<br>D_Mod = D_Mac / (1 + y/m)<br>DV01 = D_Mod · P · 0.0001</div></div>
+          <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Enter face value (F), coupon rate %, maturity in years and YTM %</li><li>Frequency: Semi-Annual (US standard), Annual (EU government bonds)</li><li>Optionally enter market price P* → YTM is back-calculated</li><li>Click Price Bond → price, duration, convexity appear</li></ol></div>
+        </div>
         <div class="card-body">
           <div class="inputs-grid">
             <div class="field"><label>Face Value <span class="sym">F</span></label><input type="number" id="bond-face" value="1000" step="100"></div>
@@ -938,111 +888,62 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
         </div>
       </div>
 
-      <!-- RESULTS STRIP -->
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;">
-        <div class="price-card call">
-          <div class="p-label">Bond Price</div>
-          <div class="p-value" id="bond-price" style="font-size:1.8rem;">—</div>
-          <div class="p-sub" id="bond-price-pct">— % of par</div>
-        </div>
-        <div class="price-card put" style="border-color:#7a1fa2;">
-          <div class="p-label" style="color:#7a1fa2;">YTM (from market price)</div>
-          <div class="p-value" id="bond-ytm-out" style="color:#7a1fa2;font-size:1.8rem;">—</div>
-          <div class="p-sub">Yield to Maturity</div>
-        </div>
-        <div class="price-card put" style="border-color:var(--green);">
-          <div class="p-label" style="color:var(--green);">Current Yield</div>
-          <div class="p-value" id="bond-cy" style="color:var(--green);font-size:1.8rem;">—</div>
-          <div class="p-sub">Annual coupon / Price</div>
-        </div>
+        <div class="price-card call"><div class="p-label">Bond Price</div><div class="p-value" id="bond-price" style="font-size:1.8rem;">—</div><div class="p-sub" id="bond-price-pct">— % of par</div></div>
+        <div class="price-card put" style="border-color:#7a1fa2;"><div class="p-label" style="color:#7a1fa2;">YTM (from market price)</div><div class="p-value" id="bond-ytm-out" style="color:#7a1fa2;font-size:1.8rem;">—</div><div class="p-sub">Yield to Maturity</div></div>
+        <div class="price-card put" style="border-color:var(--green);"><div class="p-label" style="color:var(--green);">Current Yield</div><div class="p-value" id="bond-cy" style="color:var(--green);font-size:1.8rem;">—</div><div class="p-sub">Annual coupon / Price</div></div>
       </div>
 
-      <!-- DURATION / CONVEXITY CARDS -->
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
-        <div class="g-card">
-          <div class="g-sym" style="font-size:1.3rem;">D<sub style="font-size:0.6rem">Mac</sub></div>
-          <div class="g-name">Macaulay Duration</div>
-          <div class="g-row" style="justify-content:center;"><span id="bond-dmac" style="font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--blue);">—</span></div>
-          <div class="g-desc">Weighted avg time to cash flows (years)</div>
-        </div>
-        <div class="g-card">
-          <div class="g-sym" style="font-size:1.3rem;">D<sub style="font-size:0.6rem">Mod</sub></div>
-          <div class="g-name">Modified Duration</div>
-          <div class="g-row" style="justify-content:center;"><span id="bond-dmod" style="font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--blue);">—</span></div>
-          <div class="g-desc">Price sensitivity to yield changes (ΔP/P per Δy)</div>
-        </div>
-        <div class="g-card">
-          <div class="g-sym" style="font-size:1.3rem;">C</div>
-          <div class="g-name">Convexity</div>
-          <div class="g-row" style="justify-content:center;"><span id="bond-conv" style="font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--blue);">—</span></div>
-          <div class="g-desc">Second-order price sensitivity (curvature)</div>
-        </div>
-        <div class="g-card">
-          <div class="g-sym" style="font-size:1.3rem;">DV01</div>
-          <div class="g-name">Dollar Value of 1bp</div>
-          <div class="g-row" style="justify-content:center;"><span id="bond-dv01" style="font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--blue);">—</span></div>
-          <div class="g-desc">€ change per 1 basis point move in yield</div>
-        </div>
+        <div class="g-card"><div class="g-sym" style="font-size:1.3rem;">D<sub style="font-size:0.6rem">Mac</sub></div><div class="g-name">Macaulay Duration</div><div class="g-row" style="justify-content:center;"><span id="bond-dmac" style="font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--blue);">—</span></div><div class="g-desc">Weighted avg time to cash flows (years)</div></div>
+        <div class="g-card"><div class="g-sym" style="font-size:1.3rem;">D<sub style="font-size:0.6rem">Mod</sub></div><div class="g-name">Modified Duration</div><div class="g-row" style="justify-content:center;"><span id="bond-dmod" style="font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--blue);">—</span></div><div class="g-desc">Price sensitivity to yield changes</div></div>
+        <div class="g-card"><div class="g-sym" style="font-size:1.3rem;">C</div><div class="g-name">Convexity</div><div class="g-row" style="justify-content:center;"><span id="bond-conv" style="font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--blue);">—</span></div><div class="g-desc">Second-order price sensitivity</div></div>
+        <div class="g-card"><div class="g-sym" style="font-size:1.3rem;">DV01</div><div class="g-name">Dollar Value of 1bp</div><div class="g-row" style="justify-content:center;"><span id="bond-dv01" style="font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--blue);">—</span></div><div class="g-desc">€ change per 1bp yield move</div></div>
       </div>
 
-      <!-- TABS: Cash Flows / Price vs YTM / Duration Chart -->
       <div class="card">
         <div class="card-body" style="padding-bottom:0.5rem;">
           <div class="tab-bar">
-            <button class="tab-btn active" id="btb-cf"    onclick="switchBondTab('cf')">Cash Flows</button>
-            <button class="tab-btn"        id="btb-pvy"   onclick="switchBondTab('pvy')">Price vs YTM</button>
-            <button class="tab-btn"        id="btb-dur"   onclick="switchBondTab('dur')">Duration Chart</button>
-            <button class="tab-btn"        id="btb-sens"  onclick="switchBondTab('sens')">Sensitivity</button>
+            <button class="tab-btn active" id="btb-cf"   onclick="switchBondTab('cf')">Cash Flows</button>
+            <button class="tab-btn"        id="btb-pvy"  onclick="switchBondTab('pvy')">Price vs YTM</button>
+            <button class="tab-btn"        id="btb-dur"  onclick="switchBondTab('dur')">Duration Chart</button>
+            <button class="tab-btn"        id="btb-sens" onclick="switchBondTab('sens')">Sensitivity</button>
           </div>
-
           <div class="tab-panel active" id="bpanel-cf">
             <div style="overflow-x:auto;">
-              <table class="calc-table" id="bond-cf-table">
+              <table class="calc-table">
                 <thead><tr><th>Period</th><th>Time (yr)</th><th>Cash Flow</th><th>Discount Factor</th><th>PV of CF</th><th style="text-align:right">% of Price</th></tr></thead>
                 <tbody id="bond-cf-body"><tr><td colspan="6" style="color:var(--muted);font-family:'DM Mono',monospace;font-size:0.8rem;padding:1rem 0.75rem;">Press Price Bond to compute.</td></tr></tbody>
               </table>
             </div>
           </div>
-
           <div class="tab-panel" id="bpanel-pvy">
-            <p style="font-size:0.72rem;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:0.75rem;">Bond price as a function of YTM · convex curve · current YTM marked</p>
             <canvas id="bondPvyChart" style="max-height:300px;"></canvas>
           </div>
-
           <div class="tab-panel" id="bpanel-dur">
-            <p style="font-size:0.72rem;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:0.75rem;">PV-weighted cash flow timeline · bar height = contribution to duration</p>
             <canvas id="bondDurChart" style="max-height:300px;"></canvas>
           </div>
-
           <div class="tab-panel" id="bpanel-sens">
             <table class="calc-table">
               <thead><tr><th>Yield Shock</th><th>Approx ΔP (Duration)</th><th>Approx ΔP (Dur+Conv)</th><th style="text-align:right">New Price (Full)</th></tr></thead>
               <tbody id="bond-sens-body"></tbody>
             </table>
-            <p style="font-size:0.68rem;color:var(--muted);font-family:'DM Mono',monospace;margin-top:1rem;">
-              <strong style="color:var(--blue);">Duration approx:</strong> ΔP ≈ −D_mod · P · Δy &nbsp;|&nbsp;
-              <strong style="color:var(--blue);">With convexity:</strong> ΔP ≈ −D_mod · P · Δy + ½ · C · P · Δy²
-            </p>
           </div>
         </div>
       </div>
-
     </div><!-- /tool-bond -->
 
-    <!-- ── YIELD CURVE TOOL ── -->
+    <!-- YIELD CURVE TOOL -->
     <div id="tool-yc" style="display:none;">
-
       <div class="card">
         <div class="card-header"><div class="dot"></div><span>Yield Curve Builder</span><span class="info-toggle" onclick="toggleInfo('yc',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
-      <div class="info-panel" id="info-yc">
-        <h3>Yield Curve Builder</h3>
-        <div class="info-subtitle">Term structure of interest rates · Spreads · Recession indicator</div>
-        <div class="info-section"><h4>What is it?</h4><p>The yield curve shows the yields of bonds with the same credit quality across different maturities. Normally it slopes upward — longer maturities yield more (liquidity premium). When the curve inverts (short maturities yield more than long ones), it has historically been one of the most reliable recession signals.</p></div>
-        <div class="info-section"><h4>Key spreads</h4><div class="info-grid"><div class="info-box"><div class="ib-label">2s10s spread</div><div class="ib-val">10Y − 2Y yield</div><div class="ib-desc">Classic indicator: negative = inverted = recession warning</div></div><div class="info-box"><div class="ib-label">3M10Y spread</div><div class="ib-val">10Y − 3M yield</div><div class="ib-desc">Preferred by the Fed — even more reliable leading indicator</div></div><div class="info-box"><div class="ib-label">Normal (&gt;0)</div><div class="ib-val">Growth expected</div><div class="ib-desc">Markets price in inflation and higher future rates</div></div><div class="info-box"><div class="ib-label">Inverted (&lt;0)</div><div class="ib-val">Slowdown expected</div><div class="ib-desc">Fed expected to cut rates — historically recession in 12–18 months</div></div></div></div>
-        <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Enter yields for all 10 maturities (in % p.a.)</li><li>Current market values: Bloomberg, Deutsche Bundesbank or US Treasury</li><li>Click Plot Yield Curve → curve is drawn</li><li>Shape (Normal/Flat/Inverted) and spreads are calculated automatically</li><li>Experiment: what happens when you set 2Y higher than 10Y?</li></ol></div>
-      </div>
+        <div class="info-panel" id="info-yc">
+          <h3>Yield Curve Builder</h3>
+          <div class="info-subtitle">Term structure of interest rates · Spreads · Recession indicator</div>
+          <div class="info-section"><h4>What is it?</h4><p>The yield curve shows the yields of bonds with the same credit quality across different maturities. When the curve inverts (short maturities yield more than long ones), it has historically been one of the most reliable recession signals.</p></div>
+          <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Enter yields for all 10 maturities (in % p.a.)</li><li>Click Plot Yield Curve → curve is drawn</li><li>Shape and spreads are calculated automatically</li></ol></div>
+        </div>
         <div class="card-body">
-          <p style="font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.75rem;">Enter yields for each maturity (% p.a.)</p>
           <div id="yc-inputs" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:0.75rem;margin-bottom:1rem;">
             <div class="field"><label>3M</label><input type="number" class="yc-inp" data-tenor="0.25" value="4.8" step="0.1"></div>
             <div class="field"><label>6M</label><input type="number" class="yc-inp" data-tenor="0.5"  value="4.9" step="0.1"></div>
@@ -1058,7 +959,6 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
           <button class="btn-primary" onclick="runYieldCurve()">▶ &nbsp;Plot Yield Curve</button>
         </div>
       </div>
-
       <div class="card">
         <div class="card-header"><div class="dot"></div><span>Yield Curve</span>
           <span id="yc-shape-label" style="margin-left:auto;font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--blue);"></span>
@@ -1072,13 +972,10 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
           </div>
         </div>
       </div>
-
     </div><!-- /tool-yc -->
-  </div>
+  </div><!-- /cat-fixed -->
 
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
   <!-- CAT 4: STOCHASTIC PROCESSES -->
-  <!-- ═══════════════════════════════════════════════════════════════════ -->
   <div class="cat-panel" id="cat-stochastic">
     <div class="sec-header">
       <h2>Stochastic Processes</h2>
@@ -1091,18 +988,16 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
       <div class="tool-chip"        id="chip-jd"  onclick="selectStochTool('jd')"><div class="chip-dot"></div>Jump Diffusion</div>
     </div>
 
-    <!-- ── GBM ── -->
+    <!-- GBM -->
     <div id="tool-gbm">
       <div class="card">
         <div class="card-header"><div class="dot"></div><span>Geometric Brownian Motion — dS = μS dt + σS dW</span><span class="info-toggle" onclick="toggleInfo('gbm',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
-      <div class="info-panel" id="info-gbm">
-        <h3>Geometric Brownian Motion</h3>
-        <div class="info-subtitle">The standard model for stock prices · Foundation of Black–Scholes</div>
-        <div class="info-section"><h4>What is it?</h4><p>GBM is the most important stochastic model in finance. It describes stock prices as continuously but randomly fluctuating — with a drift μ (growth trend) and diffusion σ (random noise). The key advantage: GBM always guarantees positive prices (S &gt; 0) because the price is updated multiplicatively.</p></div>
-        <div class="info-section"><h4>Core formula</h4><div class="info-formula">dS = μ·S·dt + σ·S·dW  <span class="f-comment">← stochastic differential equation</span><br><br>Exact solution:<br>S(t) = S₀ · exp[(μ − ½σ²)·t + σ·W(t)]<br><br>E[S(T)] = S₀ · e<sup>μT</sup>  <span class="f-comment">← theoretical expected value</span><br><span class="f-comment">W(t) = Brownian motion (Wiener process)</span></div></div>
-        <div class="info-section"><h4>Why μ − ½σ²?</h4><p>The ½σ² term is the Itô correction from stochastic calculus. Intuitively: since the logarithm is concave, the average of log-returns always lies slightly below μ. The terminal histogram shows a <span class="info-tag">log-normal distribution</span> — the typical distribution of stock prices.</p></div>
-        <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>S₀ = starting stock price (e.g. 100)</li><li>μ = annual drift in % (e.g. 8% for average equity market)</li><li>σ = annual volatility in % (DAX ≈ 20%, tech stocks ≈ 40%)</li><li>T = time horizon in years, N = time steps (252 = one trading year)</li><li>Paths = number of simulated paths (red line = last path)</li><li>Simulate → paths appear, terminal histogram below shows log-normal shape</li></ol></div>
-      </div>
+        <div class="info-panel" id="info-gbm">
+          <h3>Geometric Brownian Motion</h3>
+          <div class="info-subtitle">The standard model for stock prices · Foundation of Black–Scholes</div>
+          <div class="info-section"><h4>What is it?</h4><p>GBM is the most important stochastic model in finance. It describes stock prices as continuously but randomly fluctuating — with a drift μ (growth trend) and diffusion σ (random noise). GBM always guarantees positive prices (S &gt; 0) because the price is updated multiplicatively.</p></div>
+          <div class="info-section"><h4>Core formula</h4><div class="info-formula">S(t) = S₀ · exp[(μ − ½σ²)·t + σ·W(t)]<br>E[S(T)] = S₀ · e<sup>μT</sup></div></div>
+        </div>
         <div class="card-body">
           <div class="inputs-grid">
             <div class="field"><label>Initial Price <span class="sym">S₀</span></label><input type="number" id="gbm-s0" value="100" step="1"></div>
@@ -1116,30 +1011,19 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
         </div>
       </div>
       <div class="stoch-results-strip" id="gbm-strip"></div>
-      <div class="card"><div class="card-header"><div class="dot"></div><span>Simulation</span></div>
-        <div class="card-body" style="padding:1rem;">
-          <canvas id="gbm-canvas" style="max-height:340px;"></canvas>
-        </div>
-      </div>
-      <div class="card"><div class="card-header"><div class="dot"></div><span>Terminal Distribution</span></div>
-        <div class="card-body" style="padding:1rem;">
-          <canvas id="gbm-hist" style="max-height:220px;"></canvas>
-        </div>
-      </div>
-    </div><!-- /tool-gbm -->
+      <div class="card"><div class="card-header"><div class="dot"></div><span>Simulation</span></div><div class="card-body" style="padding:1rem;"><canvas id="gbm-canvas" style="max-height:340px;"></canvas></div></div>
+      <div class="card"><div class="card-header"><div class="dot"></div><span>Terminal Distribution</span></div><div class="card-body" style="padding:1rem;"><canvas id="gbm-hist" style="max-height:220px;"></canvas></div></div>
+    </div>
 
-    <!-- ── BM ── -->
+    <!-- BM -->
     <div id="tool-bm" style="display:none;">
       <div class="card">
         <div class="card-header"><div class="dot"></div><span>Standard Brownian Motion — dW ~ N(0, dt)</span><span class="info-toggle" onclick="toggleInfo('bm',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
-      <div class="info-panel" id="info-bm">
-        <h3>Standard Brownian Motion</h3>
-        <div class="info-subtitle">Wiener process · The fundamental stochastic process</div>
-        <div class="info-section"><h4>What is it?</h4><p>Brownian motion (Wiener process) is the mathematical building block of all stochastic processes in quantitative finance. It starts at 0, moves continuously, and has independent normally distributed increments. All other processes — GBM, OU, Jump Diffusion — are built on top of it.</p></div>
-        <div class="info-section"><h4>Core formula</h4><div class="info-formula">dW ~ N(0, dt)  <span class="f-comment">← infinitesimal increments</span><br><br>Properties:<br>W(0) = 0<br>E[W(t)] = 0        <span class="f-comment">← no drift, no trend</span><br>Var[W(t)] = t      <span class="f-comment">← variance grows linearly with time</span><br>W(t) ~ N(0, √t)    <span class="f-comment">← normally distributed at every point in time</span></div></div>
-        <div class="info-section"><h4>Interpreting the statistics</h4><div class="info-grid"><div class="info-box"><div class="ib-label">Mean W(T) ≈ 0</div><div class="ib-val">No trend</div><div class="ib-desc">BM has no systematic drift — it is a fair process</div></div><div class="info-box"><div class="ib-label">Var[W(T)] ≈ T</div><div class="ib-val">Variance = time</div><div class="ib-desc">Fundamental property: the longer the process runs, the more it disperses</div></div></div></div>
-        <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>T = time horizon in years (e.g. 1)</li><li>N = time steps (more = smoother paths)</li><li>Paths = number of simulated paths</li><li>Simulate → paths appear, statistics verify E[W]=0 and Var≈T</li></ol></div>
-      </div>
+        <div class="info-panel" id="info-bm">
+          <h3>Standard Brownian Motion</h3>
+          <div class="info-subtitle">Wiener process · The fundamental stochastic process</div>
+          <div class="info-section"><h4>Core formula</h4><div class="info-formula">W(0) = 0 · E[W(t)] = 0 · Var[W(t)] = t</div></div>
+        </div>
         <div class="card-body">
           <div class="inputs-grid">
             <div class="field"><label>Time Horizon (yrs) <span class="sym">T</span></label><input type="number" id="bm-T" value="1" step="0.1"></div>
@@ -1150,23 +1034,18 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
         </div>
       </div>
       <div class="stoch-results-strip" id="bm-strip"></div>
-      <div class="card"><div class="card-header"><div class="dot"></div><span>Simulation</span></div>
-        <div class="card-body" style="padding:1rem;"><canvas id="bm-canvas" style="max-height:340px;"></canvas></div>
-      </div>
-    </div><!-- /tool-bm -->
+      <div class="card"><div class="card-header"><div class="dot"></div><span>Simulation</span></div><div class="card-body" style="padding:1rem;"><canvas id="bm-canvas" style="max-height:340px;"></canvas></div></div>
+    </div>
 
-    <!-- ── OU ── -->
+    <!-- OU -->
     <div id="tool-ou" style="display:none;">
       <div class="card">
         <div class="card-header"><div class="dot"></div><span>Ornstein–Uhlenbeck — dX = θ(μ − X)dt + σ dW</span><span class="info-toggle" onclick="toggleInfo('ou',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
-      <div class="info-panel" id="info-ou">
-        <h3>Ornstein–Uhlenbeck Process</h3>
-        <div class="info-subtitle">Mean-reverting process · Interest rates, spreads, commodities</div>
-        <div class="info-section"><h4>What is it?</h4><p>The OU process describes quantities that fluctuate around a long-run mean μ and are continuously "pulled" back towards it. Unlike GBM, the process can go negative and has no unbounded growth. It is ideal for interest rates (Vasicek model), credit spreads, volatility and commodities that show mean-reverting behaviour.</p></div>
-        <div class="info-section"><h4>Core formula</h4><div class="info-formula">dX = θ·(μ − X)·dt + σ·dW<br><br>θ·(μ − X) = mean-reversion force<br><span class="f-comment">When X &gt; μ: force pulls downward</span><br><span class="f-comment">When X &lt; μ: force pulls upward</span><br><br>Half-life = ln(2) / θ<br>E[X(T)] = μ + (X₀ − μ)·e<sup>−θT</sup></div></div>
-        <div class="info-section"><h4>Parameter intuition</h4><div class="info-grid"><div class="info-box"><div class="ib-label">θ small (0.1–0.5)</div><div class="ib-val">Slow reversion</div><div class="ib-desc">Process wanders far from mean, takes long to return</div></div><div class="info-box"><div class="ib-label">θ large (5–10)</div><div class="ib-val">Fast reversion</div><div class="ib-desc">Paths cling to the mean — little deviation possible</div></div><div class="info-box"><div class="ib-label">Half-life</div><div class="ib-val">ln(2) / θ</div><div class="ib-desc">Time for half the deviation from the mean to be absorbed</div></div><div class="info-box"><div class="ib-label">Long-run variance</div><div class="ib-val">σ² / (2θ)</div><div class="ib-desc">Equilibrium variance — the process converges to this</div></div></div></div>
-        <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>X₀ = starting value (set away from μ to observe reversion)</li><li>μ = long-run mean (e.g. 0 for a spread)</li><li>θ = mean-reversion speed (e.g. 2 = moderate reversion)</li><li>σ = volatility of the noise term</li><li>Simulate → half-life in the stats strip shows how quickly the process returns to the mean</li></ol></div>
-      </div>
+        <div class="info-panel" id="info-ou">
+          <h3>Ornstein–Uhlenbeck Process</h3>
+          <div class="info-subtitle">Mean-reverting process · Interest rates, spreads, commodities</div>
+          <div class="info-section"><h4>Core formula</h4><div class="info-formula">dX = θ·(μ − X)·dt + σ·dW · Half-life = ln(2) / θ</div></div>
+        </div>
         <div class="card-body">
           <div class="inputs-grid">
             <div class="field"><label>Initial Value <span class="sym">X₀</span></label><input type="number" id="ou-x0" value="0" step="0.1"></div>
@@ -1180,29 +1059,24 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
         </div>
       </div>
       <div class="stoch-results-strip" id="ou-strip"></div>
-      <div class="card"><div class="card-header"><div class="dot"></div><span>Simulation</span></div>
-        <div class="card-body" style="padding:1rem;"><canvas id="ou-canvas" style="max-height:340px;"></canvas></div>
-      </div>
-    </div><!-- /tool-ou -->
+      <div class="card"><div class="card-header"><div class="dot"></div><span>Simulation</span></div><div class="card-body" style="padding:1rem;"><canvas id="ou-canvas" style="max-height:340px;"></canvas></div></div>
+    </div>
 
-    <!-- ── JUMP DIFFUSION ── -->
+    <!-- JUMP DIFFUSION -->
     <div id="tool-jd" style="display:none;">
       <div class="card">
         <div class="card-header"><div class="dot"></div><span>Merton Jump Diffusion — dS = μS dt + σS dW + S dJ</span><span class="info-toggle" onclick="toggleInfo('jd',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
-      <div class="info-panel" id="info-jd">
-        <h3>Merton Jump Diffusion</h3>
-        <div class="info-subtitle">GBM + Poisson jumps · Robert Merton, 1976</div>
-        <div class="info-section"><h4>What is it?</h4><p>The Merton model extends GBM with sudden jumps — e.g. earnings surprises, profit warnings or market crashes. The price mostly behaves like GBM, but occasionally there are abrupt up or down moves. These jumps follow a Poisson process (random arrival times) and have random sizes (log-normally distributed).</p></div>
-        <div class="info-section"><h4>Core formula</h4><div class="info-formula">dS = μ·S·dt + σ·S·dW + S·dJ<br><br>N(t) ~ Poisson(λ·t)     <span class="f-comment">← number of jumps up to time t</span><br>Jk ~ log-N(μ_j, σ_j²)  <span class="f-comment">← jump sizes</span><br><br>μ_adj = μ − λ·(e<sup>μⱼ+½σⱼ²</sup>−1)  <span class="f-comment">← drift compensation</span></div></div>
-        <div class="info-section"><h4>Parameter intuition</h4><div class="info-grid"><div class="info-box"><div class="ib-label">λ (intensity)</div><div class="ib-val">Jumps per year</div><div class="ib-desc">λ=3: average of 3 jumps per year — roughly one every 4 months</div></div><div class="info-box"><div class="ib-label">μⱼ (jump mean)</div><div class="ib-val">Negative value</div><div class="ib-desc">−5% = jumps are on average downward shocks (fat left tail)</div></div><div class="info-box"><div class="ib-label">σⱼ (jump vol)</div><div class="ib-val">Spread of jumps</div><div class="ib-desc">High σⱼ = sometimes small, sometimes very large jumps</div></div><div class="info-box"><div class="ib-label">Terminal histogram</div><div class="ib-val">Fat tails</div><div class="ib-desc">Compared to GBM: more extreme values on both sides</div></div></div></div>
-        <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Enter GBM parameters: S₀, μ, σ, T, N, Paths</li><li>λ = expected jumps per year (e.g. 3–5 for a single stock)</li><li>μⱼ = average jump return in % (negative = crash risk)</li><li>σⱼ = volatility of jump sizes</li><li>Simulate → stats show average jumps vs expected value λ·T</li></ol></div>
-      </div>
+        <div class="info-panel" id="info-jd">
+          <h3>Merton Jump Diffusion</h3>
+          <div class="info-subtitle">GBM + Poisson jumps · Robert Merton, 1976</div>
+          <div class="info-section"><h4>Core formula</h4><div class="info-formula">dS = μ·S·dt + σ·S·dW + S·dJ · N(t) ~ Poisson(λ·t)</div></div>
+        </div>
         <div class="card-body">
           <div class="inputs-grid">
             <div class="field"><label>Initial Price <span class="sym">S₀</span></label><input type="number" id="jd-s0" value="100" step="1"></div>
             <div class="field"><label>Drift % <span class="sym">μ</span></label><input type="number" id="jd-mu" value="8" step="0.1"></div>
             <div class="field"><label>Volatility % <span class="sym">σ</span></label><input type="number" id="jd-sig" value="15" step="0.1"></div>
-            <div class="field"><label>Jump Intensity <span class="sym">λ</span></label><input type="number" id="jd-lambda" value="3" step="0.5" title="Expected jumps per year"></div>
+            <div class="field"><label>Jump Intensity <span class="sym">λ</span></label><input type="number" id="jd-lambda" value="3" step="0.5"></div>
             <div class="field"><label>Jump Mean % <span class="sym">μⱼ</span></label><input type="number" id="jd-jmu" value="-5" step="1"></div>
             <div class="field"><label>Jump Vol % <span class="sym">σⱼ</span></label><input type="number" id="jd-jsig" value="8" step="1"></div>
             <div class="field"><label>Time Horizon (yrs) <span class="sym">T</span></label><input type="number" id="jd-T" value="1" step="0.1"></div>
@@ -1213,13 +1087,9 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
         </div>
       </div>
       <div class="stoch-results-strip" id="jd-strip"></div>
-      <div class="card"><div class="card-header"><div class="dot"></div><span>Simulation</span></div>
-        <div class="card-body" style="padding:1rem;"><canvas id="jd-canvas" style="max-height:340px;"></canvas></div>
-      </div>
-      <div class="card"><div class="card-header"><div class="dot"></div><span>Terminal Distribution</span></div>
-        <div class="card-body" style="padding:1rem;"><canvas id="jd-hist" style="max-height:220px;"></canvas></div>
-      </div>
-    </div><!-- /tool-jd -->
+      <div class="card"><div class="card-header"><div class="dot"></div><span>Simulation</span></div><div class="card-body" style="padding:1rem;"><canvas id="jd-canvas" style="max-height:340px;"></canvas></div></div>
+      <div class="card"><div class="card-header"><div class="dot"></div><span>Terminal Distribution</span></div><div class="card-body" style="padding:1rem;"><canvas id="jd-hist" style="max-height:220px;"></canvas></div></div>
+    </div>
 
     <style>
     .stoch-results-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;}
@@ -1228,16 +1098,13 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
     .stoch-stat .ss-val{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--blue);}
     .stoch-stat .ss-sub{font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--muted);margin-top:2px;}
     </style>
-  </div>
+  </div><!-- /cat-stochastic -->
 
 </div><!-- /main -->
 
 <footer>
   <div class="author-sig">Moritz Wanjura</div>
-  <div class="foot-right">
-    Quantitative Finance Toolkit<br>
-    For educational purposes · Not financial advice
-  </div>
+  <div class="foot-right">Quantitative Finance Toolkit<br>For educational purposes · Not financial advice</div>
 </footer>
 
 <script>
@@ -1298,11 +1165,12 @@ function switchCat(name){
 // TOOL SELECTOR (Options tab)
 // ════════════════════════════════════════════════════════════════════════
 function selectTool(name){
-  document.querySelectorAll('.tool-chip').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('#cat-options .tool-chip').forEach(c=>c.classList.remove('active'));
   document.getElementById('chip-'+name).classList.add('active');
-  document.getElementById('tool-bs').style.display = name==='bs'?'block':'none';
-  document.getElementById('tool-mc').style.display = name==='mc'?'block':'none';
-  if(name==='mc') initMcCanvas();
+  document.getElementById('tool-bs').style.display=name==='bs'?'block':'none';
+  document.getElementById('tool-mc').style.display=name==='mc'?'block':'none';
+  document.getElementById('tool-bin').style.display=name==='bin'?'block':'none';
+  if(name==='mc')initMcCanvas();
 }
 
 // ════════════════════════════════════════════════════════════════════════
@@ -1332,8 +1200,8 @@ function calculate(){
 }
 
 function switchTab(name){
-  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('#tool-bs .tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('#tool-bs .tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('panel-'+name).classList.add('active');
   document.getElementById('tb-'+name).classList.add('active');
   activeTab=name;
@@ -1390,6 +1258,7 @@ function renderGreeks(){
 }
 
 function drawChart(){
+  if(!lastP)return;
   const{S,K,T,r,sigma,q}=lastP;
   const type=document.getElementById('chartType').value;
   let labels=[],dC=[],dP=[];
@@ -1528,7 +1397,6 @@ function runMonteCarlo(){
   const badge=document.getElementById('mc-running-badge');
   badge.style.display='inline-flex';
 
-  // Generate all paths
   mcPaths=[];
   const payoffs=[];
   for(let p=0;p<nPaths;p++){
@@ -1542,7 +1410,6 @@ function runMonteCarlo(){
     payoffs.push(type==='call'?Math.max(path[path.length-1]-K,0):Math.max(K-path[path.length-1],0));
   }
 
-  // Stats
   const discount=Math.exp(-r*T);
   const mean=payoffs.reduce((a,b)=>a+b,0)/nPaths;
   const mcPrice=discount*mean;
@@ -1557,7 +1424,6 @@ function runMonteCarlo(){
   document.getElementById('mc-count').textContent=nPaths.toLocaleString();
   document.getElementById('mc-note').textContent=nSteps+' steps · GBM · risk-neutral measure';
 
-  // Animate paths one by one
   mcAnimStep=0; mcTotalSteps=nSteps;
   if(!mcCtx)initMcCanvas();
 
@@ -1567,14 +1433,10 @@ function runMonteCarlo(){
   const minS=Math.min(...allVals)*0.97, maxS=Math.max(...allVals)*1.03;
   const xScale=s=>s/(nSteps)*W;
   const yScale=v=>H-((v-minS)/(maxS-minS))*H*0.88-H*0.06;
-
-  // Color palette — blues and one red for last drawn path
   const palette=['rgba(26,64,245,0.35)','rgba(74,107,255,0.3)','rgba(100,140,255,0.25)','rgba(26,64,245,0.2)'];
-
   let pathIndex=0;
 
   function animStep(){
-    // Draw one path per frame (or a few for speed)
     const batchSize=Math.max(1,Math.floor(nPaths/80));
     for(let b=0;b<batchSize&&pathIndex<nPaths;b++){
       const path=mcPaths[pathIndex];
@@ -1586,43 +1448,31 @@ function runMonteCarlo(){
       mcCtx.stroke();
       pathIndex++;
     }
-
-    // Draw strike line
     mcCtx.setLineDash([4,4]);
     mcCtx.beginPath();mcCtx.moveTo(0,yScale(K));mcCtx.lineTo(W,yScale(K));
     mcCtx.strokeStyle='rgba(224,49,43,0.5)';mcCtx.lineWidth=1;mcCtx.stroke();
     mcCtx.setLineDash([]);
-
-    // Labels
     mcCtx.fillStyle='rgba(224,49,43,0.8)';mcCtx.font="0.62rem 'DM Mono',monospace";mcCtx.textAlign='left';
     mcCtx.fillText('K = '+K,4,yScale(K)-4);
     mcCtx.fillStyle='rgba(26,64,245,0.7)';
     mcCtx.fillText('S₀ = '+S0,4,yScale(S0)+12);
-
     if(pathIndex<nPaths){
       mcAnimFrame=requestAnimationFrame(animStep);
     } else {
       badge.style.display='none';
-      // Final price distribution label
       mcCtx.fillStyle='rgba(10,18,64,0.7)';mcCtx.font="bold 0.7rem 'DM Mono',monospace";mcCtx.textAlign='right';
       mcCtx.fillText('MC Price: '+mcPrice.toFixed(4)+'  |  BS: '+bsRef.toFixed(4),W-8,14);
     }
   }
 
-  // Clear and draw background
   mcCtx.clearRect(0,0,W,H);
   mcCtx.fillStyle='#f5f7ff';mcCtx.fillRect(0,0,W,H);
-  // Grid lines
   mcCtx.strokeStyle='rgba(26,64,245,0.06)';mcCtx.lineWidth=1;
   for(let g=0;g<=4;g++){const y=H*0.06+g*(H*0.88/4);mcCtx.beginPath();mcCtx.moveTo(0,y);mcCtx.lineTo(W,y);mcCtx.stroke();}
   for(let g=0;g<=6;g++){const x=g*(W/6);mcCtx.beginPath();mcCtx.moveTo(x,0);mcCtx.lineTo(x,H);mcCtx.stroke();}
-
   mcAnimFrame=requestAnimationFrame(animStep);
 }
 
-// ════════════════════════════════════════════════════════════════════════
-// INIT
-// ════════════════════════════════════════════════════════════════════════
 // ════════════════════════════════════════════════════════════════════════
 // BINOMIAL TREE
 // ════════════════════════════════════════════════════════════════════════
@@ -1653,14 +1503,12 @@ function runBinomial(){
   const dt =T/N;
   const u  =Math.exp(sig*Math.sqrt(dt));
   const d  =1/u;
-  const p  =(Math.exp(r*dt)-d)/(u-d);   // risk-neutral probability
+  const p  =(Math.exp(r*dt)-d)/(u-d);
   const disc=Math.exp(-r*dt);
 
-  // Build stock price tree
   const S=[];
   for(let i=0;i<=N;i++){S[i]=[];for(let j=0;j<=i;j++)S[i][j]=S0*Math.pow(u,j)*Math.pow(d,i-j);}
 
-  // Terminal payoffs
   const V=[];
   for(let i=0;i<=N;i++){V[i]=[];for(let j=0;j<=i;j++)V[i][j]=0;}
   for(let j=0;j<=N;j++){
@@ -1668,7 +1516,6 @@ function runBinomial(){
     V[N][j]=payoff;
   }
 
-  // Backward induction
   const earlyEx=[];for(let i=0;i<=N;i++){earlyEx[i]=[];for(let j=0;j<=i;j++)earlyEx[i][j]=false;}
   for(let i=N-1;i>=0;i--){
     for(let j=0;j<=i;j++){
@@ -1692,7 +1539,6 @@ function runBinomial(){
   document.getElementById('bin-card-label').textContent=(binStyle==='american'?'American ':'European ')+(binType==='call'?'Call':'Put');
   document.getElementById('bin-params-label').textContent='u='+u.toFixed(4)+' · d='+d.toFixed(4)+' · p='+p.toFixed(4);
 
-  // Params table
   document.getElementById('bin-params-body').innerHTML=[
     ['u (up factor)',   'e^(σ√Δt)',        u.toFixed(6)],
     ['d (down factor)', '1/u',             d.toFixed(6)],
@@ -1701,7 +1547,6 @@ function runBinomial(){
     ['Discount/step',   'e^(-rΔt)',        disc.toFixed(6)],
   ].map(([v,f,val])=>`<tr><td class="var">${v}</td><td class="formula">${f}</td><td class="val">${val}</td></tr>`).join('');
 
-  // Draw tree
   drawBinomialTree(S,V,earlyEx,N,K);
 }
 
@@ -1719,73 +1564,48 @@ function drawBinomialTree(S,V,earlyEx,N,K){
   const nodeX=(i)=>padX+i*hGap;
   const nodeY=(i,j)=>padY+(N/2-i/2+j)*(vGap)+(N%2===0?0:vGap/2)-(N===1?vGap/2:0);
 
-  // Draw edges first
   for(let i=0;i<N;i++){
     for(let j=0;j<=i;j++){
       const x1=nodeX(i)+nodeW/2, y1=nodeY(i,j)+nodeH/2;
-      // up branch
       const x2u=nodeX(i+1)+nodeW/2, y2u=nodeY(i+1,j+1)+nodeH/2;
       ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2u,y2u);
       ctx.strokeStyle='rgba(26,64,245,0.18)';ctx.lineWidth=1.5;ctx.stroke();
-      // down branch
       const x2d=nodeX(i+1)+nodeW/2, y2d=nodeY(i+1,j)+nodeH/2;
       ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2d,y2d);
       ctx.strokeStyle='rgba(26,64,245,0.18)';ctx.lineWidth=1.5;ctx.stroke();
     }
   }
 
-  // Draw nodes
   for(let i=0;i<=N;i++){
     for(let j=0;j<=i;j++){
       const x=nodeX(i), y=nodeY(i,j);
       const isITM=i===N&&(V[i][j]>0.0001);
       const isEarly=earlyEx[i][j];
-
-      // Box fill
       ctx.beginPath();ctx.roundRect(x,y,nodeW,nodeH,5);
       if(isEarly)ctx.fillStyle='rgba(0,170,102,0.12)';
       else if(isITM)ctx.fillStyle='rgba(224,49,43,0.08)';
       else ctx.fillStyle='rgba(245,247,255,0.95)';
       ctx.fill();
-
-      // Box border
       ctx.beginPath();ctx.roundRect(x,y,nodeW,nodeH,5);
       if(isEarly)ctx.strokeStyle='var(--green)';
       else if(isITM)ctx.strokeStyle='var(--put)';
       else ctx.strokeStyle='rgba(26,64,245,0.3)';
       ctx.lineWidth=1.5;ctx.stroke();
-
-      // Divider
       ctx.beginPath();ctx.moveTo(x+4,y+nodeH/2);ctx.lineTo(x+nodeW-4,y+nodeH/2);
       ctx.strokeStyle='rgba(26,64,245,0.1)';ctx.lineWidth=1;ctx.stroke();
-
-      // Stock price
       ctx.fillStyle='#0d1240';ctx.font="bold 0.68rem 'DM Mono',monospace";
       ctx.textAlign='center';ctx.textBaseline='middle';
       ctx.fillText(S[i][j].toFixed(2),x+nodeW/2,y+nodeH/4);
-
-      // Option value
       const optColor=isEarly?'#00aa66':isITM?'var(--put)':'var(--blue)';
       ctx.fillStyle=optColor;ctx.font="bold 0.68rem 'DM Mono',monospace";
       ctx.fillText(V[i][j].toFixed(2),x+nodeW/2,y+nodeH*3/4);
     }
   }
 
-  // Step labels
   ctx.fillStyle='var(--muted)';ctx.font="0.6rem 'DM Mono',monospace";ctx.textAlign='center';ctx.textBaseline='top';
   for(let i=0;i<=N;i++) ctx.fillText('t='+i,nodeX(i)+nodeW/2,2);
 }
 
-// Also update selectTool to handle 'bin'
-const _origSelectTool=selectTool;
-selectTool=function(name){
-  document.querySelectorAll('.tool-chip').forEach(c=>c.classList.remove('active'));
-  document.getElementById('chip-'+name).classList.add('active');
-  document.getElementById('tool-bs').style.display=name==='bs'?'block':'none';
-  document.getElementById('tool-mc').style.display=name==='mc'?'block':'none';
-  document.getElementById('tool-bin').style.display=name==='bin'?'block':'none';
-  if(name==='mc')initMcCanvas();
-};
 // ════════════════════════════════════════════════════════════════════════
 // PORTFOLIO & RISK — VaR & CVaR
 // ════════════════════════════════════════════════════════════════════════
@@ -1822,12 +1642,14 @@ function addAsset(){
 }
 
 function removeAsset(btn){
-  const rows=document.querySelectorAll('.var-asset-row');
+  // ✅ FIX: scope to #var-assets only
+  const rows=document.querySelectorAll('#var-assets .var-asset-row');
   if(rows.length>1) btn.parentElement.remove();
 }
 
+// ✅ FIX: scope to #var-assets only — prevents grabbing EF rows which have no .var-w input
 function getAssets(){
-  const rows=document.querySelectorAll('.var-asset-row');
+  const rows=document.querySelectorAll('#var-assets .var-asset-row');
   const assets=[];
   rows.forEach(r=>{
     const name=r.querySelector('.var-name').value||'Asset';
@@ -1839,7 +1661,6 @@ function getAssets(){
   return assets;
 }
 
-// Normal quantile (inverse CDF)
 function normInv(p){
   const a=[-3.969683028665376e+01,2.209460984245205e+02,-2.759285104469687e+02,1.383577518672690e+02,-3.066479806614716e+01,2.506628277459239e+00];
   const b=[-5.447609879822406e+01,1.615858368580409e+02,-1.556989798598866e+02,6.680131188771972e+01,-1.328068155288572e+01];
@@ -1860,21 +1681,17 @@ function runVaR(){
   const W=+document.getElementById('var-pval').value;
   const nSims=+document.getElementById('var-sims').value;
 
-  // Portfolio stats (assuming zero correlation for simplicity)
   const totalW=assets.reduce((a,b)=>a+b.w,0);
   const pMu=assets.reduce((a,b)=>a+b.w*b.mu,0)/totalW;
   const pSig=Math.sqrt(assets.reduce((a,b)=>a+Math.pow(b.w/totalW,2)*b.sig**2,0));
   const pMuH=pMu*(h/252), pSigH=pSig*Math.sqrt(h/252);
 
-  // ── Parametric ──
-  const z=normInv(1-conf);  // negative z
-  const varParam=-(pMuH+z*pSigH)*W;
-  // CVaR parametric: E[Z | Z < z_alpha] = -phi(z_alpha)/alpha
+  const z=normInv(1-conf);
   const alpha=1-conf;
   const phiZ=Math.exp(-0.5*z*z)/Math.sqrt(2*Math.PI);
+  const varParam=-(pMuH+z*pSigH)*W;
   const cvarParam=(-(pMuH)+pSigH*phiZ/alpha)*W;
 
-  // ── Monte Carlo ──
   const returns=[];
   for(let i=0;i<nSims;i++){
     let r=0;
@@ -1892,19 +1709,15 @@ function runVaR(){
   const tailReturns=returns.slice(0,varMcIdx+1);
   const cvarMc=-tailReturns.reduce((a,b)=>a+b,0)/tailReturns.length*W;
 
-  // ── Historical (simulate with normal distribution as proxy) ──
-  // Same as MC but using all tail returns
-  const varHist=-returns[Math.floor(0.05*nSims)]*W; // 95% as proxy
+  const varHist=-returns[Math.floor(0.05*nSims)]*W;
   const histTail=returns.slice(0,Math.floor(0.05*nSims)+1);
   const cvarHist=-histTail.reduce((a,b)=>a+b,0)/histTail.length*W;
 
-  // Pick active method result
   let varVal,cvarVal;
   if(varMethod==='parametric'){varVal=varParam;cvarVal=cvarParam;}
   else if(varMethod==='montecarlo'){varVal=varMc;cvarVal=cvarMc;}
   else{varVal=varHist;cvarVal=cvarHist;}
 
-  // Update results
   const fmt=v=>'€'+Math.round(v).toLocaleString('de-DE');
   const fmtPct=v=>(v/W*100).toFixed(2)+'%';
   document.getElementById('res-conf').textContent=(conf*100)+'%';
@@ -1915,20 +1728,18 @@ function runVaR(){
   document.getElementById('res-pvol').textContent=(pSig*100).toFixed(2)+'%';
   document.getElementById('res-pret').textContent=(pMu*100).toFixed(2)+'%';
 
-  // Compare table
   document.getElementById('var-compare-body').innerHTML=[
     ['Parametric', varParam, cvarParam],
     ['Monte Carlo', varMc, cvarMc],
     ['Historical (sim)', varHist, cvarHist],
   ].map(([m,v,cv])=>`
     <tr>
-      <td class="var" style="color:${m===varMethod.charAt(0).toUpperCase()+varMethod.slice(1).split(' ')[0]?'var(--blue)':'var(--muted)'}">${m}</td>
+      <td class="var">${m}</td>
       <td>${fmt(v)}</td>
       <td style="color:#7a1fa2">${fmt(cv)}</td>
       <td class="val">${fmtPct(v)}</td>
     </tr>`).join('');
 
-  // Assets table
   document.getElementById('var-assets-table').innerHTML=assets.map(a=>`
     <tr>
       <td class="var">${a.name}</td>
@@ -1937,7 +1748,6 @@ function runVaR(){
       <td class="val">${(a.sig*100).toFixed(1)}%</td>
     </tr>`).join('');
 
-  // Chart — loss distribution histogram
   const bins=60;
   const lossArr=returns.map(r=>-r*W);
   const minL=Math.min(...lossArr), maxL=Math.max(...lossArr);
@@ -1963,6 +1773,7 @@ function runVaR(){
     y:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10}},grid:{color:'rgba(26,64,245,0.06)'}}
   },animation:{duration:600}}});
 }
+
 // ════════════════════════════════════════════════════════════════════════
 // FIXED INCOME
 // ════════════════════════════════════════════════════════════════════════
@@ -1994,7 +1805,6 @@ function bondPrice(F,c,T,y,freq){
 }
 
 function calcYTM(F,c,T,freq,mktP){
-  // bisection
   let lo=0.0001, hi=2.0;
   for(let i=0;i<200;i++){
     const mid=(lo+hi)/2;
@@ -2016,13 +1826,11 @@ function runBond(){
   const n=T*freq, r=y/freq, cpn=F*c/freq;
   const P=bondPrice(F,c,T,y,freq);
 
-  // YTM from market price
   let ytmOut=null;
   if(mktPInput!==''){
     ytmOut=calcYTM(F,c,T,freq,+mktPInput);
   }
 
-  // Macaulay Duration
   let sumPvT=0;
   for(let i=1;i<=n;i++){
     const t=i/freq;
@@ -2033,7 +1841,6 @@ function runBond(){
   const dMac=sumPvT/P;
   const dMod=dMac/(1+r);
 
-  // Convexity
   let conv=0;
   for(let i=1;i<=n;i++){
     const t=i/freq;
@@ -2048,7 +1855,6 @@ function runBond(){
 
   lastBond={F,c,T,y,freq,n,r,cpn,P,dMac,dMod,conv,dv01,ytmOut};
 
-  // Update display
   document.getElementById('bond-price').textContent='€'+P.toFixed(2);
   document.getElementById('bond-price-pct').textContent=(P/F*100).toFixed(2)+'% of par';
   document.getElementById('bond-ytm-out').textContent=ytmOut!=null?(ytmOut*100).toFixed(3)+'%':'Enter P*';
@@ -2153,7 +1959,6 @@ function renderBondSens(){
   document.getElementById('bond-sens-body').innerHTML=rows.join('');
 }
 
-// ── YIELD CURVE ──
 function runYieldCurve(){
   const inputs=document.querySelectorAll('.yc-inp');
   const tenors=[],yields=[];
@@ -2195,6 +2000,7 @@ function runYieldCurve(){
     }
   }});
 }
+
 // ════════════════════════════════════════════════════════════════════════
 // STOCHASTIC PROCESSES
 // ════════════════════════════════════════════════════════════════════════
@@ -2227,7 +2033,7 @@ function destroyChart(id){
   if(stochCharts[id]){stochCharts[id].destroy();delete stochCharts[id];}
 }
 
-function drawPathChart(canvasId, paths, labels, title, color){
+function drawPathChart(canvasId, paths, labels){
   destroyChart(canvasId);
   const palette=[
     'rgba(26,64,245,0.45)','rgba(74,107,255,0.35)','rgba(100,140,255,0.3)',
@@ -2302,10 +2108,9 @@ function runStoch(type){
       {label:'Std Deviation',val:'€'+std.toFixed(2),sub:'Terminal dispersion',color:'var(--blue)'},
       {label:'% Paths S > S₀',val:pctPos.toFixed(1)+'%',sub:'Fraction above start',color:pctPos>=50?'var(--green)':'var(--put)'},
     ]);
-    drawPathChart('gbm-canvas',paths,labels,'GBM');
+    drawPathChart('gbm-canvas',paths,labels);
     drawHistChart('gbm-hist',terminals,'Terminal Price');
   }
-
   else if(type==='bm'){
     const T=+document.getElementById('bm-T').value;
     const N=+document.getElementById('bm-steps').value;
@@ -2320,16 +2125,14 @@ function runStoch(type){
     const labels=Array.from({length:N+1},(_,i)=>(i*dt).toFixed(3));
     const mean=terminals.reduce((a,b)=>a+b,0)/nP;
     const variance=terminals.reduce((a,b)=>a+b**2,0)/nP;
-    const theorVar=T;
     stochStatStrip('bm-strip',[
       {label:'Mean W(T)',val:mean.toFixed(4),sub:'Should be ≈ 0',color:'var(--blue)'},
       {label:'Simulated Var',val:variance.toFixed(4),sub:'Should be ≈ T',color:'var(--blue)'},
-      {label:'Theoretical Var',val:theorVar.toFixed(4),sub:'Var[W(T)] = T',color:'var(--muted)'},
+      {label:'Theoretical Var',val:T.toFixed(4),sub:'Var[W(T)] = T',color:'var(--muted)'},
       {label:'Paths',val:nP,sub:'Simulated trajectories',color:'var(--muted)'},
     ]);
-    drawPathChart('bm-canvas',paths,labels,'BM');
+    drawPathChart('bm-canvas',paths,labels);
   }
-
   else if(type==='ou'){
     const X0=+document.getElementById('ou-x0').value;
     const mu=+document.getElementById('ou-mu').value;
@@ -2355,9 +2158,8 @@ function runStoch(type){
       {label:'Theoretical Var',val:theorVar.toFixed(4),sub:'σ²/2θ·(1−e^(−2θT))',color:'var(--muted)'},
       {label:'Half-life',val:(Math.log(2)/theta).toFixed(3)+' yrs',sub:'ln(2)/θ',color:'var(--blue)'},
     ]);
-    drawPathChart('ou-canvas',paths,labels,'OU');
+    drawPathChart('ou-canvas',paths,labels);
   }
-
   else if(type==='jd'){
     const S0=+document.getElementById('jd-s0').value;
     const mu=+document.getElementById('jd-mu').value/100;
@@ -2393,10 +2195,11 @@ function runStoch(type){
       {label:'Avg Jumps/Path',val:avgJumps.toFixed(2),sub:'Expected: '+lambda*T,color:'var(--put)'},
       {label:'Jump Intensity λ',val:lambda+'/yr',sub:'Poisson arrival rate',color:'var(--muted)'},
     ]);
-    drawPathChart('jd-canvas',paths,labels,'Jump Diffusion');
+    drawPathChart('jd-canvas',paths,labels);
     drawHistChart('jd-hist',terminals,'Terminal Price (with jumps)');
   }
 }
+
 // ════════════════════════════════════════════════════════════════════════
 // EFFICIENT FRONTIER
 // ════════════════════════════════════════════════════════════════════════
@@ -2432,7 +2235,6 @@ function buildCorrMatrix(){
   const assets=getEFAssets();
   const n=assets.length;
   const wrap=document.getElementById('ef-corr-wrap');
-  // Preserve existing values
   const old={};
   wrap.querySelectorAll('input[data-i][data-j]').forEach(inp=>{
     old[inp.dataset.i+','+inp.dataset.j]=+inp.value;
@@ -2508,12 +2310,10 @@ function runEF(){
     portfolios.push({w,ret,vol,sharpe});
   }
 
-  // Efficient frontier — sort by vol, keep pareto-optimal
   portfolios.sort((a,b)=>a.vol-b.vol);
   const maxSharpe=portfolios.reduce((best,p)=>p.sharpe>best.sharpe?p:best,portfolios[0]);
   const minVol=portfolios[0];
 
-  // Frontier line: for each vol bucket take max return
   const buckets=60;
   const minV=Math.min(...portfolios.map(p=>p.vol));
   const maxV=Math.max(...portfolios.map(p=>p.vol));
@@ -2528,13 +2328,11 @@ function runEF(){
   }
   frontier.sort((a,b)=>a.vol-b.vol);
 
-  // Update strip
   document.getElementById('ef-sharpe').textContent=maxSharpe.sharpe.toFixed(3);
   document.getElementById('ef-sharpe-ret').textContent=(maxSharpe.ret*100).toFixed(2)+'%';
   document.getElementById('ef-sharpe-vol').textContent=(maxSharpe.vol*100).toFixed(2)+'%';
   document.getElementById('ef-minvol').textContent=(minVol.vol*100).toFixed(2)+'%';
 
-  // Scatter + frontier chart
   const scatterData=portfolios.filter((_,i)=>i%Math.max(1,Math.floor(nSims/800))===0)
     .map(p=>({x:p.vol*100,y:p.ret*100,sharpe:p.sharpe}));
 
@@ -2571,7 +2369,6 @@ function runEF(){
     }
   }});
 
-  // Weights donut
   if(efWeightsChart)efWeightsChart.destroy();
   const wCtx=document.getElementById('ef-weights-chart').getContext('2d');
   const palette=['#1a40f5','#e0312b','#00aa66','#f5b700','#7a1fa2','#4a6bff'];
@@ -2584,7 +2381,6 @@ function runEF(){
       tooltip:{callbacks:{label:c=>` ${c.label}: ${c.raw.toFixed(1)}%`}}}
   }});
 
-  // Weights table
   document.getElementById('ef-weights-table').innerHTML=assets.map((a,i)=>`
     <tr>
       <td class="var">${a.name}</td>
@@ -2593,7 +2389,6 @@ function runEF(){
     </tr>`).join('');
 }
 
-// Build correlation matrix on page load
 document.addEventListener('DOMContentLoaded',()=>{
   buildCorrMatrix();
 });
@@ -2602,7 +2397,8 @@ window.onload=()=>{
   initMcCanvas();
 };
 </script>
-<!-- ── FEEDBACK WIDGET ─────────────────────────────────────────────────── -->
+
+<!-- FEEDBACK WIDGET -->
 <div id="feedback-bar">
   <div id="feedback-inner">
     <span id="fb-label">How do you like this page?</span>
