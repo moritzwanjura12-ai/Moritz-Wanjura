@@ -641,12 +641,165 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
       <h2>Fixed Income</h2>
       <p>Bond pricing · Duration · Yield curves · Convexity</p>
     </div>
-    <div class="wip-container">
-      <div class="wip-icon">◇</div>
-      <div class="wip-title">Work in Progress</div>
-      <div class="wip-sub">Fixed income tools coming soon</div>
-      <div class="wip-tag">Planned: Bond Pricer · Duration · YTM · Yield Curve</div>
+    <div class="tool-grid">
+      <div class="tool-chip active" id="chip-bond" onclick="selectFixedTool('bond')"><div class="chip-dot"></div>Bond Pricer</div>
+      <div class="tool-chip"        id="chip-yc"   onclick="selectFixedTool('yc')"><div class="chip-dot"></div>Yield Curve</div>
     </div>
+
+    <!-- ── BOND PRICER TOOL ── -->
+    <div id="tool-bond">
+
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Bond Parameters</span></div>
+        <div class="card-body">
+          <div class="inputs-grid">
+            <div class="field"><label>Face Value <span class="sym">F</span></label><input type="number" id="bond-face" value="1000" step="100"></div>
+            <div class="field"><label>Coupon Rate % <span class="sym">c</span></label><input type="number" id="bond-coupon" value="5" step="0.1"></div>
+            <div class="field"><label>Years to Maturity <span class="sym">T</span></label><input type="number" id="bond-maturity" value="10" step="1" min="1"></div>
+            <div class="field"><label>YTM % (Market Rate) <span class="sym">y</span></label><input type="number" id="bond-ytm" value="6" step="0.1"></div>
+            <div class="field"><label>Frequency</label>
+              <select id="bond-freq" style="width:100%;background:white;border:1.5px solid var(--border);border-radius:8px;padding:0.65rem 0.9rem;color:var(--text);font-family:'DM Mono',monospace;font-size:0.9rem;outline:none;">
+                <option value="1">Annual</option>
+                <option value="2" selected>Semi-Annual</option>
+                <option value="4">Quarterly</option>
+                <option value="12">Monthly</option>
+              </select>
+            </div>
+            <div class="field"><label>Market Price <span class="sym">P*</span></label><input type="number" id="bond-mktprice" value="" placeholder="Optional — for YTM calc" step="0.01"></div>
+          </div>
+          <button class="btn-primary" onclick="runBond()">▶ &nbsp;Price Bond</button>
+        </div>
+      </div>
+
+      <!-- RESULTS STRIP -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;">
+        <div class="price-card call">
+          <div class="p-label">Bond Price</div>
+          <div class="p-value" id="bond-price" style="font-size:1.8rem;">—</div>
+          <div class="p-sub" id="bond-price-pct">— % of par</div>
+        </div>
+        <div class="price-card put" style="border-color:#7a1fa2;">
+          <div class="p-label" style="color:#7a1fa2;">YTM (from market price)</div>
+          <div class="p-value" id="bond-ytm-out" style="color:#7a1fa2;font-size:1.8rem;">—</div>
+          <div class="p-sub">Yield to Maturity</div>
+        </div>
+        <div class="price-card put" style="border-color:var(--green);">
+          <div class="p-label" style="color:var(--green);">Current Yield</div>
+          <div class="p-value" id="bond-cy" style="color:var(--green);font-size:1.8rem;">—</div>
+          <div class="p-sub">Annual coupon / Price</div>
+        </div>
+      </div>
+
+      <!-- DURATION / CONVEXITY CARDS -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+        <div class="g-card">
+          <div class="g-sym" style="font-size:1.3rem;">D<sub style="font-size:0.6rem">Mac</sub></div>
+          <div class="g-name">Macaulay Duration</div>
+          <div class="g-row" style="justify-content:center;"><span id="bond-dmac" style="font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--blue);">—</span></div>
+          <div class="g-desc">Weighted avg time to cash flows (years)</div>
+        </div>
+        <div class="g-card">
+          <div class="g-sym" style="font-size:1.3rem;">D<sub style="font-size:0.6rem">Mod</sub></div>
+          <div class="g-name">Modified Duration</div>
+          <div class="g-row" style="justify-content:center;"><span id="bond-dmod" style="font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--blue);">—</span></div>
+          <div class="g-desc">Price sensitivity to yield changes (ΔP/P per Δy)</div>
+        </div>
+        <div class="g-card">
+          <div class="g-sym" style="font-size:1.3rem;">C</div>
+          <div class="g-name">Convexity</div>
+          <div class="g-row" style="justify-content:center;"><span id="bond-conv" style="font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--blue);">—</span></div>
+          <div class="g-desc">Second-order price sensitivity (curvature)</div>
+        </div>
+        <div class="g-card">
+          <div class="g-sym" style="font-size:1.3rem;">DV01</div>
+          <div class="g-name">Dollar Value of 1bp</div>
+          <div class="g-row" style="justify-content:center;"><span id="bond-dv01" style="font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--blue);">—</span></div>
+          <div class="g-desc">€ change per 1 basis point move in yield</div>
+        </div>
+      </div>
+
+      <!-- TABS: Cash Flows / Price vs YTM / Duration Chart -->
+      <div class="card">
+        <div class="card-body" style="padding-bottom:0.5rem;">
+          <div class="tab-bar">
+            <button class="tab-btn active" id="btb-cf"    onclick="switchBondTab('cf')">Cash Flows</button>
+            <button class="tab-btn"        id="btb-pvy"   onclick="switchBondTab('pvy')">Price vs YTM</button>
+            <button class="tab-btn"        id="btb-dur"   onclick="switchBondTab('dur')">Duration Chart</button>
+            <button class="tab-btn"        id="btb-sens"  onclick="switchBondTab('sens')">Sensitivity</button>
+          </div>
+
+          <div class="tab-panel active" id="bpanel-cf">
+            <div style="overflow-x:auto;">
+              <table class="calc-table" id="bond-cf-table">
+                <thead><tr><th>Period</th><th>Time (yr)</th><th>Cash Flow</th><th>Discount Factor</th><th>PV of CF</th><th style="text-align:right">% of Price</th></tr></thead>
+                <tbody id="bond-cf-body"><tr><td colspan="6" style="color:var(--muted);font-family:'DM Mono',monospace;font-size:0.8rem;padding:1rem 0.75rem;">Press Price Bond to compute.</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="bpanel-pvy">
+            <p style="font-size:0.72rem;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:0.75rem;">Bond price as a function of YTM · convex curve · current YTM marked</p>
+            <canvas id="bondPvyChart" style="max-height:300px;"></canvas>
+          </div>
+
+          <div class="tab-panel" id="bpanel-dur">
+            <p style="font-size:0.72rem;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:0.75rem;">PV-weighted cash flow timeline · bar height = contribution to duration</p>
+            <canvas id="bondDurChart" style="max-height:300px;"></canvas>
+          </div>
+
+          <div class="tab-panel" id="bpanel-sens">
+            <table class="calc-table">
+              <thead><tr><th>Yield Shock</th><th>Approx ΔP (Duration)</th><th>Approx ΔP (Dur+Conv)</th><th style="text-align:right">New Price (Full)</th></tr></thead>
+              <tbody id="bond-sens-body"></tbody>
+            </table>
+            <p style="font-size:0.68rem;color:var(--muted);font-family:'DM Mono',monospace;margin-top:1rem;">
+              <strong style="color:var(--blue);">Duration approx:</strong> ΔP ≈ −D_mod · P · Δy &nbsp;|&nbsp;
+              <strong style="color:var(--blue);">With convexity:</strong> ΔP ≈ −D_mod · P · Δy + ½ · C · P · Δy²
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tool-bond -->
+
+    <!-- ── YIELD CURVE TOOL ── -->
+    <div id="tool-yc" style="display:none;">
+
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Yield Curve Builder</span></div>
+        <div class="card-body">
+          <p style="font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.75rem;">Enter yields for each maturity (% p.a.)</p>
+          <div id="yc-inputs" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:0.75rem;margin-bottom:1rem;">
+            <div class="field"><label>3M</label><input type="number" class="yc-inp" data-tenor="0.25" value="4.8" step="0.1"></div>
+            <div class="field"><label>6M</label><input type="number" class="yc-inp" data-tenor="0.5"  value="4.9" step="0.1"></div>
+            <div class="field"><label>1Y</label><input type="number" class="yc-inp" data-tenor="1"    value="5.0" step="0.1"></div>
+            <div class="field"><label>2Y</label><input type="number" class="yc-inp" data-tenor="2"    value="4.8" step="0.1"></div>
+            <div class="field"><label>3Y</label><input type="number" class="yc-inp" data-tenor="3"    value="4.6" step="0.1"></div>
+            <div class="field"><label>5Y</label><input type="number" class="yc-inp" data-tenor="5"    value="4.4" step="0.1"></div>
+            <div class="field"><label>7Y</label><input type="number" class="yc-inp" data-tenor="7"    value="4.3" step="0.1"></div>
+            <div class="field"><label>10Y</label><input type="number" class="yc-inp" data-tenor="10"  value="4.2" step="0.1"></div>
+            <div class="field"><label>20Y</label><input type="number" class="yc-inp" data-tenor="20"  value="4.4" step="0.1"></div>
+            <div class="field"><label>30Y</label><input type="number" class="yc-inp" data-tenor="30"  value="4.5" step="0.1"></div>
+          </div>
+          <button class="btn-primary" onclick="runYieldCurve()">▶ &nbsp;Plot Yield Curve</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Yield Curve</span>
+          <span id="yc-shape-label" style="margin-left:auto;font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--blue);"></span>
+        </div>
+        <div class="card-body">
+          <canvas id="ycChart" style="max-height:320px;"></canvas>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.25rem;">
+            <div class="mc-stat"><div class="s-label">2s10s Spread</div><div class="s-val" id="yc-2s10s" style="font-size:1.3rem;">—</div><div class="s-sub">10Y minus 2Y yield</div></div>
+            <div class="mc-stat"><div class="s-label">3M10Y Spread</div><div class="s-val" id="yc-3m10y" style="font-size:1.3rem;">—</div><div class="s-sub">Recession indicator</div></div>
+            <div class="mc-stat"><div class="s-label">Curve Shape</div><div class="s-val" id="yc-shape" style="font-size:1.1rem;">—</div><div class="s-sub">Normal / Flat / Inverted</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tool-yc -->
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -1385,6 +1538,238 @@ function runVaR(){
     x:{ticks:{display:false},grid:{display:false}},
     y:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10}},grid:{color:'rgba(26,64,245,0.06)'}}
   },animation:{duration:600}}});
+}
+// ════════════════════════════════════════════════════════════════════════
+// FIXED INCOME
+// ════════════════════════════════════════════════════════════════════════
+let bondChartPvy=null, bondChartDur=null, ycChartInst=null;
+let activeBondTab='cf', lastBond=null;
+
+function selectFixedTool(name){
+  document.querySelectorAll('#cat-fixed .tool-chip').forEach(c=>c.classList.remove('active'));
+  document.getElementById('chip-'+name).classList.add('active');
+  document.getElementById('tool-bond').style.display=name==='bond'?'block':'none';
+  document.getElementById('tool-yc').style.display=name==='yc'?'block':'none';
+}
+
+function switchBondTab(name){
+  document.querySelectorAll('#tool-bond .tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('#tool-bond .tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('bpanel-'+name).classList.add('active');
+  document.getElementById('btb-'+name).classList.add('active');
+  activeBondTab=name;
+  if(lastBond) renderBondTab();
+}
+
+function bondPrice(F,c,T,y,freq){
+  const n=T*freq, r=y/freq, cpn=F*c/freq;
+  let P=0;
+  for(let i=1;i<=n;i++) P+=cpn/Math.pow(1+r,i);
+  P+=F/Math.pow(1+r,n);
+  return P;
+}
+
+function calcYTM(F,c,T,freq,mktP){
+  // bisection
+  let lo=0.0001, hi=2.0;
+  for(let i=0;i<200;i++){
+    const mid=(lo+hi)/2;
+    const p=bondPrice(F,c,T,mid,freq);
+    if(Math.abs(p-mktP)<0.0001) return mid;
+    if(p>mktP) lo=mid; else hi=mid;
+  }
+  return (lo+hi)/2;
+}
+
+function runBond(){
+  const F=+document.getElementById('bond-face').value;
+  const c=+document.getElementById('bond-coupon').value/100;
+  const T=+document.getElementById('bond-maturity').value;
+  const y=+document.getElementById('bond-ytm').value/100;
+  const freq=+document.getElementById('bond-freq').value;
+  const mktPInput=document.getElementById('bond-mktprice').value;
+
+  const n=T*freq, r=y/freq, cpn=F*c/freq;
+  const P=bondPrice(F,c,T,y,freq);
+
+  // YTM from market price
+  let ytmOut=null;
+  if(mktPInput!==''){
+    ytmOut=calcYTM(F,c,T,freq,+mktPInput);
+  }
+
+  // Macaulay Duration
+  let sumPvT=0;
+  for(let i=1;i<=n;i++){
+    const t=i/freq;
+    const pv=cpn/Math.pow(1+r,i);
+    sumPvT+=t*pv;
+  }
+  sumPvT+=(T)*(F/Math.pow(1+r,n));
+  const dMac=sumPvT/P;
+  const dMod=dMac/(1+r);
+
+  // Convexity
+  let conv=0;
+  for(let i=1;i<=n;i++){
+    const t=i/freq;
+    const pv=cpn/Math.pow(1+r,i);
+    conv+=pv*t*(t+1/freq);
+  }
+  conv+=(F/Math.pow(1+r,n))*T*(T+1/freq);
+  conv=conv/(P*Math.pow(1+r,2));
+
+  const dv01=dMod*P*0.0001;
+  const currentYield=(F*c)/P*100;
+
+  lastBond={F,c,T,y,freq,n,r,cpn,P,dMac,dMod,conv,dv01,ytmOut};
+
+  // Update display
+  document.getElementById('bond-price').textContent='€'+P.toFixed(2);
+  document.getElementById('bond-price-pct').textContent=(P/F*100).toFixed(2)+'% of par';
+  document.getElementById('bond-ytm-out').textContent=ytmOut!=null?(ytmOut*100).toFixed(3)+'%':'Enter P*';
+  document.getElementById('bond-cy').textContent=currentYield.toFixed(3)+'%';
+  document.getElementById('bond-dmac').textContent=dMac.toFixed(4)+' yrs';
+  document.getElementById('bond-dmod').textContent=dMod.toFixed(4);
+  document.getElementById('bond-conv').textContent=conv.toFixed(4);
+  document.getElementById('bond-dv01').textContent='€'+dv01.toFixed(4);
+
+  renderBondTab();
+}
+
+function renderBondTab(){
+  if(activeBondTab==='cf')   renderBondCF();
+  if(activeBondTab==='pvy')  renderBondPvY();
+  if(activeBondTab==='dur')  renderBondDur();
+  if(activeBondTab==='sens') renderBondSens();
+}
+
+function renderBondCF(){
+  const{F,c,T,y,freq,n,r,cpn,P}=lastBond;
+  let rows='';
+  for(let i=1;i<=n;i++){
+    const t=i/freq;
+    const cf=i===n?cpn+F:cpn;
+    const df=1/Math.pow(1+r,i);
+    const pv=cf*df;
+    rows+=`<tr>
+      <td class="var">${i}</td>
+      <td>${t.toFixed(2)}</td>
+      <td>€${cf.toFixed(2)}</td>
+      <td>${df.toFixed(6)}</td>
+      <td>€${pv.toFixed(4)}</td>
+      <td class="val">${(pv/P*100).toFixed(2)}%</td>
+    </tr>`;
+  }
+  document.getElementById('bond-cf-body').innerHTML=rows;
+}
+
+function renderBondPvY(){
+  const{F,c,T,freq,y,P}=lastBond;
+  const ytms=Array.from({length:80},(_,i)=>0.005+i*0.01);
+  const prices=ytms.map(yt=>bondPrice(F,c,T,yt,freq));
+  const ctx=document.getElementById('bondPvyChart').getContext('2d');
+  if(bondChartPvy)bondChartPvy.destroy();
+  bondChartPvy=new Chart(ctx,{type:'line',data:{
+    labels:ytms.map(v=>(v*100).toFixed(1)+'%'),
+    datasets:[
+      {label:'Bond Price',data:prices,borderColor:'#1a40f5',backgroundColor:'rgba(26,64,245,0.07)',borderWidth:2,pointRadius:0,tension:0.3,fill:true},
+      {label:'Current',data:ytms.map(yt=>Math.abs(yt-y)<0.005?P:null),borderColor:'#e0312b',backgroundColor:'#e0312b',pointRadius:6,pointStyle:'circle',showLine:false},
+    ]
+  },options:{responsive:true,interaction:{mode:'index',intersect:false},
+    plugins:{legend:{labels:{color:'#7a85bb',font:{family:'DM Mono',size:11}}},
+      tooltip:{backgroundColor:'#fff',borderColor:'#d8e0f5',borderWidth:1,titleColor:'#1a40f5',bodyColor:'#0d1240',
+        callbacks:{label:c=>` ${c.dataset.label}: ${typeof c.raw==='number'?'€'+c.raw.toFixed(2):''}`.trim()}}},
+    scales:{
+      x:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10},maxTicksLimit:12},grid:{color:'rgba(26,64,245,0.06)'}},
+      y:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10},callback:v=>'€'+v.toFixed(0)},grid:{color:'rgba(26,64,245,0.06)'}}
+    }
+  }});
+}
+
+function renderBondDur(){
+  const{F,c,T,freq,n,r,cpn,P}=lastBond;
+  const labels=[],pvWeights=[];
+  for(let i=1;i<=n;i++){
+    const t=i/freq;
+    const cf=i===n?cpn+F:cpn;
+    const pv=cf/Math.pow(1+r,i);
+    labels.push(t.toFixed(2)+'y');
+    pvWeights.push((pv/P*t));
+  }
+  const ctx=document.getElementById('bondDurChart').getContext('2d');
+  if(bondChartDur)bondChartDur.destroy();
+  bondChartDur=new Chart(ctx,{type:'bar',data:{
+    labels,datasets:[{label:'PV weight × time',data:pvWeights,backgroundColor:'rgba(26,64,245,0.6)',borderColor:'#1a40f5',borderWidth:1,borderRadius:3}]
+  },options:{responsive:true,plugins:{
+    legend:{labels:{color:'#7a85bb',font:{family:'DM Mono',size:11}}},
+    tooltip:{backgroundColor:'#fff',borderColor:'#d8e0f5',borderWidth:1,titleColor:'#1a40f5',bodyColor:'#0d1240',
+      callbacks:{label:c=>` Duration contribution: ${c.raw.toFixed(4)} yrs`}}
+  },scales:{
+    x:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:9},maxRotation:45},grid:{display:false}},
+    y:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10}},grid:{color:'rgba(26,64,245,0.06)'}}
+  }}});
+}
+
+function renderBondSens(){
+  const{P,dMod,conv,F,c,T,y,freq}=lastBond;
+  const shocks=[-0.02,-0.01,-0.005,-0.0025,0.0025,0.005,0.01,0.02];
+  const rows=shocks.map(dy=>{
+    const approxDur=-dMod*P*dy;
+    const approxFull=approxDur+0.5*conv*P*dy*dy;
+    const newP=bondPrice(F,c,T,Math.max(0.0001,y+dy),freq);
+    const sign=dy>0?'+':'';
+    return`<tr>
+      <td class="var">${sign+(dy*100).toFixed(2)}%</td>
+      <td style="color:${approxDur>=0?'var(--green)':'var(--put)'}">€${approxDur.toFixed(2)}</td>
+      <td style="color:${approxFull>=0?'var(--green)':'var(--put)'}">€${approxFull.toFixed(2)}</td>
+      <td class="val">€${newP.toFixed(2)}</td>
+    </tr>`;
+  });
+  document.getElementById('bond-sens-body').innerHTML=rows.join('');
+}
+
+// ── YIELD CURVE ──
+function runYieldCurve(){
+  const inputs=document.querySelectorAll('.yc-inp');
+  const tenors=[],yields=[];
+  inputs.forEach(inp=>{
+    tenors.push(+inp.dataset.tenor);
+    yields.push(+inp.value);
+  });
+
+  const spread2s10s=(yields[tenors.indexOf(10)]-yields[tenors.indexOf(2)]).toFixed(2);
+  const spread3m10y=(yields[tenors.indexOf(10)]-yields[tenors.indexOf(0.25)]).toFixed(2);
+  const shape=spread2s10s>0.1?'Normal':spread2s10s<-0.1?'Inverted':'Flat';
+  const shapeColor=shape==='Normal'?'var(--green)':shape==='Inverted'?'var(--put)':'var(--muted)';
+
+  document.getElementById('yc-2s10s').textContent=(spread2s10s>0?'+':'')+spread2s10s+'%';
+  document.getElementById('yc-3m10y').textContent=(spread3m10y>0?'+':'')+spread3m10y+'%';
+  document.getElementById('yc-shape').textContent=shape;
+  document.getElementById('yc-shape').style.color=shapeColor;
+  document.getElementById('yc-shape-label').textContent='Shape: '+shape;
+
+  const ctx=document.getElementById('ycChart').getContext('2d');
+  if(ycChartInst)ycChartInst.destroy();
+  ycChartInst=new Chart(ctx,{type:'line',data:{
+    labels:tenors.map(t=>t<1?t*12+'M':t+'Y'),
+    datasets:[{
+      label:'Yield Curve',data:yields,
+      borderColor:'#1a40f5',backgroundColor:'rgba(26,64,245,0.08)',
+      borderWidth:2.5,pointRadius:5,pointBackgroundColor:'#1a40f5',
+      fill:true,tension:0.35,
+    }]
+  },options:{responsive:true,
+    plugins:{legend:{display:false},
+      tooltip:{backgroundColor:'#fff',borderColor:'#d8e0f5',borderWidth:1,titleColor:'#1a40f5',bodyColor:'#0d1240',
+        callbacks:{label:c=>` Yield: ${c.raw.toFixed(2)}%`}}},
+    scales:{
+      x:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:11}},grid:{color:'rgba(26,64,245,0.06)'}},
+      y:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10},callback:v=>v+'%'},
+         grid:{color:'rgba(26,64,245,0.06)'},
+         title:{display:true,text:'Yield (%)',color:'var(--muted)',font:{family:'DM Mono',size:10}}}
+    }
+  }});
 }
 window.onload=()=>{
   calculate();
