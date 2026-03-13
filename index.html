@@ -317,7 +317,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;">
       <div>
         <h2 style="font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--text);margin-bottom:0.3rem;">Welcome<em style="font-style:italic;color:var(--muted);"> to the Toolkit.</em></h2>
-        <p style="font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--muted);letter-spacing:0.06em;">15 interactive models · 4 categories · no installation required</p>
+        <p style="font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--muted);letter-spacing:0.06em;">20 interactive models · 4 categories · no installation required</p>
       </div>
       <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
         <span style="background:rgba(26,64,245,0.08);border:1px solid rgba(26,64,245,0.2);border-radius:20px;padding:4px 14px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--blue);letter-spacing:0.08em;">Educational</span>
@@ -344,10 +344,13 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
       <div onclick="switchCat('portfolio')" style="background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:1.5rem;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;" onmouseover="this.style.borderColor='var(--blue)';this.style.boxShadow='0 4px 24px var(--shadow)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
         <div style="position:absolute;right:-20px;top:-20px;font-size:5rem;opacity:0.04;pointer-events:none;">◉</div>
         <div style="font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--blue);margin-bottom:0.75rem;font-weight:500;">◉ Portfolio &amp; Risk</div>
-        <p style="font-size:0.82rem;color:var(--muted);line-height:1.7;margin-bottom:1.1rem;">Value at Risk, Expected Shortfall and mean-variance optimisation. Interactive Efficient Frontier with Sharpe-optimal portfolio, correlation matrix and Capital Market Line.</p>
+        <p style="font-size:0.82rem;color:var(--muted);line-height:1.7;margin-bottom:1.1rem;">VaR, CVaR, Efficient Frontier, Correlation &amp; Covariance analysis, Risk Parity optimisation, Maximum Drawdown simulation, CAPM/Beta calculator and Fama-French 3-Factor attribution.</p>
         <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1.1rem;">
           <span style="background:var(--off);border:1px solid var(--border);border-radius:4px;padding:3px 9px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);">VaR &amp; CVaR</span>
           <span style="background:var(--off);border:1px solid var(--border);border-radius:4px;padding:3px 9px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);">Efficient Frontier</span>
+          <span style="background:var(--off);border:1px solid var(--border);border-radius:4px;padding:3px 9px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);">Correlation Matrix</span>
+          <span style="background:var(--off);border:1px solid var(--border);border-radius:4px;padding:3px 9px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);">Risk Parity</span>
+          <span style="background:var(--off);border:1px solid var(--border);border-radius:4px;padding:3px 9px;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);">CAPM · FF3</span>
         </div>
         <div style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--blue);letter-spacing:0.08em;">Open →</div>
       </div>
@@ -380,13 +383,13 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
     <div style="display:grid;grid-template-columns:2fr 1fr;gap:1.5rem;margin-bottom:2rem;">
       <div>
         <div style="font-family:'DM Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:0.75rem;">About this project</div>
-        <p style="font-size:0.85rem;color:var(--text);line-height:1.85;margin-bottom:0.9rem;">I built this toolkit because I wanted to understand the core models of quantitative finance not just theoretically, but interactively. Every model here is something I worked through properly — the maths, the implementation, the edge cases. Being able to drag a slider and instantly see how Delta changes, or watch 200 GBM paths animate in real time, makes these concepts click in a way that reading a textbook never quite does.</p>
+        <p style="font-size:0.85rem;color:var(--text);line-height:1.85;margin-bottom:0.9rem;">I built this toolkit because I wanted to understand the core models of quantitative finance not just theoretically, but interactively. Being able to drag a slider and instantly see how e.g. Delta changes makes these concepts click in a way that reading a textbook or hearing a lecture never quite does.</p>
         <p style="font-size:0.85rem;color:var(--muted);line-height:1.85;">Everything runs in a single HTML file — no backend, no login, no dependencies beyond Chart.js and Three.js. Each tool has a built-in explanation (click <span style="font-family:'DM Mono',monospace;background:rgba(26,64,245,0.08);border:1px solid rgba(26,64,245,0.2);border-radius:4px;padding:1px 7px;font-size:0.75rem;color:var(--blue);">ⓘ Explain model</span>) covering the theory, the formulas and how to use it.</p>
       </div>
       <div style="display:flex;flex-direction:column;gap:0.75rem;">
         <div style="background:var(--off);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;">
           <div style="font-family:'DM Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px;">Models</div>
-          <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--blue);">15</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--blue);">20</div>
           <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);">Across 4 categories</div>
         </div>
         <div style="background:var(--off);border:1px solid var(--border);border-radius:10px;padding:1rem 1.1rem;">
@@ -841,8 +844,13 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
       <p>Mean-variance optimization · VaR · Sharpe ratio · Correlation analysis</p>
     </div>
     <div class="tool-grid">
-      <div class="tool-chip active" id="chip-var" onclick="selectPortfolioTool('var')"><div class="chip-dot"></div>VaR &amp; CVaR</div>
-      <div class="tool-chip" id="chip-ef" onclick="selectPortfolioTool('ef')"><div class="chip-dot"></div>Efficient Frontier</div>
+      <div class="tool-chip active" id="chip-var"   onclick="selectPortfolioTool('var')"><div class="chip-dot"></div>VaR &amp; CVaR</div>
+      <div class="tool-chip"        id="chip-ef"    onclick="selectPortfolioTool('ef')"><div class="chip-dot"></div>Efficient Frontier</div>
+      <div class="tool-chip"        id="chip-corr"  onclick="selectPortfolioTool('corr')"><div class="chip-dot"></div>Correlation Matrix</div>
+      <div class="tool-chip"        id="chip-rp"    onclick="selectPortfolioTool('rp')"><div class="chip-dot"></div>Risk Parity</div>
+      <div class="tool-chip"        id="chip-mdd"   onclick="selectPortfolioTool('mdd')"><div class="chip-dot"></div>Max Drawdown</div>
+      <div class="tool-chip"        id="chip-capm"  onclick="selectPortfolioTool('capm')"><div class="chip-dot"></div>CAPM / Beta</div>
+      <div class="tool-chip"        id="chip-ff"    onclick="selectPortfolioTool('ff')"><div class="chip-dot"></div>Fama-French 3-Factor</div>
     </div>
 
     <!-- VAR TOOL -->
@@ -1045,6 +1053,206 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
         </div>
       </div>
     </div><!-- /tool-ef -->
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- CORRELATION & COVARIANCE MATRIX                                -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="tool-corr" style="display:none;">
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Correlation &amp; Covariance Matrix</span><span class="info-toggle" onclick="toggleInfo('corr',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
+        <div class="info-panel" id="info-corr">
+          <h3>Correlation &amp; Covariance Analysis</h3>
+          <div class="info-subtitle">Pearson correlation · Covariance matrix · Diversification analysis</div>
+          <div class="info-section"><h4>What is it?</h4><p>The correlation matrix shows the linear relationships between asset returns. Values near +1 = highly correlated (move together), near −1 = inversely correlated, near 0 = independent. The covariance matrix encodes both correlation and volatility, and is the foundation of all mean-variance portfolio theory.</p></div>
+          <div class="info-section"><h4>Core formulas</h4><div class="info-formula">ρ_ij = Cov(R_i, R_j) / (σ_i · σ_j)<br>Cov(R_i, R_j) = E[(R_i − μ_i)(R_j − μ_j)]<br><br><span class="f-comment">Synthetic returns: GBM simulation with specified correlations (Cholesky decomposition)</span></div></div>
+          <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Add assets with name, expected return %, volatility % and true correlation matrix</li><li>Set number of simulated periods (days)</li><li>Click Generate → synthetic return series are simulated via Cholesky decomposition</li><li>Computed correlation and covariance matrices are displayed as colour-coded heatmaps</li><li>Scatter plots show pairwise return distributions</li></ol></div>
+        </div>
+        <div class="card-body">
+          <p style="font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.75rem;">Assets — Name · Annual Return % · Annual Vol %</p>
+          <div id="corr-assets">
+            <div class="var-asset-row"><input type="text" class="var-inp var-name" value="Equities"><input type="number" class="var-inp var-mu" value="10" step="0.1"><input type="number" class="var-inp var-sig" value="18" step="0.1"><button class="var-rm" onclick="corrRemoveAsset(this)">✕</button></div>
+            <div class="var-asset-row"><input type="text" class="var-inp var-name" value="Bonds"><input type="number" class="var-inp var-mu" value="4" step="0.1"><input type="number" class="var-inp var-sig" value="7" step="0.1"><button class="var-rm" onclick="corrRemoveAsset(this)">✕</button></div>
+            <div class="var-asset-row"><input type="text" class="var-inp var-name" value="Real Estate"><input type="number" class="var-inp var-mu" value="7" step="0.1"><input type="number" class="var-inp var-sig" value="14" step="0.1"><button class="var-rm" onclick="corrRemoveAsset(this)">✕</button></div>
+            <div class="var-asset-row"><input type="text" class="var-inp var-name" value="Commodities"><input type="number" class="var-inp var-mu" value="5" step="0.1"><input type="number" class="var-inp var-sig" value="20" step="0.1"><button class="var-rm" onclick="corrRemoveAsset(this)">✕</button></div>
+          </div>
+          <button onclick="corrAddAsset()" style="margin-top:0.5rem;padding:0.4rem 1rem;background:transparent;border:1.5px dashed var(--border);border-radius:8px;font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);cursor:pointer;" onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">+ Add Asset</button>
+          <div style="height:1px;background:var(--border);margin:1.25rem 0;"></div>
+          <p style="font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.75rem;">True Correlation Matrix (used for simulation)</p>
+          <div id="corr-input-matrix" style="overflow-x:auto;margin-bottom:1.25rem;"></div>
+          <div class="inputs-grid" style="grid-template-columns:1fr 1fr;">
+            <div class="field"><label>Simulated Periods (days)</label><input type="number" id="corr-periods" value="500" step="100"></div>
+            <div class="field"><label>Random Seed</label><input type="number" id="corr-seed" value="42" step="1"></div>
+          </div>
+          <button class="btn-primary" onclick="runCorr()">▶ &nbsp;Generate &amp; Analyse</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
+        <div class="card"><div class="card-header"><div class="dot"></div><span>Correlation Matrix (Computed)</span></div><div class="card-body" style="padding:1rem;overflow-x:auto;"><div id="corr-out-matrix"></div></div></div>
+        <div class="card"><div class="card-header"><div class="dot"></div><span>Covariance Matrix (Annualised)</span></div><div class="card-body" style="padding:1rem;overflow-x:auto;"><div id="cov-out-matrix"></div></div></div>
+      </div>
+      <div class="card"><div class="card-header"><div class="dot"></div><span>Return Series &amp; Cumulative Performance</span></div><div class="card-body" style="padding:1rem;"><canvas id="corr-chart" style="max-height:300px;"></canvas></div></div>
+    </div><!-- /tool-corr -->
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- RISK PARITY PORTFOLIO                                          -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="tool-rp" style="display:none;">
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Risk Parity Portfolio</span><span class="info-toggle" onclick="toggleInfo('rp',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
+        <div class="info-panel" id="info-rp">
+          <h3>Risk Parity Portfolio</h3>
+          <div class="info-subtitle">Equal risk contribution · Bridgewater All Weather approach</div>
+          <div class="info-section"><h4>What is it?</h4><p>Risk Parity allocates weights so that every asset contributes equally to total portfolio risk. Unlike equal weighting or market-cap weighting, it's driven entirely by volatility and correlation. Bonds receive more weight than equities because they have lower volatility. Made famous by Bridgewater's All Weather fund.</p></div>
+          <div class="info-section"><h4>Core formulas</h4><div class="info-formula">RC_i = w_i · (Σw)_i / σ_p  ← risk contribution of asset i<br>Target: RC_i = 1/N for all i<br><br>Solved via iterative gradient descent:<br>w ← w − α · ∇[Σ(RC_i − 1/N)²]</div></div>
+          <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Enter assets with volatility % and edit correlation matrix</li><li>Click Solve → weights are found via iterative optimisation</li><li>Results show risk contribution per asset (should all be equal)</li><li>Compare to equal weight and vol-inverse weight</li></ol></div>
+        </div>
+        <div class="card-body">
+          <p style="font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.75rem;">Assets — Name · Annual Return % · Annual Vol %</p>
+          <div id="rp-assets">
+            <div class="var-asset-row"><input type="text" class="var-inp var-name" value="Global Equities"><input type="number" class="var-inp var-mu" value="9" step="0.1"><input type="number" class="var-inp var-sig" value="16" step="0.1"><button class="var-rm" onclick="rpRemoveAsset(this)">✕</button></div>
+            <div class="var-asset-row"><input type="text" class="var-inp var-name" value="Long-Term Bonds"><input type="number" class="var-inp var-mu" value="4" step="0.1"><input type="number" class="var-inp var-sig" value="10" step="0.1"><button class="var-rm" onclick="rpRemoveAsset(this)">✕</button></div>
+            <div class="var-asset-row"><input type="text" class="var-inp var-name" value="Gold"><input type="number" class="var-inp var-mu" value="5" step="0.1"><input type="number" class="var-inp var-sig" value="14" step="0.1"><button class="var-rm" onclick="rpRemoveAsset(this)">✕</button></div>
+            <div class="var-asset-row"><input type="text" class="var-inp var-name" value="Commodities"><input type="number" class="var-inp var-mu" value="4" step="0.1"><input type="number" class="var-inp var-sig" value="18" step="0.1"><button class="var-rm" onclick="rpRemoveAsset(this)">✕</button></div>
+          </div>
+          <button onclick="rpAddAsset()" style="margin-top:0.5rem;padding:0.4rem 1rem;background:transparent;border:1.5px dashed var(--border);border-radius:8px;font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);cursor:pointer;" onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">+ Add Asset</button>
+          <div style="height:1px;background:var(--border);margin:1.25rem 0;"></div>
+          <p style="font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.75rem;">Correlation Matrix</p>
+          <div id="rp-corr-wrap" style="overflow-x:auto;margin-bottom:1.25rem;"></div>
+          <button class="btn-primary" onclick="runRiskParity()">▶ &nbsp;Solve Risk Parity</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;" id="rp-strip"></div>
+      <div style="display:grid;grid-template-columns:3fr 2fr;gap:1rem;margin-bottom:1.5rem;">
+        <div class="card"><div class="card-header"><div class="dot"></div><span>Risk Contribution vs Weight</span></div><div class="card-body" style="padding:1rem;"><canvas id="rp-chart" style="max-height:300px;"></canvas></div></div>
+        <div class="card"><div class="card-header"><div class="dot"></div><span>Portfolio Comparison</span></div>
+          <div class="card-body">
+            <table class="calc-table">
+              <thead><tr><th>Asset</th><th>Risk Parity</th><th>Equal Weight</th><th style="text-align:right">1/Vol</th></tr></thead>
+              <tbody id="rp-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div><!-- /tool-rp -->
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- MAXIMUM DRAWDOWN                                               -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="tool-mdd" style="display:none;">
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Maximum Drawdown Analysis</span><span class="info-toggle" onclick="toggleInfo('mdd',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
+        <div class="info-panel" id="info-mdd">
+          <h3>Maximum Drawdown Analysis</h3>
+          <div class="info-subtitle">Peak-to-trough loss · Recovery · Drawdown distribution</div>
+          <div class="info-section"><h4>What is it?</h4><p>Maximum Drawdown (MDD) measures the largest peak-to-trough decline over a period. It's the most intuitive risk metric for investors — "how much could I have lost if I bought at the peak?" The Calmar Ratio = Annual Return / MDD is a common risk-adjusted performance measure.</p></div>
+          <div class="info-section"><h4>Core formulas</h4><div class="info-formula">DD(t) = [Peak(t) − V(t)] / Peak(t)<br>MDD = max DD(t) over all t<br>Calmar = μ_annual / |MDD|<br>Recovery = time from trough back to prior peak</div></div>
+          <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Set GBM parameters: drift μ, volatility σ, time horizon</li><li>Number of paths: more = better distribution estimate</li><li>Click Simulate → paths are drawn, MDD computed per path</li><li>Histogram shows distribution of MDD across all paths</li><li>Statistics: mean MDD, worst/best path, Calmar ratio</li></ol></div>
+        </div>
+        <div class="card-body">
+          <div class="inputs-grid">
+            <div class="field"><label>Initial Value <span class="sym">V₀</span></label><input type="number" id="mdd-v0" value="100" step="1"></div>
+            <div class="field"><label>Annual Drift % <span class="sym">μ</span></label><input type="number" id="mdd-mu" value="8" step="0.1"></div>
+            <div class="field"><label>Annual Volatility % <span class="sym">σ</span></label><input type="number" id="mdd-sig" value="20" step="0.1"></div>
+            <div class="field"><label>Time Horizon (yrs) <span class="sym">T</span></label><input type="number" id="mdd-T" value="5" step="0.5"></div>
+            <div class="field"><label>Steps per Year</label><input type="number" id="mdd-steps" value="252" step="10"></div>
+            <div class="field"><label>Paths</label><input type="number" id="mdd-paths" value="500" step="100"></div>
+          </div>
+          <button class="btn-primary" onclick="runMDD()">▶ &nbsp;Simulate Drawdowns</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;" id="mdd-strip"></div>
+      <div style="display:grid;grid-template-columns:3fr 2fr;gap:1rem;">
+        <div class="card"><div class="card-header"><div class="dot"></div><span>Sample Paths &amp; Drawdown</span></div><div class="card-body" style="padding:1rem;"><canvas id="mdd-path-chart" style="max-height:260px;"></canvas><canvas id="mdd-dd-chart" style="max-height:160px;margin-top:0.75rem;"></canvas></div></div>
+        <div class="card"><div class="card-header"><div class="dot"></div><span>MDD Distribution (all paths)</span></div><div class="card-body" style="padding:1rem;"><canvas id="mdd-hist-chart" style="max-height:320px;"></canvas></div></div>
+      </div>
+    </div><!-- /tool-mdd -->
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- CAPM / BETA CALCULATOR                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="tool-capm" style="display:none;">
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>CAPM &amp; Beta Calculator</span><span class="info-toggle" onclick="toggleInfo('capm',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
+        <div class="info-panel" id="info-capm">
+          <h3>CAPM &amp; Beta Calculator</h3>
+          <div class="info-subtitle">Capital Asset Pricing Model · William Sharpe, 1964</div>
+          <div class="info-section"><h4>What is it?</h4><p>CAPM is the foundational model for relating asset expected returns to systematic risk. Beta (β) measures how much an asset moves relative to the market — β=1 moves with the market, β&gt;1 is amplified, β&lt;1 is defensive. Alpha (α) is the excess return not explained by market exposure.</p></div>
+          <div class="info-section"><h4>Core formulas</h4><div class="info-formula">E[R_i] = r_f + β_i · (E[R_m] − r_f)<br><br>β_i = Cov(R_i, R_m) / Var(R_m)<br>α_i = R_i − [r_f + β_i·(R_m − r_f)]  ← Jensen's Alpha<br><br>R² = ρ²_{i,m}  ← fraction of variance explained by market</div></div>
+          <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Set asset and market parameters (or use the synthetic return generator)</li><li>Adjust true beta and correlation to simulate different asset types</li><li>Click Calculate → OLS regression is run on simulated returns</li><li>Security Market Line is plotted with the asset positioned</li><li>Residual chart shows idiosyncratic (non-market) risk</li></ol></div>
+        </div>
+        <div class="card-body">
+          <div class="inputs-grid">
+            <div class="field"><label>Risk-Free Rate % <span class="sym">r_f</span></label><input type="number" id="capm-rf" value="4" step="0.1"></div>
+            <div class="field"><label>Market Return % <span class="sym">E[R_m]</span></label><input type="number" id="capm-rm" value="10" step="0.1"></div>
+            <div class="field"><label>Market Vol % <span class="sym">σ_m</span></label><input type="number" id="capm-sigm" value="15" step="0.1"></div>
+            <div class="field"><label>Asset True Beta <span class="sym">β</span></label><input type="number" id="capm-beta" value="1.3" step="0.05"></div>
+            <div class="field"><label>Asset Idio. Vol % <span class="sym">σ_ε</span></label><input type="number" id="capm-sigeps" value="12" step="1"></div>
+            <div class="field"><label>Simulated Periods</label><input type="number" id="capm-periods" value="252" step="50"></div>
+          </div>
+          <button class="btn-primary" onclick="runCAPM()">▶ &nbsp;Calculate CAPM</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;" id="capm-strip"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="card"><div class="card-header"><div class="dot"></div><span>Security Market Line &amp; Asset</span></div><div class="card-body" style="padding:1rem;"><canvas id="capm-sml-chart" style="max-height:280px;"></canvas></div></div>
+        <div class="card"><div class="card-header"><div class="dot"></div><span>Scatter: Asset vs Market Returns</span></div><div class="card-body" style="padding:1rem;"><canvas id="capm-scatter-chart" style="max-height:280px;"></canvas></div></div>
+      </div>
+    </div><!-- /tool-capm -->
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- FAMA-FRENCH 3-FACTOR MODEL                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="tool-ff" style="display:none;">
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Fama-French 3-Factor Model</span><span class="info-toggle" onclick="toggleInfo('ff',this)"><span class="info-icon">ⓘ</span> Explain model</span></div>
+        <div class="info-panel" id="info-ff">
+          <h3>Fama-French 3-Factor Model</h3>
+          <div class="info-subtitle">Beyond CAPM · Fama &amp; French, 1993</div>
+          <div class="info-section"><h4>What is it?</h4><p>Fama-French extends CAPM with two additional risk factors: SMB (Small Minus Big) — the size premium, small caps historically outperform large caps; and HML (High Minus Low) — the value premium, high book-to-market (value) stocks outperform growth stocks. Together, the three factors explain most of the cross-section of stock returns.</p></div>
+          <div class="info-section"><h4>Core formula</h4><div class="info-formula">R_i − r_f = α + β_mkt·(R_m−r_f) + β_smb·SMB + β_hml·HML + ε<br><br><span class="f-comment">β_smb &gt; 0: small-cap tilt · β_hml &gt; 0: value tilt · α ≠ 0: skill/anomaly</span></div></div>
+          <div class="info-section"><h4>Typical factor premiums (historical)</h4><div class="info-grid">
+            <div class="info-box"><div class="ib-label">Market (Mkt-RF)</div><div class="ib-val">~6% p.a.</div><div class="ib-desc">Equity risk premium over T-bills</div></div>
+            <div class="info-box"><div class="ib-label">SMB (Size)</div><div class="ib-val">~2–3% p.a.</div><div class="ib-desc">Small cap outperformance, long-run</div></div>
+            <div class="info-box"><div class="ib-label">HML (Value)</div><div class="ib-val">~3–4% p.a.</div><div class="ib-desc">Value vs growth premium</div></div>
+            <div class="info-box"><div class="ib-label">R² typical</div><div class="ib-val">~90–95%</div><div class="ib-desc">vs ~70–75% for CAPM alone</div></div>
+          </div></div>
+          <div class="info-section"><h4>How to use</h4><ol class="info-steps"><li>Set factor loadings (betas) for your asset/portfolio</li><li>Set factor premiums (or use historical defaults)</li><li>Click Calculate → expected return decomposition appears</li><li>The factor attribution chart shows what % of return each factor explains</li><li>Simulate returns to see how factor exposure affects path behaviour</li></ol></div>
+        </div>
+        <div class="card-body">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+            <div>
+              <p style="font-family:'DM Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.75rem;">Factor Loadings (Betas)</p>
+              <div class="inputs-grid" style="grid-template-columns:1fr 1fr;">
+                <div class="field"><label>β_mkt</label><input type="number" id="ff-bmkt" value="1.1" step="0.05"></div>
+                <div class="field"><label>β_smb (Size)</label><input type="number" id="ff-bsmb" value="0.4" step="0.05"></div>
+                <div class="field"><label>β_hml (Value)</label><input type="number" id="ff-bhml" value="0.2" step="0.05"></div>
+                <div class="field"><label>α (Skill) %</label><input type="number" id="ff-alpha" value="1" step="0.1"></div>
+              </div>
+            </div>
+            <div>
+              <p style="font-family:'DM Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.75rem;">Factor Premiums &amp; Base Rates</p>
+              <div class="inputs-grid" style="grid-template-columns:1fr 1fr;">
+                <div class="field"><label>r_f %</label><input type="number" id="ff-rf" value="4" step="0.1"></div>
+                <div class="field"><label>Mkt Premium %</label><input type="number" id="ff-mktprem" value="6" step="0.1"></div>
+                <div class="field"><label>SMB Premium %</label><input type="number" id="ff-smbprem" value="2.5" step="0.1"></div>
+                <div class="field"><label>HML Premium %</label><input type="number" id="ff-hmlprem" value="3.5" step="0.1"></div>
+              </div>
+            </div>
+          </div>
+          <div class="inputs-grid" style="grid-template-columns:1fr 1fr 1fr;margin-top:1rem;">
+            <div class="field"><label>Residual Vol % <span class="sym">σ_ε</span></label><input type="number" id="ff-sigeps" value="10" step="1"></div>
+            <div class="field"><label>Factor Vol % <span class="sym">σ_f</span></label><input type="number" id="ff-sigf" value="12" step="1"></div>
+            <div class="field"><label>Simulated Periods</label><input type="number" id="ff-periods" value="252" step="50"></div>
+          </div>
+          <button class="btn-primary" onclick="runFF()">▶ &nbsp;Calculate &amp; Decompose</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;" id="ff-strip"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="card"><div class="card-header"><div class="dot"></div><span>Return Attribution by Factor</span></div><div class="card-body" style="padding:1rem;"><canvas id="ff-attr-chart" style="max-height:280px;"></canvas></div></div>
+        <div class="card"><div class="card-header"><div class="dot"></div><span>Simulated Return Path &amp; CAPM Comparison</span></div><div class="card-body" style="padding:1rem;"><canvas id="ff-path-chart" style="max-height:280px;"></canvas></div></div>
+      </div>
+    </div><!-- /tool-ff -->
 
     <style>
     .var-asset-row{display:flex;gap:0.5rem;margin-bottom:0.5rem;align-items:center;}
@@ -1825,10 +2033,12 @@ function drawBinomialTree(S,V,earlyEx,N,K){
 let varMethod='parametric', varChartInst=null;
 
 function selectPortfolioTool(name){
-  document.querySelectorAll('#cat-portfolio .tool-chip').forEach(c=>c.classList.remove('active'));
-  document.getElementById('chip-'+name).classList.add('active');
-  document.getElementById('tool-var').style.display=name==='var'?'block':'none';
-  document.getElementById('tool-ef').style.display=name==='ef'?'block':'none';
+  ['var','ef','corr','rp','mdd','capm','ff'].forEach(t=>{
+    document.getElementById('chip-'+t).classList.toggle('active',t===name);
+    document.getElementById('tool-'+t).style.display=t===name?'block':'none';
+  });
+  if(name==='corr')buildCorrInputMatrix();
+  if(name==='rp')buildRPCorrMatrix();
   if(name==='ef') buildCorrMatrix();
 }
 
@@ -2602,15 +2812,560 @@ function runEF(){
     </tr>`).join('');
 }
 
-document.addEventListener('DOMContentLoaded',()=>{
-  buildCorrMatrix();
-  initStratLegs();
-  initSmileRows();
-});
-window.onload=()=>{
-  calculate();
-  initMcCanvas();
-};
+// ════════════════════════════════════════════════════════════════════════
+// CORRELATION & COVARIANCE MATRIX
+// ════════════════════════════════════════════════════════════════════════
+let corrChart=null;
+
+function corrAddAsset(){
+  const row=document.createElement('div');row.className='var-asset-row';
+  row.innerHTML='<input type="text" class="var-inp var-name" value="Asset"><input type="number" class="var-inp var-mu" value="7" step="0.1"><input type="number" class="var-inp var-sig" value="15" step="0.1"><button class="var-rm" onclick="corrRemoveAsset(this)">✕</button>';
+  document.getElementById('corr-assets').appendChild(row);
+  buildCorrInputMatrix();
+}
+function corrRemoveAsset(btn){
+  if(document.querySelectorAll('#corr-assets .var-asset-row').length>2)btn.parentElement.remove();
+  buildCorrInputMatrix();
+}
+function getCorrAssets(containerId){
+  return Array.from(document.querySelectorAll('#'+containerId+' .var-asset-row')).map(r=>({
+    name:r.querySelector('.var-name').value||'Asset',
+    mu:+r.querySelector('.var-mu').value/100,
+    sig:+r.querySelector('.var-sig').value/100
+  }));
+}
+function buildCorrInputMatrix(){
+  const assets=getCorrAssets('corr-assets');
+  buildGenericCorrMatrix('corr-input-matrix',assets,'corr-inp');
+}
+function buildGenericCorrMatrix(containerId,assets,prefix){
+  const n=assets.length;
+  const wrap=document.getElementById(containerId);
+  const old={};
+  if(wrap)wrap.querySelectorAll('input[data-i][data-j]').forEach(inp=>old[inp.dataset.i+','+inp.dataset.j]=+inp.value);
+  let html='<table style="border-collapse:collapse;font-family:\'DM Mono\',monospace;font-size:0.72rem;">';
+  html+='<tr><th style="padding:4px 8px;color:var(--muted);"></th>';
+  assets.forEach(a=>html+='<th style="padding:4px 8px;color:var(--blue);text-align:center;">'+a.name.slice(0,6)+'</th>');
+  html+='</tr>';
+  for(let i=0;i<n;i++){
+    html+='<tr><td style="padding:4px 8px;color:var(--blue);font-weight:500;">'+assets[i].name.slice(0,6)+'</td>';
+    for(let j=0;j<n;j++){
+      if(i===j){html+='<td style="padding:4px;"><input type="number" value="1" disabled style="width:58px;padding:4px 6px;background:var(--off);border:1px solid var(--border);border-radius:4px;font-family:\'DM Mono\',monospace;font-size:0.72rem;color:var(--muted);text-align:center;"></td>';}
+      else{const v=old[i+','+j]??old[j+','+i]??0.3;html+='<td style="padding:4px;"><input type="number" data-prefix="'+prefix+'" data-i="'+i+'" data-j="'+j+'" value="'+v+'" min="-1" max="1" step="0.05" style="width:58px;padding:4px 6px;background:white;border:1.5px solid var(--border);border-radius:4px;font-family:\'DM Mono\',monospace;font-size:0.72rem;color:var(--text);text-align:center;outline:none;" onfocus="this.style.borderColor=\'var(--blue)\'" onblur="this.style.borderColor=\'var(--border)\'"></td>';}
+    }
+    html+='</tr>';
+  }
+  html+='</table>';
+  if(wrap)wrap.innerHTML=html;
+}
+function getGenericCorrMatrix(containerId,n){
+  const corr=Array.from({length:n},(_,i)=>Array.from({length:n},(_,j)=>i===j?1:0.3));
+  document.getElementById(containerId).querySelectorAll('input[data-i][data-j]').forEach(inp=>{
+    const i=+inp.dataset.i,j=+inp.dataset.j,v=Math.max(-0.999,Math.min(0.999,+inp.value));
+    corr[i][j]=v;corr[j][i]=v;
+  });
+  return corr;
+}
+
+// Cholesky decomposition
+function cholesky(corr){
+  const n=corr.length;
+  const L=Array.from({length:n},()=>Array(n).fill(0));
+  for(let i=0;i<n;i++){
+    for(let j=0;j<=i;j++){
+      let s=corr[i][j];
+      for(let k=0;k<j;k++)s-=L[i][k]*L[j][k];
+      L[i][j]=j===i?Math.sqrt(Math.max(s,0)):s/L[j][j];
+    }
+  }
+  return L;
+}
+
+function seededRand(seed){
+  let s=seed%2147483647;if(s<=0)s+=2147483646;
+  return function(){s=s*16807%2147483647;return (s-1)/2147483646;};
+}
+
+function runCorr(){
+  const assets=getCorrAssets('corr-assets');
+  const n=assets.length;
+  const T=+document.getElementById('corr-periods').value;
+  const seed=+document.getElementById('corr-seed').value;
+  const corr=getGenericCorrMatrix('corr-input-matrix',n);
+  const L=cholesky(corr);
+  const rand=seededRand(seed);
+  function boxMuller(){const u1=rand()||1e-10,u2=rand()||1e-10;return Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2);}
+
+  // Simulate daily returns
+  const dt=1/252;
+  const returns=Array.from({length:n},()=>Array(T).fill(0));
+  for(let t=0;t<T;t++){
+    const z=Array.from({length:n},()=>boxMuller());
+    const correlated=Array.from({length:n},(_,i)=>L[i].reduce((s,v,k)=>s+v*z[k],0));
+    for(let i=0;i<n;i++){
+      returns[i][t]=(assets[i].mu-0.5*assets[i].sig**2)*dt+assets[i].sig*Math.sqrt(dt)*correlated[i];
+    }
+  }
+
+  // Compute sample correlation and covariance
+  const means=returns.map(r=>r.reduce((a,b)=>a+b,0)/T);
+  const covMat=Array.from({length:n},(_,i)=>Array.from({length:n},(_,j)=>{
+    return returns[i].reduce((s,_,t)=>(s+(returns[i][t]-means[i])*(returns[j][t]-means[j])),0)/(T-1);
+  }));
+  const stdDevs=Array.from({length:n},(_,i)=>Math.sqrt(covMat[i][i]));
+  const corrMat=Array.from({length:n},(_,i)=>Array.from({length:n},(_,j)=>covMat[i][j]/(stdDevs[i]*stdDevs[j])));
+
+  // Annualise cov
+  const covAnn=covMat.map(r=>r.map(v=>v*252));
+
+  function matrixHtml(mat,fmt,colorFn){
+    let html='<table style="border-collapse:collapse;font-family:\'DM Mono\',monospace;font-size:0.68rem;">';
+    html+='<tr><th style="padding:4px 8px;background:var(--off);border:1px solid var(--border);"></th>';
+    assets.forEach(a=>html+='<th style="padding:4px 8px;background:var(--off);border:1px solid var(--border);color:var(--blue);text-align:center;">'+a.name.slice(0,6)+'</th>');
+    html+='</tr>';
+    for(let i=0;i<n;i++){
+      html+='<tr><td style="padding:4px 8px;background:var(--off);border:1px solid var(--border);color:var(--blue);font-weight:500;">'+assets[i].name.slice(0,6)+'</td>';
+      for(let j=0;j<n;j++){
+        const v=mat[i][j];
+        const{bg,text}=colorFn(v,i,j);
+        html+='<td style="padding:5px 8px;text-align:center;background:'+bg+';color:'+text+';border:1px solid rgba(200,210,240,0.4);">'+fmt(v)+'</td>';
+      }
+      html+='</tr>';
+    }
+    return html+'</table>';
+  }
+
+  function corrColor(v,i,j){
+    if(i===j)return{bg:'rgba(26,64,245,0.15)',text:'var(--blue)'};
+    const t=(v+1)/2;
+    const r=Math.round(224+(10-224)*t),g=Math.round(49+(42-49)*t),b=Math.round(43+(204-43)*t);
+    return{bg:'rgb('+r+','+g+','+b+')',text:t>0.5?'white':'var(--text)'};
+  }
+  function covColor(v){
+    const maxV=Math.max(...covAnn.flat().map(Math.abs));
+    const t=Math.abs(v)/maxV;
+    const r=Math.round(232+(10-232)*t),g=Math.round(237+(42-237)*t),b=Math.round(255+(204-255)*t);
+    return{bg:'rgb('+r+','+g+','+b+')',text:t>0.5?'white':'var(--text)'};
+  }
+
+  document.getElementById('corr-out-matrix').innerHTML=matrixHtml(corrMat,v=>v.toFixed(3),corrColor);
+  document.getElementById('cov-out-matrix').innerHTML=matrixHtml(covAnn,v=>(v*100).toFixed(3)+'%',covColor);
+
+  // Cumulative return chart
+  const palette=['#1a40f5','#e0312b','#00aa66','#f5b700','#7a1fa2','#4a6bff'];
+  const cumReturns=returns.map(r=>{
+    let cum=100;return r.map(ret=>{cum*=(1+ret);return cum;});
+  });
+  const labels=Array.from({length:T},(_,i)=>i%50===0?'Day '+i:'');
+  if(corrChart)corrChart.destroy();
+  const ctx=document.getElementById('corr-chart').getContext('2d');
+  corrChart=new Chart(ctx,{type:'line',data:{
+    labels,
+    datasets:assets.map((a,i)=>({label:a.name,data:cumReturns[i],borderColor:palette[i%palette.length],borderWidth:1.5,pointRadius:0,tension:0,fill:false}))
+  },options:{responsive:true,interaction:{mode:'index',intersect:false},
+    plugins:{legend:{labels:{color:'#7a85bb',font:{family:'DM Mono',size:11}}},
+      tooltip:{backgroundColor:'#fff',borderColor:'#d8e0f5',borderWidth:1,
+        callbacks:{label:function(c){return ' '+c.dataset.label+': '+c.raw.toFixed(1);}}}},
+    scales:{
+      x:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:9},maxTicksLimit:10},grid:{color:'rgba(26,64,245,0.05)'}},
+      y:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10}},grid:{color:'rgba(26,64,245,0.06)'}}
+    }
+  }});
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// RISK PARITY
+// ════════════════════════════════════════════════════════════════════════
+let rpChart=null;
+
+function rpAddAsset(){
+  const row=document.createElement('div');row.className='var-asset-row';
+  row.innerHTML='<input type="text" class="var-inp var-name" value="Asset"><input type="number" class="var-inp var-mu" value="6" step="0.1"><input type="number" class="var-inp var-sig" value="15" step="0.1"><button class="var-rm" onclick="rpRemoveAsset(this)">✕</button>';
+  document.getElementById('rp-assets').appendChild(row);
+  buildRPCorrMatrix();
+}
+function rpRemoveAsset(btn){
+  if(document.querySelectorAll('#rp-assets .var-asset-row').length>2)btn.parentElement.remove();
+  buildRPCorrMatrix();
+}
+function buildRPCorrMatrix(){
+  const assets=getCorrAssets('rp-assets');
+  buildGenericCorrMatrix('rp-corr-wrap',assets,'rp-inp');
+}
+
+function runRiskParity(){
+  const assets=getCorrAssets('rp-assets');
+  const n=assets.length;
+  const corr=getGenericCorrMatrix('rp-corr-wrap',n);
+  const sigs=assets.map(a=>a.sig);
+  const mus=assets.map(a=>a.mu);
+
+  // Build cov matrix
+  const cov=Array.from({length:n},(_,i)=>Array.from({length:n},(_,j)=>sigs[i]*sigs[j]*corr[i][j]));
+
+  // Portfolio variance: wCw
+  function portVar(w){return w.reduce((s,wi,i)=>s+w.reduce((ss,wj,j)=>ss+wi*wj*cov[i][j],0),0);}
+  function portVol(w){return Math.sqrt(portVar(w));}
+  // Marginal risk contribution
+  function mrc(w){return w.map((_,i)=>w.reduce((s,wj,j)=>s+wj*cov[i][j],0));}
+  // Risk contribution
+  function rc(w){const m=mrc(w),pv=portVar(w);return w.map((wi,i)=>wi*m[i]/pv);}
+
+  // Iterative risk parity solver
+  let w=Array(n).fill(1/n);
+  const target=1/n;
+  for(let iter=0;iter<5000;iter++){
+    const m=mrc(w);
+    const pv=portVar(w);
+    for(let i=0;i<n;i++){
+      w[i]*=target*pv/Math.max(w[i]*m[i],1e-12);
+    }
+    const s=w.reduce((a,b)=>a+b,0);
+    w=w.map(x=>x/s);
+  }
+
+  const rpRC=rc(w);
+  const eqW=Array(n).fill(1/n);
+  const invVolSum=sigs.reduce((s,v)=>s+1/v,0);
+  const invVolW=sigs.map(s=>1/(s*invVolSum));
+
+  const rpRet=w.reduce((s,wi,i)=>s+wi*mus[i],0);
+  const rpVol=portVol(w)*100;
+  const eqRet=eqW.reduce((s,wi,i)=>s+wi*mus[i],0);
+  const eqVol=portVol(eqW)*100;
+
+  document.getElementById('rp-strip').innerHTML=[
+    {label:'RP Portfolio Vol',val:rpVol.toFixed(2)+'%',sub:'Annualised',color:'var(--blue)'},
+    {label:'RP Expected Return',val:(rpRet*100).toFixed(2)+'%',sub:'Weighted μ',color:'var(--green)'},
+    {label:'Equal Weight Vol',val:eqVol.toFixed(2)+'%',sub:'For comparison',color:'var(--muted)'},
+    {label:'Max RC Deviation',val:(Math.max(...rpRC.map(v=>Math.abs(v-target)))*100).toFixed(3)+'%',sub:'From equal RC',color:'var(--muted)'},
+  ].map(s=>'<div class="mc-stat"><div class="s-label">'+s.label+'</div><div class="s-val" style="color:'+s.color+'">'+s.val+'</div><div class="s-sub">'+s.sub+'</div></div>').join('');
+
+  document.getElementById('rp-table').innerHTML=assets.map((a,i)=>`
+    <tr>
+      <td class="var">${a.name}</td>
+      <td style="color:var(--blue)">${(w[i]*100).toFixed(2)}%</td>
+      <td style="color:var(--muted)">${(eqW[i]*100).toFixed(2)}%</td>
+      <td class="val" style="color:var(--green)">${(invVolW[i]*100).toFixed(2)}%</td>
+    </tr>`).join('');
+
+  const palette=['#1a40f5','#e0312b','#00aa66','#f5b700','#7a1fa2','#4a6bff'];
+  if(rpChart)rpChart.destroy();
+  const ctx=document.getElementById('rp-chart').getContext('2d');
+  rpChart=new Chart(ctx,{type:'bar',data:{
+    labels:assets.map(a=>a.name),
+    datasets:[
+      {label:'Risk Parity Weight',data:w.map(v=>+(v*100).toFixed(2)),backgroundColor:'rgba(26,64,245,0.7)',borderColor:'#1a40f5',borderWidth:1,borderRadius:4},
+      {label:'Risk Contribution',data:rpRC.map(v=>+(v*100).toFixed(2)),backgroundColor:'rgba(0,170,102,0.6)',borderColor:'#00aa66',borderWidth:1,borderRadius:4},
+      {label:'Equal Weight',data:eqW.map(v=>+(v*100).toFixed(2)),backgroundColor:'rgba(122,161,250,0.4)',borderColor:'#7aadf5',borderWidth:1,borderRadius:4},
+    ]
+  },options:{responsive:true,
+    plugins:{legend:{labels:{color:'#7a85bb',font:{family:'DM Mono',size:11}}},
+      tooltip:{backgroundColor:'#fff',borderColor:'#d8e0f5',borderWidth:1,
+        callbacks:{label:function(c){return ' '+c.dataset.label+': '+c.raw.toFixed(2)+'%';}}}},
+    scales:{
+      x:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10}},grid:{display:false}},
+      y:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10},callback:function(v){return v+'%';}},grid:{color:'rgba(26,64,245,0.06)'}}
+    }
+  }});
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// MAXIMUM DRAWDOWN
+// ════════════════════════════════════════════════════════════════════════
+let mddPathChart=null,mddDDChart=null,mddHistChart=null;
+
+function computeMDD(path){
+  let peak=path[0],mdd=0,trough=path[0],troughIdx=0,peakIdx=0,recoveryLen=null;
+  let curPeak=path[0],curPeakIdx=0;
+  for(let i=1;i<path.length;i++){
+    if(path[i]>curPeak){curPeak=path[i];curPeakIdx=i;}
+    const dd=(curPeak-path[i])/curPeak;
+    if(dd>mdd){mdd=dd;peak=curPeak;peakIdx=curPeakIdx;trough=path[i];troughIdx=i;}
+  }
+  // Recovery: find first time after trough that price exceeds peak
+  for(let i=troughIdx;i<path.length;i++){
+    if(path[i]>=peak){recoveryLen=i-troughIdx;break;}
+  }
+  return{mdd,peak,trough,peakIdx,troughIdx,recoveryLen};
+}
+
+function runMDD(){
+  const V0=+document.getElementById('mdd-v0').value;
+  const mu=+document.getElementById('mdd-mu').value/100;
+  const sig=+document.getElementById('mdd-sig').value/100;
+  const T=+document.getElementById('mdd-T').value;
+  const stepsPerYear=+document.getElementById('mdd-steps').value;
+  const nPaths=+document.getElementById('mdd-paths').value;
+  const N=Math.round(T*stepsPerYear);
+  const dt=T/N;
+  const allMDDs=[],allFinal=[];
+  const samplePaths=[],nSample=Math.min(20,nPaths);
+
+  for(let p=0;p<nPaths;p++){
+    let V=V0;const path=[V];
+    for(let i=0;i<N;i++){
+      const u1=Math.random()||1e-10,u2=Math.random()||1e-10;
+      const z=Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2);
+      V*=Math.exp((mu-0.5*sig**2)*dt+sig*Math.sqrt(dt)*z);
+      path.push(V);
+    }
+    const{mdd}=computeMDD(path);
+    allMDDs.push(mdd);allFinal.push(V);
+    if(p<nSample)samplePaths.push(path);
+  }
+
+  allMDDs.sort((a,b)=>a-b);
+  const meanMDD=allMDDs.reduce((a,b)=>a+b,0)/nPaths;
+  const medMDD=allMDDs[Math.floor(nPaths/2)];
+  const var95MDD=allMDDs[Math.floor(0.95*nPaths)];
+  const meanFinal=allFinal.reduce((a,b)=>a+b,0)/nPaths;
+  const calmar=(mu)/(meanMDD||0.001);
+
+  document.getElementById('mdd-strip').innerHTML=[
+    {label:'Mean MDD',val:(meanMDD*100).toFixed(2)+'%',sub:'Across all paths',color:'var(--put)'},
+    {label:'Median MDD',val:(medMDD*100).toFixed(2)+'%',sub:'50th percentile',color:'var(--put)'},
+    {label:'95th pct MDD',val:(var95MDD*100).toFixed(2)+'%',sub:'Stress scenario',color:'var(--put)'},
+    {label:'Calmar Ratio',val:calmar.toFixed(2),sub:'μ / |Mean MDD|',color:calmar>0.5?'var(--green)':'var(--muted)'},
+  ].map(s=>'<div class="mc-stat"><div class="s-label">'+s.label+'</div><div class="s-val" style="color:'+s.color+'">'+s.val+'</div><div class="s-sub">'+s.sub+'</div></div>').join('');
+
+  // Sample path chart (first 5 paths)
+  const labels=Array.from({length:N+1},(_,i)=>i%stepsPerYear===0?'Y'+(i/stepsPerYear).toFixed(0):'');
+  const palette=['rgba(26,64,245,0.3)','rgba(74,107,255,0.25)','rgba(100,140,255,0.2)','rgba(26,64,245,0.18)','rgba(10,42,204,0.22)'];
+  if(mddPathChart)mddPathChart.destroy();
+  const ctx1=document.getElementById('mdd-path-chart').getContext('2d');
+  mddPathChart=new Chart(ctx1,{type:'line',data:{
+    labels,
+    datasets:samplePaths.slice(0,5).map((p,i)=>({data:p,borderColor:i===0?'rgba(224,49,43,0.7)':palette[i%palette.length],borderWidth:i===0?1.8:0.9,pointRadius:0,tension:0,fill:false,label:i===0?'Sample path':''}))
+  },options:{responsive:true,plugins:{legend:{display:false}},
+    scales:{
+      x:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:9},maxTicksLimit:10},grid:{color:'rgba(26,64,245,0.04)'}},
+      y:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10}},grid:{color:'rgba(26,64,245,0.06)'}}
+    }
+  }});
+
+  // Drawdown of first path
+  const firstPath=samplePaths[0];
+  const ddSeries=[];let peak=firstPath[0];
+  for(let i=0;i<firstPath.length;i++){if(firstPath[i]>peak)peak=firstPath[i];ddSeries.push((firstPath[i]-peak)/peak*100);}
+  if(mddDDChart)mddDDChart.destroy();
+  const ctx2=document.getElementById('mdd-dd-chart').getContext('2d');
+  mddDDChart=new Chart(ctx2,{type:'line',data:{
+    labels,
+    datasets:[{label:'Drawdown %',data:ddSeries,borderColor:'rgba(224,49,43,0.7)',backgroundColor:'rgba(224,49,43,0.1)',borderWidth:1.5,pointRadius:0,tension:0,fill:true}]
+  },options:{responsive:true,plugins:{legend:{display:false}},
+    scales:{
+      x:{ticks:{display:false},grid:{display:false}},
+      y:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:9},callback:function(v){return v+'%';}},grid:{color:'rgba(26,64,245,0.05)'}}
+    }
+  }});
+
+  // MDD histogram
+  const bins=40;
+  const minM=allMDDs[0],maxM=allMDDs[allMDDs.length-1];
+  const bw=(maxM-minM)/bins;
+  const counts=Array(bins).fill(0);
+  allMDDs.forEach(m=>{const i=Math.min(bins-1,Math.floor((m-minM)/bw));counts[i]++;});
+  const binLabels=Array.from({length:bins},(_,i)=>((minM+i*bw)*100).toFixed(1)+'%');
+  if(mddHistChart)mddHistChart.destroy();
+  const ctx3=document.getElementById('mdd-hist-chart').getContext('2d');
+  mddHistChart=new Chart(ctx3,{type:'bar',data:{
+    labels:binLabels,
+    datasets:[{label:'Frequency',data:counts,backgroundColor:'rgba(26,64,245,0.55)',borderColor:'#1a40f5',borderWidth:0,borderRadius:2}]
+  },options:{responsive:true,
+    plugins:{legend:{display:false},tooltip:{backgroundColor:'#fff',borderColor:'#d8e0f5',borderWidth:1,
+      callbacks:{title:function(i){return 'MDD: '+i[0].label;},label:function(c){return 'Count: '+c.raw;}}}},
+    scales:{
+      x:{ticks:{display:false},grid:{display:false}},
+      y:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10}},grid:{color:'rgba(26,64,245,0.06)'}}
+    }
+  }});
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// CAPM / BETA
+// ════════════════════════════════════════════════════════════════════════
+let capmSMLChart=null,capmScatterChart=null;
+
+function runCAPM(){
+  const rf=+document.getElementById('capm-rf').value/100;
+  const rm=+document.getElementById('capm-rm').value/100;
+  const sigm=+document.getElementById('capm-sigm').value/100;
+  const betaTrue=+document.getElementById('capm-beta').value;
+  const sigEps=+document.getElementById('capm-sigeps').value/100;
+  const T=+document.getElementById('capm-periods').value;
+  const dt=1/252;
+  const mktExPrem=rm-rf;
+
+  // Simulate daily excess returns
+  const mktReturns=[],assetReturns=[];
+  for(let t=0;t<T;t++){
+    const u1=Math.random()||1e-10,u2=Math.random()||1e-10;
+    const u3=Math.random()||1e-10,u4=Math.random()||1e-10;
+    const zm=Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2);
+    const ze=Math.sqrt(-2*Math.log(u3))*Math.cos(2*Math.PI*u4);
+    const rm_t=(mktExPrem)*dt+sigm*Math.sqrt(dt)*zm;
+    const ra_t=betaTrue*rm_t+sigEps*Math.sqrt(dt)*ze;
+    mktReturns.push(rm_t);assetReturns.push(ra_t);
+  }
+
+  // OLS regression: ra = alpha + beta*rm + eps
+  const n=T;
+  const meanM=mktReturns.reduce((a,b)=>a+b,0)/n;
+  const meanA=assetReturns.reduce((a,b)=>a+b,0)/n;
+  const cov=mktReturns.reduce((s,m,i)=>s+(m-meanM)*(assetReturns[i]-meanA),0)/(n-1);
+  const varM=mktReturns.reduce((s,m)=>s+(m-meanM)**2,0)/(n-1);
+  const betaEst=cov/varM;
+  const alphaEst=(meanA-betaEst*meanM)*252; // annualise alpha
+
+  const residuals=assetReturns.map((ra,i)=>ra-betaEst*mktReturns[i]);
+  const ssRes=residuals.reduce((s,e)=>s+e**2,0);
+  const ssTot=assetReturns.reduce((s,a)=>s+(a-meanA)**2,0);
+  const r2=1-ssRes/ssTot;
+  const capmExp=(rf+betaEst*(rm-rf))*100;
+  const actualAnn=meanA*252*100;
+
+  document.getElementById('capm-strip').innerHTML=[
+    {label:'Estimated β',val:betaEst.toFixed(4),sub:'OLS regression',color:'var(--blue)'},
+    {label:'Jensen\'s α (ann.)',val:(alphaEst*100).toFixed(3)+'%',sub:'Excess return',color:alphaEst>0?'var(--green)':'var(--put)'},
+    {label:'R² (explained)',val:(r2*100).toFixed(2)+'%',sub:'Market explains',color:'var(--blue)'},
+    {label:'CAPM Expected',val:capmExp.toFixed(2)+'%',sub:'r_f + β·(r_m - r_f)',color:'var(--muted)'},
+  ].map(s=>'<div class="mc-stat"><div class="s-label">'+s.label+'</div><div class="s-val" style="color:'+s.color+'">'+s.val+'</div><div class="s-sub">'+s.sub+'</div></div>').join('');
+
+  // SML chart
+  const betas=Array.from({length:50},(_,i)=>-0.5+i*3/49);
+  const smlReturns=betas.map(b=>(rf+b*(rm-rf))*100);
+  if(capmSMLChart)capmSMLChart.destroy();
+  const ctx1=document.getElementById('capm-sml-chart').getContext('2d');
+  capmSMLChart=new Chart(ctx1,{type:'line',data:{
+    labels:betas.map(b=>b.toFixed(2)),
+    datasets:[
+      {label:'Security Market Line',data:smlReturns,borderColor:'#1a40f5',borderWidth:2,pointRadius:0,fill:false,tension:0},
+      {label:'Asset (estimated)',data:betas.map(b=>Math.abs(b-betaEst)<0.04?actualAnn:null),borderColor:'#e0312b',backgroundColor:'#e0312b',pointRadius:8,pointStyle:'star',showLine:false},
+    ]
+  },options:{responsive:true,
+    plugins:{legend:{labels:{color:'#7a85bb',font:{family:'DM Mono',size:11}}},
+      tooltip:{backgroundColor:'#fff',borderColor:'#d8e0f5',borderWidth:1,
+        callbacks:{label:function(c){return ' '+c.dataset.label+': '+c.raw.toFixed(2)+'%';}}}},
+    scales:{
+      x:{title:{display:true,text:'Beta',color:'var(--muted)',font:{family:'DM Mono',size:10}},
+        ticks:{color:'#7a85bb',font:{family:'DM Mono',size:9}},grid:{color:'rgba(26,64,245,0.06)'}},
+      y:{title:{display:true,text:'Expected Return (%)',color:'var(--muted)',font:{family:'DM Mono',size:10}},
+        ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10},callback:function(v){return v+'%';}},grid:{color:'rgba(26,64,245,0.06)'}}
+    }
+  }});
+
+  // Scatter
+  const scatterPts=mktReturns.filter((_,i)=>i%3===0).map((m,i)=>({x:m*100,y:assetReturns[i*3]*100}));
+  const lineX=[-sigm*Math.sqrt(252)*3*100,sigm*Math.sqrt(252)*3*100];
+  if(capmScatterChart)capmScatterChart.destroy();
+  const ctx2=document.getElementById('capm-scatter-chart').getContext('2d');
+  capmScatterChart=new Chart(ctx2,{type:'scatter',data:{datasets:[
+    {label:'Daily Returns',data:scatterPts,backgroundColor:'rgba(26,64,245,0.25)',pointRadius:2},
+    {label:'OLS Regression',data:lineX.map(x=>({x,y:betaEst*x+alphaEst/252*100})),type:'line',borderColor:'#e0312b',borderWidth:2,pointRadius:0,fill:false,showLine:true},
+  ]},options:{responsive:true,
+    plugins:{legend:{labels:{color:'#7a85bb',font:{family:'DM Mono',size:11}}},
+      tooltip:{backgroundColor:'#fff',borderColor:'#d8e0f5',borderWidth:1,
+        callbacks:{label:function(c){return ' Mkt: '+c.raw.x.toFixed(2)+'%  Asset: '+c.raw.y.toFixed(2)+'%';}}}},
+    scales:{
+      x:{title:{display:true,text:'Market Return (%)',color:'var(--muted)',font:{family:'DM Mono',size:10}},
+        ticks:{color:'#7a85bb',font:{family:'DM Mono',size:9},callback:function(v){return v+'%';}},grid:{color:'rgba(26,64,245,0.06)'}},
+      y:{title:{display:true,text:'Asset Return (%)',color:'var(--muted)',font:{family:'DM Mono',size:10}},
+        ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10},callback:function(v){return v+'%';}},grid:{color:'rgba(26,64,245,0.06)'}}
+    }
+  }});
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// FAMA-FRENCH 3-FACTOR
+// ════════════════════════════════════════════════════════════════════════
+let ffAttrChart=null,ffPathChart=null;
+
+function runFF(){
+  const bMkt=+document.getElementById('ff-bmkt').value;
+  const bSmb=+document.getElementById('ff-bsmb').value;
+  const bHml=+document.getElementById('ff-bhml').value;
+  const alpha=+document.getElementById('ff-alpha').value/100;
+  const rf=+document.getElementById('ff-rf').value/100;
+  const mktPrem=+document.getElementById('ff-mktprem').value/100;
+  const smbPrem=+document.getElementById('ff-smbprem').value/100;
+  const hmlPrem=+document.getElementById('ff-hmlprem').value/100;
+  const sigEps=+document.getElementById('ff-sigeps').value/100;
+  const sigF=+document.getElementById('ff-sigf').value/100;
+  const T=+document.getElementById('ff-periods').value;
+  const dt=1/252;
+
+  const ffExp=rf+bMkt*mktPrem+bSmb*smbPrem+bHml*hmlPrem+alpha;
+  const capmExp=rf+bMkt*mktPrem;
+  const betaRet=bMkt*mktPrem;
+  const smbRet=bSmb*smbPrem;
+  const hmlRet=bHml*hmlPrem;
+  const alphaRet=alpha;
+  const rfRet=rf;
+
+  document.getElementById('ff-strip').innerHTML=[
+    {label:'FF3 Expected Return',val:(ffExp*100).toFixed(2)+'%',sub:'Annual',color:'var(--blue)'},
+    {label:'CAPM Expected',val:(capmExp*100).toFixed(2)+'%',sub:'β_mkt only',color:'var(--muted)'},
+    {label:'Size Premium (SMB)',val:(smbRet*100).toFixed(2)+'%',sub:'β_smb × SMB',color:'var(--green)'},
+    {label:'Value Premium (HML)',val:(hmlRet*100).toFixed(2)+'%',sub:'β_hml × HML',color:'#f5b700'},
+  ].map(s=>'<div class="mc-stat"><div class="s-label">'+s.label+'</div><div class="s-val" style="color:'+s.color+'">'+s.val+'</div><div class="s-sub">'+s.sub+'</div></div>').join('');
+
+  // Attribution bar chart
+  const attrData=[rfRet,betaRet,smbRet,hmlRet,alphaRet].map(v=>+(v*100).toFixed(3));
+  const colors=['#7a85bb','#1a40f5','#00aa66','#f5b700','#e0312b'];
+  if(ffAttrChart)ffAttrChart.destroy();
+  const ctx1=document.getElementById('ff-attr-chart').getContext('2d');
+  ffAttrChart=new Chart(ctx1,{type:'bar',data:{
+    labels:['Risk-Free r_f','Market β','SMB (Size)','HML (Value)','Alpha α'],
+    datasets:[{label:'Return Contribution (%)',data:attrData,
+      backgroundColor:colors,borderColor:colors,borderWidth:1,borderRadius:6}]
+  },options:{responsive:true,
+    plugins:{legend:{display:false},
+      tooltip:{backgroundColor:'#fff',borderColor:'#d8e0f5',borderWidth:1,
+        callbacks:{label:function(c){return ' '+c.raw.toFixed(3)+'%';}}}},
+    scales:{
+      x:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10}},grid:{display:false}},
+      y:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10},callback:function(v){return v+'%';}},grid:{color:'rgba(26,64,245,0.06)'}}
+    }
+  }});
+
+  // Simulate paths: FF3 vs CAPM
+  const labels=Array.from({length:T},(_,i)=>i%50===0?'Day '+i:'');
+  let vFF=100,vCAPM=100;
+  const pathFF=[100],pathCAPM=[100];
+  for(let t=0;t<T-1;t++){
+    const u1=Math.random()||1e-10,u2=Math.random()||1e-10;
+    const u3=Math.random()||1e-10,u4=Math.random()||1e-10;
+    const z1=Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2);
+    const z2=Math.sqrt(-2*Math.log(u3))*Math.cos(2*Math.PI*u4);
+    const factorNoise=sigF*Math.sqrt(dt)*z1;
+    const idioNoise=sigEps*Math.sqrt(dt)*z2;
+    vFF*=(1+(bMkt*mktPrem+bSmb*smbPrem+bHml*hmlPrem+alpha)*dt+bMkt*factorNoise+idioNoise);
+    vCAPM*=(1+(bMkt*mktPrem)*dt+bMkt*factorNoise+idioNoise);
+    pathFF.push(vFF);pathCAPM.push(vCAPM);
+  }
+
+  if(ffPathChart)ffPathChart.destroy();
+  const ctx2=document.getElementById('ff-path-chart').getContext('2d');
+  ffPathChart=new Chart(ctx2,{type:'line',data:{
+    labels,
+    datasets:[
+      {label:'FF3 (all factors)',data:pathFF,borderColor:'#1a40f5',borderWidth:2,pointRadius:0,fill:false,tension:0},
+      {label:'CAPM only (β_mkt)',data:pathCAPM,borderColor:'rgba(122,161,250,0.7)',borderWidth:1.5,pointRadius:0,fill:false,tension:0,borderDash:[4,3]},
+    ]
+  },options:{responsive:true,
+    plugins:{legend:{labels:{color:'#7a85bb',font:{family:'DM Mono',size:11}}},
+      tooltip:{backgroundColor:'#fff',borderColor:'#d8e0f5',borderWidth:1,
+        callbacks:{label:function(c){return ' '+c.dataset.label+': '+c.raw.toFixed(2);}}}},
+    scales:{
+      x:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:9},maxTicksLimit:10},grid:{color:'rgba(26,64,245,0.04)'}},
+      y:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10}},grid:{color:'rgba(26,64,245,0.06)'}}
+    }
+  }});
+}
+
+document.addEventListener('DOMContentLoaded',()=>{ buildCorrMatrix(); initStratLegs(); initSmileRows(); buildCorrInputMatrix(); buildRPCorrMatrix(); });
+window.onload=()=>{ calculate(); initMcCanvas(); };
 
 // ════════════════════════════════════════════════════════════════════════
 // IMPLIED VOLATILITY — Newton–Raphson
