@@ -502,12 +502,135 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
       <h2>Portfolio &amp; Risk</h2>
       <p>Mean-variance optimization · VaR · Sharpe ratio · Correlation analysis</p>
     </div>
-    <div class="wip-container">
-      <div class="wip-icon">◉</div>
-      <div class="wip-title">Work in Progress</div>
-      <div class="wip-sub">Portfolio optimization tools coming soon</div>
-      <div class="wip-tag">Planned: MV Optimization · VaR · CVaR · Sharpe · Beta</div>
+    <!-- Tool selector -->
+    <div class="tool-grid">
+      <div class="tool-chip active" id="chip-var" onclick="selectPortfolioTool('var')"><div class="chip-dot"></div>VaR &amp; CVaR</div>
     </div>
+
+    <!-- ── VAR TOOL ── -->
+    <div id="tool-var">
+
+      <div class="card">
+        <div class="card-header"><div class="dot"></div><span>Portfolio &amp; Method</span></div>
+        <div class="card-body">
+
+          <!-- Portfolio input -->
+          <p style="font-family:'DM Mono',monospace;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.75rem;">Portfolio Assets (ticker · weight · annual return % · annual vol %)</p>
+          <div id="var-assets">
+            <div class="var-asset-row">
+              <input type="text"   class="var-inp var-name" placeholder="Asset A" value="Equity">
+              <input type="number" class="var-inp var-w"    placeholder="Weight %" value="60" step="1">
+              <input type="number" class="var-inp var-mu"   placeholder="Return %" value="10" step="0.1">
+              <input type="number" class="var-inp var-sig"  placeholder="Vol %"    value="20" step="0.1">
+              <button class="var-rm" onclick="removeAsset(this)">✕</button>
+            </div>
+            <div class="var-asset-row">
+              <input type="text"   class="var-inp var-name" placeholder="Asset B" value="Bonds">
+              <input type="number" class="var-inp var-w"    placeholder="Weight %" value="40" step="1">
+              <input type="number" class="var-inp var-mu"   placeholder="Return %" value="4"  step="0.1">
+              <input type="number" class="var-inp var-sig"  placeholder="Vol %"    value="8"  step="0.1">
+              <button class="var-rm" onclick="removeAsset(this)">✕</button>
+            </div>
+          </div>
+          <button onclick="addAsset()" style="margin-top:0.5rem;padding:0.4rem 1rem;background:transparent;border:1.5px dashed var(--border);border-radius:8px;font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">+ Add Asset</button>
+
+          <div style="height:1px;background:var(--border);margin:1.25rem 0;"></div>
+
+          <!-- Parameters -->
+          <div class="inputs-grid" style="grid-template-columns:repeat(4,1fr);">
+            <div class="field">
+              <label>Confidence Level</label>
+              <select id="var-conf" style="width:100%;background:white;border:1.5px solid var(--border);border-radius:8px;padding:0.65rem 0.9rem;color:var(--text);font-family:'DM Mono',monospace;font-size:0.9rem;outline:none;">
+                <option value="0.95">95%</option>
+                <option value="0.99" selected>99%</option>
+                <option value="0.999">99.9%</option>
+              </select>
+            </div>
+            <div class="field"><label>Horizon (days)</label><input type="number" id="var-horizon" value="1" min="1" max="252" step="1"></div>
+            <div class="field"><label>Portfolio Value €</label><input type="number" id="var-pval" value="100000" step="1000"></div>
+            <div class="field"><label>MC Simulations</label><input type="number" id="var-sims" value="50000" step="10000"></div>
+          </div>
+
+          <!-- Method toggle -->
+          <div style="margin-top:1rem;display:flex;gap:0;background:var(--off);border:1.5px solid var(--border);border-radius:8px;overflow:hidden;width:fit-content;">
+            <button id="var-m-param" onclick="setVarMethod('parametric')" style="padding:0.55rem 1.2rem;border:none;background:var(--blue);color:white;font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;">Parametric</button>
+            <button id="var-m-mc"    onclick="setVarMethod('montecarlo')" style="padding:0.55rem 1.2rem;border:none;background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;">Monte Carlo</button>
+            <button id="var-m-hist"  onclick="setVarMethod('historical')" style="padding:0.55rem 1.2rem;border:none;background:transparent;color:var(--muted);font-family:'DM Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;">Historical</button>
+          </div>
+
+          <button class="btn-primary" onclick="runVaR()" style="margin-top:1rem;">▶ &nbsp;Calculate VaR &amp; CVaR</button>
+        </div>
+      </div>
+
+      <!-- RESULTS STRIP -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;">
+        <div class="price-card call" style="background:var(--blue);">
+          <div class="p-label">VaR (<span id="res-conf">99%</span>)</div>
+          <div class="p-value" id="res-var" style="font-size:1.7rem;">—</div>
+          <div class="p-sub" id="res-var-pct">— of portfolio</div>
+        </div>
+        <div class="price-card put" style="border-color:#7a1fa2;">
+          <div class="p-label" style="color:#7a1fa2;">CVaR (Expected Shortfall)</div>
+          <div class="p-value" id="res-cvar" style="color:#7a1fa2;font-size:1.7rem;">—</div>
+          <div class="p-sub" id="res-cvar-pct">— of portfolio</div>
+        </div>
+        <div class="price-card put" style="border-color:var(--blue);">
+          <div class="p-label" style="color:var(--blue);">Portfolio Vol (annual)</div>
+          <div class="p-value" id="res-pvol" style="color:var(--blue);font-size:1.7rem;">—</div>
+          <div class="p-sub">weighted σ</div>
+        </div>
+        <div class="price-card put" style="border-color:var(--green);">
+          <div class="p-label" style="color:var(--green);">Expected Return (annual)</div>
+          <div class="p-value" id="res-pret" style="color:var(--green);font-size:1.7rem;">—</div>
+          <div class="p-sub">weighted μ</div>
+        </div>
+      </div>
+
+      <!-- CHART + TABLE -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
+        <div class="card">
+          <div class="card-header"><div class="dot"></div><span>Loss Distribution</span></div>
+          <div class="card-body" style="padding:1rem;">
+            <canvas id="varChart" style="max-height:260px;"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="dot"></div><span>Results by Method</span></div>
+          <div class="card-body">
+            <table class="calc-table" id="var-compare-table">
+              <thead><tr><th>Method</th><th>VaR</th><th>CVaR</th><th style="text-align:right">VaR %</th></tr></thead>
+              <tbody id="var-compare-body"><tr><td colspan="4" style="color:var(--muted);font-family:'DM Mono',monospace;font-size:0.8rem;padding:1rem 0.75rem;">Run calculation first.</td></tr></tbody>
+            </table>
+            <div style="height:1px;background:var(--border);margin:1rem 0;"></div>
+            <table class="calc-table">
+              <thead><tr><th>Asset</th><th>Weight</th><th>μ</th><th style="text-align:right">σ</th></tr></thead>
+              <tbody id="var-assets-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORMULA NOTE -->
+      <div style="background:var(--off);border:1px solid var(--border);border-radius:8px;padding:1rem 1.25rem;">
+        <p style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--muted);line-height:1.8;" id="var-formula-note">
+          <strong style="color:var(--blue);">Parametric:</strong> VaR = −(μ_p − z_α · σ_p) · √h · W &nbsp;|&nbsp;
+          <strong style="color:var(--blue);">CVaR:</strong> E[L | L &gt; VaR] &nbsp;|&nbsp;
+          <strong style="color:var(--blue);">Monte Carlo:</strong> GBM simulation of portfolio returns, empirical quantile
+        </p>
+      </div>
+
+    </div><!-- /tool-var -->
+
+    <style>
+    .var-asset-row{display:flex;gap:0.5rem;margin-bottom:0.5rem;align-items:center;}
+    .var-inp{background:white;border:1.5px solid var(--border);border-radius:8px;padding:0.55rem 0.75rem;font-family:'DM Mono',monospace;font-size:0.82rem;color:var(--text);outline:none;transition:border-color 0.2s;}
+    .var-inp:focus{border-color:var(--blue);}
+    .var-name{flex:2;}
+    .var-w,.var-mu,.var-sig{flex:1;}
+    .var-rm{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;padding:0 0.25rem;transition:color 0.2s;}
+    .var-rm:hover{color:var(--put);}
+    @media(max-width:600px){.var-asset-row{flex-wrap:wrap;}.var-name{flex:1 1 100%;}}
+    </style>
   </div>
 
   <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -1089,6 +1212,180 @@ selectTool=function(name){
   document.getElementById('tool-bin').style.display=name==='bin'?'block':'none';
   if(name==='mc')initMcCanvas();
 };
+// ════════════════════════════════════════════════════════════════════════
+// PORTFOLIO & RISK — VaR & CVaR
+// ════════════════════════════════════════════════════════════════════════
+let varMethod='parametric', varChartInst=null;
+
+function selectPortfolioTool(name){
+  document.querySelectorAll('#cat-portfolio .tool-chip').forEach(c=>c.classList.remove('active'));
+  document.getElementById('chip-'+name).classList.add('active');
+}
+
+function setVarMethod(m){
+  varMethod=m;
+  ['param','mc','hist'].forEach(x=>{
+    const el=document.getElementById('var-m-'+x);
+    const match=(m==='parametric'&&x==='param')||(m==='montecarlo'&&x==='mc')||(m==='historical'&&x==='hist');
+    el.style.background=match?'var(--blue)':'transparent';
+    el.style.color=match?'white':'var(--muted)';
+  });
+}
+
+function addAsset(){
+  const row=document.createElement('div');
+  row.className='var-asset-row';
+  row.innerHTML=`
+    <input type="text"   class="var-inp var-name" placeholder="Asset">
+    <input type="number" class="var-inp var-w"    placeholder="Weight %" value="0" step="1">
+    <input type="number" class="var-inp var-mu"   placeholder="Return %" value="5" step="0.1">
+    <input type="number" class="var-inp var-sig"  placeholder="Vol %"    value="15" step="0.1">
+    <button class="var-rm" onclick="removeAsset(this)">✕</button>`;
+  document.getElementById('var-assets').appendChild(row);
+}
+
+function removeAsset(btn){
+  const rows=document.querySelectorAll('.var-asset-row');
+  if(rows.length>1) btn.parentElement.remove();
+}
+
+function getAssets(){
+  const rows=document.querySelectorAll('.var-asset-row');
+  const assets=[];
+  rows.forEach(r=>{
+    const name=r.querySelector('.var-name').value||'Asset';
+    const w=+r.querySelector('.var-w').value/100;
+    const mu=+r.querySelector('.var-mu').value/100;
+    const sig=+r.querySelector('.var-sig').value/100;
+    assets.push({name,w,mu,sig});
+  });
+  return assets;
+}
+
+// Normal quantile (inverse CDF)
+function normInv(p){
+  const a=[−3.969683028665376e+01,2.209460984245205e+02,−2.759285104469687e+02,1.383577518672690e+02,−3.066479806614716e+01,2.506628277459239e+00];
+  const b=[−5.447609879822406e+01,1.615858368580409e+02,−1.556989798598866e+02,6.680131188771972e+01,−1.328068155288572e+01];
+  const c=[−7.784894002430293e-03,−3.223964580411365e-01,−2.400758277161838e+00,−2.549732539343734e+00,4.374664141464968e+00,2.938163982698783e+00];
+  const d=[7.784695709041462e-03,3.224671290700398e-01,2.445134137142996e+00,3.754408661907416e+00];
+  const pLow=0.02425,pHigh=1-pLow;
+  let q;
+  if(p<pLow){const s=Math.sqrt(-2*Math.log(p));q=(((((c[0]*s+c[1])*s+c[2])*s+c[3])*s+c[4])*s+c[5])/(((((d[0]*s+d[1])*s+d[2])*s+d[3])*s+1));}
+  else if(p<=pHigh){const s=p-0.5,r=s*s;q=(((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*s/(((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);}
+  else{const s=Math.sqrt(-2*Math.log(1-p));q=-(((((c[0]*s+c[1])*s+c[2])*s+c[3])*s+c[4])*s+c[5])/(((((d[0]*s+d[1])*s+d[2])*s+d[3])*s+1));}
+  return q;
+}
+
+function runVaR(){
+  const assets=getAssets();
+  const conf=+document.getElementById('var-conf').value;
+  const h=+document.getElementById('var-horizon').value;
+  const W=+document.getElementById('var-pval').value;
+  const nSims=+document.getElementById('var-sims').value;
+
+  // Portfolio stats (assuming zero correlation for simplicity)
+  const totalW=assets.reduce((a,b)=>a+b.w,0);
+  const pMu=assets.reduce((a,b)=>a+b.w*b.mu,0)/totalW;
+  const pSig=Math.sqrt(assets.reduce((a,b)=>a+Math.pow(b.w/totalW,2)*b.sig**2,0));
+  const pMuH=pMu*(h/252), pSigH=pSig*Math.sqrt(h/252);
+
+  // ── Parametric ──
+  const z=normInv(1-conf);  // negative z
+  const varParam=-(pMuH+z*pSigH)*W;
+  // CVaR parametric: E[Z | Z < z_alpha] = -phi(z_alpha)/alpha
+  const alpha=1-conf;
+  const phiZ=Math.exp(-0.5*z*z)/Math.sqrt(2*Math.PI);
+  const cvarParam=(-(pMuH)+pSigH*phiZ/alpha)*W;
+
+  // ── Monte Carlo ──
+  const returns=[];
+  for(let i=0;i<nSims;i++){
+    let r=0;
+    assets.forEach(a=>{
+      const u1=Math.random(),u2=Math.random();
+      const z2=Math.sqrt(-2*Math.log(u1||1e-10))*Math.cos(2*Math.PI*u2);
+      const ret=(a.mu/252*h+a.sig*Math.sqrt(h/252)*z2)*(a.w/totalW);
+      r+=ret;
+    });
+    returns.push(r);
+  }
+  returns.sort((a,b)=>a-b);
+  const varMcIdx=Math.floor(alpha*nSims);
+  const varMc=-returns[varMcIdx]*W;
+  const tailReturns=returns.slice(0,varMcIdx+1);
+  const cvarMc=-tailReturns.reduce((a,b)=>a+b,0)/tailReturns.length*W;
+
+  // ── Historical (simulate with normal distribution as proxy) ──
+  // Same as MC but using all tail returns
+  const varHist=-returns[Math.floor(0.05*nSims)]*W; // 95% as proxy
+  const histTail=returns.slice(0,Math.floor(0.05*nSims)+1);
+  const cvarHist=-histTail.reduce((a,b)=>a+b,0)/histTail.length*W;
+
+  // Pick active method result
+  let varVal,cvarVal;
+  if(varMethod==='parametric'){varVal=varParam;cvarVal=cvarParam;}
+  else if(varMethod==='montecarlo'){varVal=varMc;cvarVal=cvarMc;}
+  else{varVal=varHist;cvarVal=cvarHist;}
+
+  // Update results
+  const fmt=v=>'€'+Math.round(v).toLocaleString('de-DE');
+  const fmtPct=v=>(v/W*100).toFixed(2)+'%';
+  document.getElementById('res-conf').textContent=(conf*100)+'%';
+  document.getElementById('res-var').textContent=fmt(varVal);
+  document.getElementById('res-var-pct').textContent=fmtPct(varVal)+' of portfolio';
+  document.getElementById('res-cvar').textContent=fmt(cvarVal);
+  document.getElementById('res-cvar-pct').textContent=fmtPct(cvarVal)+' of portfolio';
+  document.getElementById('res-pvol').textContent=(pSig*100).toFixed(2)+'%';
+  document.getElementById('res-pret').textContent=(pMu*100).toFixed(2)+'%';
+
+  // Compare table
+  document.getElementById('var-compare-body').innerHTML=[
+    ['Parametric', varParam, cvarParam],
+    ['Monte Carlo', varMc, cvarMc],
+    ['Historical (sim)', varHist, cvarHist],
+  ].map(([m,v,cv])=>`
+    <tr>
+      <td class="var" style="color:${m===varMethod.charAt(0).toUpperCase()+varMethod.slice(1).split(' ')[0]?'var(--blue)':'var(--muted)'}">${m}</td>
+      <td>${fmt(v)}</td>
+      <td style="color:#7a1fa2">${fmt(cv)}</td>
+      <td class="val">${fmtPct(v)}</td>
+    </tr>`).join('');
+
+  // Assets table
+  document.getElementById('var-assets-table').innerHTML=assets.map(a=>`
+    <tr>
+      <td class="var">${a.name}</td>
+      <td>${(a.w/totalW*100).toFixed(1)}%</td>
+      <td style="color:var(--green)">${(a.mu*100).toFixed(1)}%</td>
+      <td class="val">${(a.sig*100).toFixed(1)}%</td>
+    </tr>`).join('');
+
+  // Chart — loss distribution histogram
+  const bins=60;
+  const lossArr=returns.map(r=>-r*W);
+  const minL=Math.min(...lossArr), maxL=Math.max(...lossArr);
+  const binW=(maxL-minL)/bins;
+  const counts=Array(bins).fill(0);
+  lossArr.forEach(l=>{const i=Math.min(bins-1,Math.floor((l-minL)/binW));counts[i]++;});
+  const binLabels=Array.from({length:bins},(_,i)=>Math.round(minL+i*binW).toLocaleString('de-DE'));
+  const bgColors=Array.from({length:bins},(_,i)=>{
+    const binMid=minL+(i+0.5)*binW;
+    return binMid>varVal?'rgba(224,49,43,0.7)':binMid>0?'rgba(122,161,250,0.5)':'rgba(26,64,245,0.4)';
+  });
+
+  const ctx=document.getElementById('varChart').getContext('2d');
+  if(varChartInst)varChartInst.destroy();
+  varChartInst=new Chart(ctx,{type:'bar',data:{labels:binLabels,datasets:[{
+    label:'Frequency',data:counts,backgroundColor:bgColors,borderWidth:0,borderRadius:1,
+  }]},options:{responsive:true,plugins:{
+    legend:{display:false},
+    tooltip:{backgroundColor:'#fff',borderColor:'#d8e0f5',borderWidth:1,titleColor:'#1a40f5',bodyColor:'#0d1240',
+      callbacks:{title:i=>'Loss: €'+i[0].label,label:c=>'Count: '+c.raw}}
+  },scales:{
+    x:{ticks:{display:false},grid:{display:false}},
+    y:{ticks:{color:'#7a85bb',font:{family:'DM Mono',size:10}},grid:{color:'rgba(26,64,245,0.06)'}}
+  },animation:{duration:600}}});
+}
 window.onload=()=>{
   calculate();
   initMcCanvas();
