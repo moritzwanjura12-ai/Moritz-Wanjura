@@ -423,7 +423,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
             </div>
           </div>
           <p style="font-size:0.68rem;color:var(--muted);font-family:'DM Mono',monospace;margin-top:0.5rem;">
-            Each path: S(t) = S₀ · exp[(r − ½σ²)Δt + σ√Δt · Z] where Z ~ N(0,1) · GBM simulation
+            Each path: S(t) = S₀ · exp[(r - ½σ²)Δt + σ√Δt · Z] where Z ~ N(0,1) · GBM simulation
           </p>
         </div>
       </div>
@@ -613,7 +613,7 @@ footer .foot-right{font-family:'DM Mono',monospace;font-size:0.65rem;color:var(-
       <!-- FORMULA NOTE -->
       <div style="background:var(--off);border:1px solid var(--border);border-radius:8px;padding:1rem 1.25rem;">
         <p style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--muted);line-height:1.8;" id="var-formula-note">
-          <strong style="color:var(--blue);">Parametric:</strong> VaR = −(μ_p − z_α · σ_p) · √h · W &nbsp;|&nbsp;
+          <strong style="color:var(--blue);">Parametric:</strong> VaR = -(μ_p - z_α · σ_p) · √h · W &nbsp;|&nbsp;
           <strong style="color:var(--blue);">CVaR:</strong> E[L | L &gt; VaR] &nbsp;|&nbsp;
           <strong style="color:var(--blue);">Monte Carlo:</strong> GBM simulation of portfolio returns, empirical quantile
         </p>
@@ -779,17 +779,17 @@ function renderCalc(){
   const rows=[
     ['ln(S/K)','Log moneyness',Math.log(S/K).toFixed(6)],
     ['σ√T','Vol × √T',(sigma*sqT).toFixed(6)],
-    ['d₁','[ln(S/K)+(r−q+½σ²)T]/(σ√T)',res.d1.toFixed(6)],
-    ['d₂','d₁ − σ√T',res.d2.toFixed(6)],
+    ['d₁','[ln(S/K)+(r-q+½σ²)T]/(σ√T)',res.d1.toFixed(6)],
+    ['d₂','d₁ - σ√T',res.d2.toFixed(6)],
     ['N(d₁)','CDF standard normal',res.Nd1.toFixed(6)],
     ['N(d₂)','CDF standard normal',res.Nd2.toFixed(6)],
-    ['N(−d₁)','CDF standard normal',res.Nd1n.toFixed(6)],
-    ['N(−d₂)','CDF standard normal',res.Nd2n.toFixed(6)],
-    ['e^(−rT)','Risk-free discount',Math.exp(-r*T).toFixed(6)],
-    ['e^(−qT)','Dividend discount',Math.exp(-q*T).toFixed(6)],
-    ['Call (C)','S·e^(−qT)·N(d₁)−K·e^(−rT)·N(d₂)',res.call.toFixed(6)],
-    ['Put (P)','K·e^(−rT)·N(−d₂)−S·e^(−qT)·N(−d₁)',res.put.toFixed(6)],
-    ['Parity residual','C−P−(S·e^(−qT)−K·e^(−rT))',((res.call-res.put)-(S*Math.exp(-q*T)-K*Math.exp(-r*T))).toExponential(3)],
+    ['N(-d₁)','CDF standard normal',res.Nd1n.toFixed(6)],
+    ['N(-d₂)','CDF standard normal',res.Nd2n.toFixed(6)],
+    ['e^(-rT)','Risk-free discount',Math.exp(-r*T).toFixed(6)],
+    ['e^(-qT)','Dividend discount',Math.exp(-q*T).toFixed(6)],
+    ['Call (C)','S·e^(-qT)·N(d₁)-K·e^(-rT)·N(d₂)',res.call.toFixed(6)],
+    ['Put (P)','K·e^(-rT)·N(-d₂)-S·e^(-qT)·N(-d₁)',res.put.toFixed(6)],
+    ['Parity residual','C-P-(S·e^(-qT)-K·e^(-rT))',((res.call-res.put)-(S*Math.exp(-q*T)-K*Math.exp(-r*T))).toExponential(3)],
   ];
   document.getElementById('calcBody').innerHTML=rows.map(([v,f,val])=>
     `<tr><td class="var">${v}</td><td class="formula">${f}</td><td class="val">${val}</td></tr>`).join('');
@@ -1122,9 +1122,9 @@ function runBinomial(){
   document.getElementById('bin-params-body').innerHTML=[
     ['u (up factor)',   'e^(σ√Δt)',        u.toFixed(6)],
     ['d (down factor)', '1/u',             d.toFixed(6)],
-    ['p (risk-neutral prob)', '(e^(rΔt)−d)/(u−d)', p.toFixed(6)],
+    ['p (risk-neutral prob)', '(e^(rΔt)-d)/(u-d)', p.toFixed(6)],
     ['Δt (time step)',  'T/N',             dt.toFixed(6)],
-    ['Discount/step',   'e^(−rΔt)',        disc.toFixed(6)],
+    ['Discount/step',   'e^(-rΔt)',        disc.toFixed(6)],
   ].map(([v,f,val])=>`<tr><td class="var">${v}</td><td class="formula">${f}</td><td class="val">${val}</td></tr>`).join('');
 
   // Draw tree
